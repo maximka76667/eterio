@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Link, Route, Routes } from 'react-router-dom';
+import './App.sass';
+import Drink from './components/Drink/Drink';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="header">
+        <h1 className='header__title'>Alcopedia</h1>
       </header>
+      <div className='content'>
+        <aside className='sidebar'>
+          <Link className='sidebar__link' to="/rumncoke">Rum & Coke</Link>
+        </aside>
+        <main className="main">
+          <Routes>
+            <Route path="/rumncoke" element={<Drink></Drink>} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 }
