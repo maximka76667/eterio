@@ -1,11 +1,23 @@
+$border: rgba(0, 0, 0, 0.1)
+
+.drink
+  &__name
+    font-size: 48px
+    line-height: 1.5
+
+  &__subheading
+    font-size: 24px
+    line-height: 1.5
+
 .glass
   width: 175px
   height: 450px
-  border-left: 20px solid #fff
-  border-right: 20px solid #fff
-  border-bottom: 20px solid #fff
+  border-left: 20px solid $border
+  border-right: 20px solid $border
+  border-bottom: 20px solid $border
   display: flex
   align-items: flex-end
+  margin: 0 auto
 
   &__content
     width: 100%
@@ -14,6 +26,26 @@
     flex-direction: column-reverse
 
   &__ingredient
+    position: relative
+
+    .ingredient__name
+      right: 120%
+      width: 200%
+      text-transform: capitalize
+      font-size: 20px
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      text-align: right
+
+    .ingredient__amount
+      left: 120%
+      width: 200%
+      font-size: 20px
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+
     &_rum
       background-color: brown
 
@@ -21,7 +53,7 @@
       background-color: black
 
     &_crème.de.cassis.liqueur
-      background-color: white
+      background-color: wheat
 
     &_peach.schnapps
       background-color: orange

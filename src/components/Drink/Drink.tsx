@@ -19,9 +19,9 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
 
   return (
     <div className='drink'>
-      <h2 className='drink__name'>{drink.name}</h2>
+      <h1 className='drink__name'>{drink.name}</h1>
       <p>{drink.description}</p>
-      <h3>Drinks:</h3>
+      <h2 className='drink__subheading'>Ingredients</h2>
       <ul>
         {
           ingredientList.map((ingredient) => {
@@ -33,7 +33,7 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
           })
         }
       </ul>
-      <h3>Extra Ingredients:</h3>
+      <h2 className='drink__subheading'>Extra Ingredients</h2>
       <ul>
         {
           drink.extra.map((extra) => {
@@ -44,6 +44,7 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
           })
         }
       </ul>
+      <h2 className='drink__subheading'>Proportions</h2>
       <div className='glass'>
         <div className='glass__content'>
           {
