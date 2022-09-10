@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import { DrinkInterface } from '../../interfaces';
 import Ingredient from '../Ingredient/Ingredient';
 import "./Drink.sass"
 
-const Drink = () => {
+const Drink = ({ drink }: { drink: DrinkInterface }) => {
 
   const [ingredientList, setIngredientList] = useState<{ name: string, amount: number }[]>([]);
   const [ingredientCount, setIngredientCount] = useState<number>(0);
 
-  const drink: { name: string, ingredients: { [key: string]: number }, extra: string[], description: string } = {
-    name: "Rum & Coke",
-    ingredients: {
-      rum: 1,
-      coke: 2
-    },
-    extra: ["lime"],
-    description: "The rum and Coke is an unbelievably simple yet satisfying cocktail. Everything that you need to know about mixing this popular drink is right there in the name. That said, even the easiest of mixed drinks can be made just a little better (or worse) and deserves a bit more attention than it often receives."
-  }
-
   useEffect(() => {
+    setIngredientList([]);
+    setIngredientCount(0);
     for (const ingridient in drink.ingredients) {
       setIngredientCount((ingredientCount) => ingredientCount + drink.ingredients[ingridient]);
       setIngredientList((ingredientList) => [...ingredientList, { name: ingridient, amount: drink.ingredients[ingridient] }]);
     }
-  }, [])
+  }, [drink])
 
   return (
     <div className='drink'>
