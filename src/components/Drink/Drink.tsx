@@ -20,28 +20,25 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
   return (
     <div className='drink'>
       <h1 className='drink__name'>{drink.name}</h1>
-      <p>{drink.description}</p>
+      <p className='drink__description'>{drink.description}</p>
       <h2 className='drink__subheading'>Ingredients</h2>
-      <ul>
+      <ul className='drink__ingredients'>
         {
-          ingredientList.map((ingredient) => {
-            return (
-              <li key={ingredient.name}>
-                {ingredient.name}
-              </li>
-            )
-          })
+          ingredientList.map(ingredient => (
+            <li className='drink__ingredients-item' key={ingredient.name}>
+              {ingredient.name}
+            </li>
+          ))
         }
       </ul>
       <h2 className='drink__subheading'>Extra Ingredients</h2>
-      <ul>
+      <ul className='drink__extra'>
         {
-          drink.extra.map((extra) => {
-            return (
-              <li key={extra}>
-                {extra}</li>
-            )
-          })
+          drink.extra.map(extra => (
+            <li className='drink__extra-item' key={extra}>
+              {extra}
+            </li>
+          ))
         }
       </ul>
       <h2 className='drink__subheading'>Proportions</h2>
