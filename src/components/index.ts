@@ -1,4 +1,10 @@
-export { default as Header } from "./Header/Header";
-export { default as Sidebar } from "./Sidebar/Sidebar";
+export { default as Content } from "./Content/Content";
 export { default as Drink } from "./Drink/Drink";
+export { default as Glass } from "./Glass/Glass";
+export { default as Header } from "./Header/Header";
+export { default as Home } from "./Home/Home";
 export { default as Ingredient } from "./Ingredient/Ingredient";
+export { default as Loading } from "./Loading/Loading";
+export { default as Main } from "./Main/Main";
+export { default as Search } from "./Search/Search";
+export { default as Sidebar } from "./Sidebar/Sidebar";

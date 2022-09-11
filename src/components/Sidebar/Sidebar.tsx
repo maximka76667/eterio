@@ -1,33 +1,31 @@
-import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
+import { DrinkInterface } from '../../interfaces';
+import Search from '../Search/Search';
 import "./Sidebar.sass"
 
 const Sidebar = () => {
   const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState("");
+  const [filteredDrinks, setFilteredDrinks] = useState<DrinkInterface[]>([]);
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSearch(e.target.value);
+  function handleSearch(search: string) {
+    setSearch(search);
   }
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-  }
+  useEffect(() => {
+    const newDrinks = drinks.filter((drink) => drink.name.toLowerCase().includes(search.toLowerCase()))
+    setFilteredDrinks(newDrinks);
+  }, [search, drinks])
 
   return (
     <div className='sidebar-wrapper'>
       <aside className='sidebar'>
-        <form onSubmit={handleSubmit}>
-          <input type="text" value={search} onChange={handleChange} />
-        </form>
+        <Search search={search} onSearch={handleSearch} />
         <ul className='sidebar__list'>
           {
-            drinks.filter((drink) => {
-              if (drink.name.toLowerCase().includes(search.toLowerCase()))
-                return drink;
-              return null;
-            }).map((drink) => (
+            filteredDrinks.map((drink) => (
               <li key={drink._id} className='sidebar__item'>
                 <NavLink className={
                   ({ isActive }) => "sidebar__link" +

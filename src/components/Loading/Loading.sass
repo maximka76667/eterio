@@ -1,0 +1,30 @@
+@keyframes loading
+  0%
+    margin-top: 0
+
+  50%
+    margin-top: -50px
+
+  100%
+    margin-top: 0
+
+.loading
+  display: flex
+  width: 100%
+  justify-content: center
+  align-items: center
+  height: 100vh
+  max-height: 90vh
+
+  &__container
+    width: 20rem
+    height: 8rem
+    display: flex
+    justify-content: space-around
+
+  &__circle
+    display: block
+    width: 5rem
+    height: 5rem
+    background-color: #000
+    border-radius: 50%
