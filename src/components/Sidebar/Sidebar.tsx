@@ -25,7 +25,7 @@ const Sidebar = () => {
         <Search search={search} onSearch={handleSearch} />
         <ul className='sidebar__list'>
           {
-            filteredDrinks.map((drink) => (
+            filteredDrinks.length !== 0 ? filteredDrinks.map((drink) => (
               <li key={drink._id} className='sidebar__item'>
                 <NavLink className={
                   ({ isActive }) => "sidebar__link" +
@@ -34,7 +34,7 @@ const Sidebar = () => {
                   {drink.name}
                 </NavLink>
               </li>
-            ))
+            )) : <p className='sidebar__not-found'>Nothing is found</p>
           }
         </ul>
       </aside>
