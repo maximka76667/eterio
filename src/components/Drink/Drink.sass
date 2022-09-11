@@ -1,5 +1,3 @@
-$border: rgba(0, 0, 0, 0.1)
-
 .drink
   &__name
     font-size: 48px
@@ -17,7 +15,7 @@ $border: rgba(0, 0, 0, 0.1)
   &__ingredients
     padding: 0
     padding-left: 2rem
-    margin: 0.5rem 0 50px
+    margin: 0.5rem 0 30px
     text-transform: capitalize
 
     &-item
@@ -26,66 +24,7 @@ $border: rgba(0, 0, 0, 0.1)
   &__extra
     padding: 0
     padding-left: 2rem
-    margin: 0.5rem 0 50px
+    margin: 0.5rem 0 30px
 
     &-item
       margin: 5px 0
-
-.glass
-  width: 175px
-  height: 450px
-  border-left: 20px solid $border
-  border-right: 20px solid $border
-  border-bottom: 20px solid $border
-  display: flex
-  align-items: flex-end
-  margin: 50px auto
-  border-radius: 0 0 10px 10px
-
-  &__content
-    width: 100%
-    height: 97%
-    display: flex
-    flex-direction: column-reverse
-
-  &__ingredient
-    position: relative
-
-    .ingredient__name
-      right: 130%
-      width: 200%
-      text-transform: capitalize
-      font-size: 20px
-      position: absolute
-      top: 50%
-      transform: translateY(-50%)
-      text-align: right
-
-    .ingredient__amount
-      left: 130%
-      width: 200%
-      font-size: 20px
-      position: absolute
-      top: 50%
-      transform: translateY(-50%)
-
-    &_rum
-      background-color: #45362b
-
-    &_coke
-      background-color: #370b15
-
-    &_cranberry.juice
-      background-color: #ba4242
-
-    &_orange.juice
-      background-color: #F7CA05
-
-    &_crème.de.cassis.liqueur
-      background-color: #0d0d0b
-
-    &_peach.schnapps
-      background-color: #FFDCD6
-
-    &_vodka
-      background-color: rgba(#bfc0ee, 0.3)

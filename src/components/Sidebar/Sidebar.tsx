@@ -1,9 +1,10 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { DrinkInterface } from '../../interfaces';
+import DrinksContext from '../../contexts/DrinksContext';
+import "./Sidebar.sass"
 
-const Sidebar = ({ drinks }: { drinks: DrinkInterface[] }) => {
-
+const Sidebar = () => {
+  const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState("");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -27,11 +28,13 @@ const Sidebar = ({ drinks }: { drinks: DrinkInterface[] }) => {
                 return drink;
               return null;
             }).map((drink) => (
-              <li className='sidebar__item'>
+              <li key={drink._id} className='sidebar__item'>
                 <NavLink className={
                   ({ isActive }) => "sidebar__link" +
                     (isActive ? " sidebar__link_active" : "")
-                } to={drink._id}>{drink.name}</NavLink>
+                } to={drink._id}>
+                  {drink.name}
+                </NavLink>
               </li>
             ))
           }

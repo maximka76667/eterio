@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DrinkInterface } from '../../interfaces';
-import Ingredient from '../Ingredient/Ingredient';
+import Glass from '../Glass/Glass';
 import "./Drink.sass"
 
 const Drink = ({ drink }: { drink: DrinkInterface }) => {
@@ -42,17 +42,7 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
         }
       </ul>
       <h2 className='drink__subheading'>Proportions</h2>
-      <div className='glass'>
-        <div className='glass__content'>
-          {
-            ingredientList.map((ingredient) => {
-              return (
-                <Ingredient ingredient={ingredient} ingredientCount={ingredientCount}></Ingredient>
-              )
-            })
-          }
-        </div>
-      </div>
+      <Glass ingredientCount={ingredientCount} ingredientList={ingredientList} />
     </div >
   )
 }

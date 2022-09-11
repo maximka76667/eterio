@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import './App.sass';
-import { Drink, Header, Sidebar } from './components';
+import { Header } from './components';
+import Content from './components/Content/Content';
+import DrinksContext from './contexts/DrinksContext';
 import { DrinkInterface } from './interfaces';
 import api from './utils/api';
 
@@ -11,7 +12,6 @@ function App() {
 
   async function getDrinks() {
     const { drinks } = await api.getDrinks()
-
     setDrinks(drinks);
   }
 
@@ -22,18 +22,9 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <div className='content'>
-        <Sidebar drinks={drinks} />
-        <main className="main">
-          <Routes>
-            {
-              drinks.map((drink) => (
-                <Route key={drink._id} path={drink._id} element={<Drink drink={drink}></Drink>} />
-              ))
-            }
-          </Routes>
-        </main>
-      </div>
+      <DrinksContext.Provider value={drinks}>
+        <Content />
+      </DrinksContext.Provider>
     </div>
   );
 }
