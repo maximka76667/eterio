@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/alcopedia/static/css/main.d2da2b78.css",
-    "main.js": "/alcopedia/static/js/main.07ab25be.js",
+    "main.css": "/alcopedia/static/css/main.e99541cd.css",
+    "main.js": "/alcopedia/static/js/main.4f0deaf9.js",
+    "static/media/logo512.png": "/alcopedia/static/media/logo512.2b4f1b026f490312e7b6.png",
     "index.html": "/alcopedia/index.html",
-    "main.d2da2b78.css.map": "/alcopedia/static/css/main.d2da2b78.css.map",
-    "main.07ab25be.js.map": "/alcopedia/static/js/main.07ab25be.js.map"
+    "main.e99541cd.css.map": "/alcopedia/static/css/main.e99541cd.css.map",
+    "main.4f0deaf9.js.map": "/alcopedia/static/js/main.4f0deaf9.js.map"
   },
   "entrypoints": [
-    "static/css/main.d2da2b78.css",
-    "static/js/main.07ab25be.js"
+    "static/css/main.e99541cd.css",
+    "static/js/main.4f0deaf9.js"
   ]
 }
