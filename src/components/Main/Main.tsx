@@ -14,7 +14,7 @@ const Main = () => {
         <Route index element={<Home />} />
         {
           drinks.map((drink) => (
-            <Route key={drink._id} path={drink._id} element={<Drink drink={drink}></Drink>} />
+            <Route key={drink._id} path={drink.code} element={<Drink drink={drink}></Drink>} />
           ))
         }
       </Routes>

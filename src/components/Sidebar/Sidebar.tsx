@@ -30,7 +30,7 @@ const Sidebar = () => {
                 <NavLink className={
                   ({ isActive }) => "sidebar__link" +
                     (isActive ? " sidebar__link_active" : "")
-                } to={drink._id}>
+                } to={drink.code}>
                   {drink.name}
                 </NavLink>
               </li>
