@@ -1,9 +1,11 @@
+@import "../../sass/mixins"
 
 .sidebar
   width: 100%
   padding: 0.5rem
   position: sticky
   top: 0
+  height: 100%
 
   &-wrapper
     display: flex
@@ -13,9 +15,20 @@
     margin-top: -3.75rem
     top: 0
     padding-top: 3.75rem
-    transition: opacity 50ms
     min-width: 200px
     width: 20%
+    background-color: #fff
+    z-index: 4
+
+    @include md
+      margin-top: 0
+      position: fixed
+      display: none
+      width: 100%
+      height: 100%
+
+    &_opened
+      display: flex
 
   &__list
     padding: 0

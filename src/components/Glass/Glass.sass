@@ -1,4 +1,5 @@
 @import "../../sass/variables.sass"
+@import "../../sass/mixins"
 
 .glass
   width: 175px
@@ -10,6 +11,16 @@
   align-items: flex-end
   margin: 50px auto
   border-radius: 0 0 10px 10px
+
+  @include md
+    width: 100px
+    height: 250px
+    border-left: 10px solid $border
+    border-right: 10px solid $border
+    border-bottom: 10px solid $border
+
+  @include sm
+    margin: 0 0 0 auto
 
   &__content
     width: 100%
@@ -30,6 +41,11 @@
       transform: translateY(-50%)
       text-align: right
 
+      @include md
+        width: 300%
+        right: 140%
+        font-size: 14px
+
     .ingredient__amount
       left: 130%
       width: 200%
@@ -37,6 +53,21 @@
       position: absolute
       top: 50%
       transform: translateY(-50%)
+
+      @include md
+        width: 300%
+        left: 140%
+        font-size: 14px
+
+      @include sm
+        width: 400%
+
+      @include sm
+        text-align: right
+        right: 300%
+        top: 50%
+        transform: translateY(-50%)
+        left: auto
 
     &_rum
       background-color: #45362b
