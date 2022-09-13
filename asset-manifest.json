@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/alcopedia/static/css/main.a51dbabf.css",
-    "main.js": "/alcopedia/static/js/main.f774b2db.js",
+    "main.css": "/alcopedia/static/css/main.32f55a63.css",
+    "main.js": "/alcopedia/static/js/main.6005f61c.js",
     "static/media/Ubuntu-Regular.ttf": "/alcopedia/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
     "static/media/Ubuntu-Bold.ttf": "/alcopedia/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
     "static/media/AmaticSC-Bold.ttf": "/alcopedia/static/media/AmaticSC-Bold.f12c1d887cda2131ac83.ttf",
@@ -9,12 +9,13 @@
     "static/media/IndieFlower-Regular.ttf": "/alcopedia/static/media/IndieFlower-Regular.599d26584b9afc1d20b1.ttf",
     "static/media/logo512.png": "/alcopedia/static/media/logo512.2b4f1b026f490312e7b6.png",
     "static/media/PatuaOne-Regular.ttf": "/alcopedia/static/media/PatuaOne-Regular.a9f01afefe6f58c9aeb2.ttf",
+    "static/media/lime-slice.webp": "/alcopedia/static/media/lime-slice.9bec9e92722ae1424160.webp",
     "index.html": "/alcopedia/index.html",
-    "main.a51dbabf.css.map": "/alcopedia/static/css/main.a51dbabf.css.map",
-    "main.f774b2db.js.map": "/alcopedia/static/js/main.f774b2db.js.map"
+    "main.32f55a63.css.map": "/alcopedia/static/css/main.32f55a63.css.map",
+    "main.6005f61c.js.map": "/alcopedia/static/js/main.6005f61c.js.map"
   },
   "entrypoints": [
-    "static/css/main.a51dbabf.css",
-    "static/js/main.f774b2db.js"
+    "static/css/main.32f55a63.css",
+    "static/js/main.6005f61c.js"
   ]
 }
