@@ -1,12 +1,16 @@
 import React from 'react'
-import { IngredientInterface } from '../../interfaces'
+import { GlassProps, IngredientInterface } from '../../interfaces'
+import Extra from '../Extra/Extra'
 import Ingredient from '../Ingredient/Ingredient'
 import "./Glass.sass"
 
-const Glass = ({ ingredientList, ingredientCount }: { ingredientList: IngredientInterface[], ingredientCount: number }) => {
+const Glass = ({ ingredientList, ingredientCount, extras }: GlassProps) => {
   return (
     <div className='glass'>
+      <div className='glass__tube' />
       <div className='glass__content'>
+        <span className='glass__ice' />
+        <span className='glass__ice' />
         {
           ingredientList.map((ingredient) => {
             return (
@@ -14,6 +18,11 @@ const Glass = ({ ingredientList, ingredientCount }: { ingredientList: Ingredient
             )
           })
         }
+        <>
+          {
+            extras.map((extra) => <Extra key={extra} extra={extra} />)
+          }
+        </>
       </div>
     </div>
   )

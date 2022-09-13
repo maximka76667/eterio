@@ -42,7 +42,7 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
         }
       </ul>
       <h2 className='drink__subheading'>Proportions</h2>
-      <Glass ingredientCount={ingredientCount} ingredientList={ingredientList} />
+      <Glass ingredientCount={ingredientCount} ingredientList={ingredientList} extras={drink.extra} />
     </div >
   )
 }

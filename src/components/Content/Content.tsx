@@ -13,7 +13,7 @@ const Content = ({ toggleSidebar, closeSidebar, isSidebarOpened }: ContentProps)
         <img className='content__sidebar-button-img' src={icon} alt='sidebar icon' />
       </button>
       <Sidebar isOpened={isSidebarOpened} onListItemClick={closeSidebar} />
-      <Main toggleSidebar={toggleSidebar} />
+      <Main isSidebarOpened={isSidebarOpened} toggleSidebar={toggleSidebar} />
     </div>
   )
 }
