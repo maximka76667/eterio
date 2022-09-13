@@ -1,24 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { ContentProps } from '../../interfaces'
 import Main from '../Main/Main'
 import Sidebar from '../Sidebar/Sidebar'
 import "./Content.sass"
+import icon from "../../images/logo512.png"
 
-const Content = () => {
-  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
-
-  function handleClick() {
-    setIsSidebarOpened(!isSidebarOpened);
-  }
-
-  function handleListItemClick() {
-    setIsSidebarOpened(false);
-  }
+const Content = ({ toggleSidebar, closeSidebar, isSidebarOpened }: ContentProps) => {
 
   return (
     <div className='content'>
-      <button className='content__sidebar-button' onClick={handleClick}>-</button>
-      <Sidebar isOpened={isSidebarOpened} onListItemClick={handleListItemClick} />
-      <Main />
+      <button className='content__sidebar-button' onClick={toggleSidebar}>
+        <img className='content__sidebar-button-img' src={icon} alt='sidebar icon' />
+      </button>
+      <Sidebar isOpened={isSidebarOpened} onListItemClick={closeSidebar} />
+      <Main toggleSidebar={toggleSidebar} />
     </div>
   )
 }

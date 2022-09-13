@@ -1,3 +1,5 @@
+@import "../../sass/mixins"
+
 .home
   display: flex
   justify-content: center
@@ -5,8 +7,37 @@
   flex-direction: column
   min-height: 60vh
 
+  @include md
+    min-height: calc(80vh - 3.75rem)
+
   &__title
-    font-size: 5rem
+    font-size: 6rem
+
+    @include md
+      text-align: center
+      font-size: 3rem
+      margin-bottom: 5px
 
   &__text
     font-size: 2rem
+    font-family: "Ubuntu", sans-serif
+
+    @include md
+      text-align: center
+      font-size: 1rem
+
+  &__sidebar-button
+    display: none
+    background-color: $blue
+    border: 0
+    outline: 0
+    border-radius: 10px
+    padding: 10px 20px
+    color: #fff
+    margin-top: 20px
+    font-size: 1.2em
+    cursor: pointer
+
+    @include md
+      font-size: 1.5rem
+      display: flex

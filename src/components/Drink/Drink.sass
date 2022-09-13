@@ -1,15 +1,28 @@
+@import "../../sass/mixins"
+
 .drink
+
   &__name
-    font-size: 48px
+    font-size: 4rem
     line-height: 1.5
     margin-bottom: 25px
 
+    @include md
+      font-size: 3rem
+      margin-bottom: 0.5em
+
   &__description
-    max-width: 70%
+    max-width: 50%
     margin-bottom: 40px
+    line-height: 1.6
+    font-family: "Ubuntu", sans-serif
+
+    @include md
+      max-width: 90%
+      font-size: 1rem
 
   &__subheading
-    font-size: 24px
+    font-size: 2rem
     line-height: 1.5
 
   &__ingredients
@@ -19,6 +32,7 @@
     text-transform: capitalize
     display: flex
     flex-direction: column
+    font-size: 1.5rem
 
     &-item
       margin: 5px 0
@@ -29,6 +43,7 @@
     margin: 0.5rem 0 30px
     display: flex
     flex-direction: column
+    font-size: 1.5rem
 
     &-item
       margin: 5px 0

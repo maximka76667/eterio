@@ -22,11 +22,27 @@ function App() {
     getDrinks();
   }, [])
 
+  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+
+  function toggleSidebar() {
+    setIsSidebarOpened(!isSidebarOpened);
+  }
+
+  function closeSidebar() {
+    setIsSidebarOpened(false);
+  }
+
   return (
     <div className="app">
-      <Header />
+      <Header isSidebarOpened={isSidebarOpened} closeSidebar={closeSidebar} />
       <DrinksContext.Provider value={drinks}>
-        {isLoading ? <Loading /> : <Content />}
+        {isLoading ?
+          <Loading /> :
+          <Content
+            isSidebarOpened={isSidebarOpened}
+            toggleSidebar={toggleSidebar}
+            closeSidebar={closeSidebar}
+          />}
       </DrinksContext.Provider>
     </div>
   );
