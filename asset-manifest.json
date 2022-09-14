@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/alcopedia/static/css/main.3335e449.css",
+    "main.css": "/alcopedia/static/css/main.16f57726.css",
     "main.js": "/alcopedia/static/js/main.5948139e.js",
     "static/media/Ubuntu-Regular.ttf": "/alcopedia/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
     "static/media/Ubuntu-Bold.ttf": "/alcopedia/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
@@ -11,11 +11,11 @@
     "static/media/PatuaOne-Regular.ttf": "/alcopedia/static/media/PatuaOne-Regular.a9f01afefe6f58c9aeb2.ttf",
     "static/media/lime-slice.webp": "/alcopedia/static/media/lime-slice.9bec9e92722ae1424160.webp",
     "index.html": "/alcopedia/index.html",
-    "main.3335e449.css.map": "/alcopedia/static/css/main.3335e449.css.map",
+    "main.16f57726.css.map": "/alcopedia/static/css/main.16f57726.css.map",
     "main.5948139e.js.map": "/alcopedia/static/js/main.5948139e.js.map"
   },
   "entrypoints": [
-    "static/css/main.3335e449.css",
+    "static/css/main.16f57726.css",
     "static/js/main.5948139e.js"
   ]
 }
