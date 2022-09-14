@@ -13,14 +13,21 @@
   font-family: "IndieFlower", sans-serif
   position: relative
 
+  @include lg
+    width: 150px
+    height: 375px
+    font-size: 1.2rem
+    margin: 50px 15% 15px auto
+
   @include md
-    width: 100px
-    height: 250px
     font-size: 1rem
     padding: 1rem 0.5rem 0.5rem
 
   @include sm
-    margin: 50px 15% 15px auto
+    font-size: 0.8rem
+    width: 100px
+    height: 250px
+    margin: 50px 5% 15px auto
 
   &__tube
     background-color: $secondary
@@ -91,7 +98,7 @@
       top: 50%
       transform: translateY(-50%)
 
-      @include md
+      @include lg
         display: none
 
       @include sm

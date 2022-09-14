@@ -38,13 +38,16 @@
 
   &__img
     display: block
-    height: 400px
+    height: 450px
     background-size: cover
     background-position: 50% 20%
     position: relative
     background-repeat: no-repeat
     border-radius: 15px
     width: 100%
+
+    @include lg
+      height: 350px
 
     @include md
       height: 500px
@@ -68,6 +71,9 @@
     margin-bottom: 40px
     line-height: 1.6
     font-family: "Ubuntu", sans-serif
+
+    @include lg
+      min-width: 70%
 
     @include md
       max-width: 90%
