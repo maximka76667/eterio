@@ -20,6 +20,9 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
   return (
     <div className='drink'>
       <h1 className='drink__name'>{drink.name}</h1>
+      <div className='drink__container'>
+        <div className='drink__img' style={{ backgroundImage: `url(${drink.img})` }} />
+      </div>
       <p className='drink__description'>{drink.description}</p>
       <h2 className='drink__subheading'>Ingredients</h2>
       <ul className='drink__ingredients'>
