@@ -16,6 +16,7 @@
   align-items: center
   flex-direction: column
   min-height: 60vh
+  position: relative
 
   @include md
     min-height: calc(80vh - 3.75rem)
@@ -59,3 +60,30 @@
     @include md
       font-size: 1.5rem
       display: flex
+
+  &__glass
+    width: 100px
+    height: 250px
+    margin-top: 300px
+    display: flex
+    flex-direction: column-reverse
+
+  &__button
+    padding: 50px
+    position: absolute
+    top: 10%
+    left: 40%
+    background-color: transparent
+
+  &__vodka
+    width: 200px
+    height: 250px
+    background: url("../../images/vodka.png") 50% 50%
+    background-size: cover
+    transform: rotate(-45deg)
+    transition: all 0.3s
+    pointer-events: none
+
+    &_pouring
+      top: 15%
+      transform: rotate(-110deg)

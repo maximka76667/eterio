@@ -6,7 +6,7 @@ const Ingredient = ({ ingredient, ingredientCount }: { ingredient: IngredientInt
   const proportion = Math.floor(height);
 
   return (
-    <div className={`glass__ingredient glass__ingredient_${ingredient.name}`} key={ingredient.name} style={{ height: `${height}%` }}>
+    <div className={`glass__ingredient glass__ingredient_${ingredient.name}`} style={{ height: `${height}%` }}>
       <p className='ingredient__name'>{ingredient.name}</p>
       <p className='ingredient__amount'>{ingredient.amount} ounces ({proportion}% of glass)</p>
     </div>
