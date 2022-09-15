@@ -27,8 +27,8 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
     if (isPouring && ingredientCount < 10) {
       bulking = setInterval(() => {
         const initValue = drink[drinkType] || 0;
-        setDrink({ ...drink, [drinkType]: Math.floor((initValue + 0.1) * 10) / 10 });
-        setIngredientCount(Math.floor((ingredientCount + 0.1) * 10) / 10);
+        setDrink({ ...drink, [drinkType]: Math.floor((initValue + 0.1) * 100) / 100 });
+        setIngredientCount(Math.floor((ingredientCount + 0.1) * 100) / 100);
         console.log(drink);
         console.log(ingredientCount);
       }, 100)
