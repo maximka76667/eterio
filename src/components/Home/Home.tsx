@@ -1,15 +1,22 @@
 import React, { MouseEventHandler, useState, useEffect } from 'react'
 import { HomeProps } from '../../interfaces'
+import Bottle from '../Bottle/Bottle';
 import "./Home.sass"
 
 const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
 
   const [isPouring, setIsPouring] = useState(false);
-  const [drink, setDrink] = useState<{ [key: string]: number }>({
-    "cranberry juice": 2,
-  })
-  const [ingredientCount, setIngredientCount] = useState<number>(2);
+  const [glassContent, setGlassContent] = useState<{ [key: string]: number }>({})
+
+  const [currentDrink, setCurrentDrink] = useState("");
+
+  const [ingredientCount, setIngredientCount] = useState<number>(0);
   const [drinkType, setDrinkType] = useState<string>("");
+
+  const bottles = [
+    "vodka",
+    "cranberry-juice"
+  ]
 
   const pourDrink: MouseEventHandler<HTMLButtonElement> = (e) => {
     const drinkType = (e.target as HTMLInputElement).getAttribute("data-type")!;
@@ -21,20 +28,26 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
     setIsPouring(false);
   }
 
+  const changeDrink: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const drinkType = (e.target as HTMLInputElement).getAttribute("data-type")!;
+
+    setCurrentDrink(drinkType);
+  }
+
   useEffect(() => {
     let bulking: NodeJS.Timer;
 
     if (isPouring && ingredientCount < 10) {
       bulking = setInterval(() => {
-        const initValue = drink[drinkType] || 0;
-        setDrink({ ...drink, [drinkType]: Math.floor((initValue + 0.1) * 100) / 100 });
+        const initValue = glassContent[drinkType] || 0;
+        setGlassContent({ ...glassContent, [drinkType]: Math.floor((initValue + 0.1) * 100) / 100 });
         setIngredientCount(ingredientCount => Math.floor((ingredientCount + 0.1) * 100) / 100);
-        console.log(drink);
+        console.log(glassContent);
         console.log(ingredientCount);
       }, 100)
     }
     return () => clearInterval(bulking);
-  }, [isPouring, drink, drinkType, ingredientCount])
+  }, [isPouring, glassContent, drinkType, ingredientCount])
 
 
   return (
@@ -44,17 +57,29 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
       <button className={`home__sidebar-button ${!isSidebarOpened ? "home__sidebar-button_animated" : ""}`} onClick={toggleSidebar}>Search for a drink</button> */}
 
       <div className='home__glass glass'>
-        <>
-          {
-            Object.keys(drink).map((key) => {
-              return <div className={`glass__ingredient glass__ingredient_${key}`} key={key} style={{ height: `${drink[key] * 10}%` }}></div>
-            })
-          }
-        </>
+        {
+          Object.keys(glassContent).map((key) => (
+            <div className={`glass__ingredient glass__ingredient_${key}`} key={key} style={{ height: `${glassContent[key] * 10}%` }}></div>
+          ))
+        }
       </div>
-      <button className='home__button' data-type="vodka" onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink}>
-        <div className={`home__vodka ${isPouring ? "home__vodka_pouring" : ""}`}></div>
+      {/* <button className='home__button' data-type="vodka" onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink} onClick={chooseDrink}>
+        <div className={`home__drink home__vodka ${isPouring ? "home__drink_pouring" : ""}`}></div>
       </button>
+      <button className='home__drink home__orange juice'>Change Drink</button>
+      <button className='home__button' data-type="vodka" onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink} onClick={chooseDrink}>
+        <div className={`home__drink home__orange ${isPouring ? "home__drink_pouring" : ""}`}></div>
+      </button> */}
+      <button className='home__button' data-type={currentDrink} onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink}>
+        <div className={`home__drink home__${currentDrink} ${isPouring ? "home__drink_pouring" : ""}`}></div>
+      </button>
+      <button className='home__change_vodka' data-type="vodka" onClick={changeDrink}>Vodka</button>
+      <button className='home__change_cranberry-juice' data-type="cranberry-juice" onClick={changeDrink}>Cranberry Juice</button>
+      {
+        bottles.map((bottle) => (
+          <Bottle />
+        ))
+      }
     </div>
   )
 }
