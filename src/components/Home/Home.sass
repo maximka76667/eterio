@@ -1,4 +1,5 @@
 @import "../../sass/mixins"
+@import "../../sass/bottles"
 
 @keyframes pulse
   0%
@@ -68,30 +69,21 @@
     display: flex
     flex-direction: column-reverse
 
-  &__button
+  &__current-drink
     padding: 50px
     position: absolute
     top: 10%
     left: 40%
     background-color: transparent
 
-  &__vodka
+  &__drink
     width: 200px
-    height: 250px
-    background: url("../../images/vodka.png") 50% 50%
-    background-size: cover
+    min-height: 250px
     transform: rotate(-45deg)
     transition: all 0.3s
     pointer-events: none
-
-  &__cranberry-juice
-    width: 200px
-    height: 250px
-    background: url("../../images/cranberry-juice.png") 50% 50%
     background-size: cover
-    transform: rotate(-45deg)
-    transition: all 0.3s
-    pointer-events: none
+    background-position: 50% 50%
 
   &__drink
     &_pouring
