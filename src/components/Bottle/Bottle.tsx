@@ -6,7 +6,7 @@ const Bottle = ({ bottle, changeDrink }: BottleProps) => {
   const className = bottle.replaceAll(" ", "-").toLowerCase();
 
   return (
-    <button className={`home__change home__change_${className}`} onClick={() => changeDrink(className)}>{bottle}</button>
+    <button className={`home__change home__change_${className}`} onClick={() => changeDrink(bottle.toLowerCase())}>{bottle}</button>
   )
 }
 

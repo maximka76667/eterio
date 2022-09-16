@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import DrinksContext from '../../contexts/DrinksContext';
 import { HomeProps } from '../../interfaces'
 import Bottle from '../Bottle/Bottle';
 import "./Home.sass"
 
 const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
 
+  const drinks = useContext(DrinksContext);
+
   const [isPouring, setIsPouring] = useState(false);
   const [glassContent, setGlassContent] = useState<{ [key: string]: number }>({})
 
   const [currentDrink, setCurrentDrink] = useState("");
+  const [currentDrinkCode, setCurrentDrinkCode] = useState("");
 
   const [ingredientCount, setIngredientCount] = useState<number>(0);
 
@@ -27,6 +31,25 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
 
   const changeDrink = (drink: string) => {
     setCurrentDrink(drink);
+  }
+
+  function searchMatches() {
+    for (const drink of drinks) {
+      console.log(compareComposition(drink.ingredients, glassContent));
+    }
+  }
+
+  function compareComposition(drink1: { [key: string]: number }, drink2: { [key: string]: number }) {
+    let result = 0;
+    console.log(drink1);
+    console.log(drink2);
+
+    for (const ingr in drink1) {
+      if (drink2[ingr]) {
+        result += (drink1[ingr] < drink2[ingr] ? drink1[ingr] : drink2[ingr]) / 6.5 * 100;
+      }
+    }
+    return result;
   }
 
   useEffect(() => {
@@ -50,6 +73,14 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
     console.log(ingredientCount);
   }, [glassContent, ingredientCount])
 
+  useEffect(() => {
+    setCurrentDrinkCode(formatDrinkName(currentDrink));
+  }, [currentDrink])
+
+  function formatDrinkName(drink: string) {
+    return drink.replaceAll(" ", "-")
+  }
+
   return (
     <div className='home'>
       {/* <h1 className='home__title'>Welcome to <span className='home__name'>Alcopedia</span></h1>
@@ -59,18 +90,22 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
       <div className='home__glass glass'>
         {
           Object.keys(glassContent).map((key) => (
-            <div className={`glass__ingredient ${key}`} key={key} style={{ height: `${glassContent[key] * 10}%` }}></div>
+            <div className={`glass__ingredient ${formatDrinkName(key)}`} key={key} style={{ height: `${glassContent[key] * 10}%` }}></div>
           ))
         }
       </div>
-      <button className='home__current-drink' data-type={currentDrink} onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink}>
-        <div className={`home__drink home__${currentDrink} ${isPouring ? "home__drink_pouring" : ""}`}></div>
+      <button className='home__current-drink' data-type={currentDrinkCode} onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink}>
+        <div className={`home__drink home__${currentDrinkCode} ${isPouring ? "home__drink_pouring" : ""}`}></div>
       </button>
       {
         bottles.map((bottle) => (
           <Bottle bottle={bottle} changeDrink={changeDrink} />
         ))
       }
+      <button className='home__matches-button' onClick={searchMatches}>Find matches</button>
+      <div className='matches'>
+
+      </div>
     </div>
   )
 }
