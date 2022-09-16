@@ -1,11 +1,12 @@
 import React from 'react'
+import { BottleProps } from '../../interfaces'
 
-const Bottle = () => {
+const Bottle = ({ bottle, changeDrink }: BottleProps) => {
+
+  const className = bottle.replaceAll(" ", "-").toLowerCase();
+
   return (
-    // <button className='home__button' data-type="vodka" onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink} onClick={chooseDrink}>
-    //   <div className={`home__drink home__orange ${isPouring ? "home__drink_pouring" : ""}`}></div>
-    // </button>
-    <></>
+    <button className={`home__change home__change_${className}`} onClick={() => changeDrink(className)}>{bottle}</button>
   )
 }
 
