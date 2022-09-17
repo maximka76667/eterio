@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, ChangeEventHandler, FocusEventHandler, MouseEventHandler } from 'react'
 import DrinksContext from '../../contexts/DrinksContext';
 import { HomeProps } from '../../interfaces'
 import Drink from '../../interfaces/DrinkInterface';
@@ -8,6 +8,9 @@ import "./Home.sass"
 const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
 
   const drinks = useContext(DrinksContext);
+
+  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const [isPouring, setIsPouring] = useState(false);
   const [glassContent, setGlassContent] = useState<{ [key: string]: number }>({})
@@ -56,6 +59,33 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
     return drink.replaceAll(" ", "-")
   }
 
+  function showInput() {
+    setIsSearchListOpen(true);
+  }
+
+  const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {
+    if (!e.relatedTarget) {
+      hideInput();
+    }
+  }
+
+  const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchValue(e.target.value);
+  }
+
+  function handleInputClick() {
+    setSearchValue("");
+    showInput();
+  }
+
+  const handleBottleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    hideInput();
+  }
+
+  function hideInput() {
+    setIsSearchListOpen(false);
+  }
+
   useEffect(() => {
     let bulking: NodeJS.Timer;
 
@@ -85,6 +115,10 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
     console.log(matches);
   }, [matches])
 
+  useEffect(() => {
+    setSearchValue(currentDrink);
+  }, [currentDrink])
+
   return (
     <div className='home'>
       {/* <h1 className='home__title'>Welcome to <span className='home__name'>Alcopedia</span></h1>
@@ -99,13 +133,20 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
         }
       </div>
       <button className='home__current-drink' data-type={currentDrinkCode} onMouseDown={pourDrink} onMouseUp={unpourDrink} onMouseLeave={unpourDrink}>
-        <div className={`home__drink home__${currentDrinkCode} ${isPouring ? "home__drink_pouring" : ""}`}></div>
+        <div className={`home__drink bottle_${currentDrinkCode} ${isPouring ? "home__drink_pouring" : ""}`}></div>
       </button>
-      {
-        bottles.map((bottle) => (
-          <Bottle bottle={bottle} changeDrink={changeDrink} />
-        ))
-      }
+      <div className='home__search-container' onBlur={handleSearchBlur}>
+        <input className='home__search' type="text" value={searchValue} onChange={handleSearch} onFocus={handleInputClick} />
+        <ul className={`home__search-list ${isSearchListOpen ? "home__search-list_active" : ""}`}>
+          {
+            bottles.filter((bottle) => bottle.toLowerCase().includes(searchValue.toLowerCase())).map((bottle) => (
+              <li key={bottle} className='home__search-item'>
+                <Bottle bottle={bottle} changeDrink={changeDrink} onClick={handleBottleClick} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
       <button className='home__matches-button' onClick={searchMatches}>Find matches</button>
       <div className='matches'>
 
