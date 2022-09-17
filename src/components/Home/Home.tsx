@@ -109,15 +109,17 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps) => {
 
   useEffect(() => {
     setCurrentDrinkCode(formatDrinkName(currentDrink));
+    setSearchValue(currentDrink);
   }, [currentDrink])
 
+  useEffect(() => {
+    if (!isSearchListOpen && !searchValue) setSearchValue(currentDrink);
+  }, [isSearchListOpen, searchValue, currentDrink])
+
+  // Temporary
   useEffect(() => {
     console.log(matches);
   }, [matches])
-
-  useEffect(() => {
-    setSearchValue(currentDrink);
-  }, [currentDrink])
 
   return (
     <div className='home'>
