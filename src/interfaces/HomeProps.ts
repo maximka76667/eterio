@@ -1,4 +1,4 @@
 export default interface HomeProps {
-  isSidebarOpened: boolean,
-  toggleSidebar: () => void
+  isSidebarOpened: boolean;
+  toggleSidebar: () => void;
 }

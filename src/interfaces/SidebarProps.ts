@@ -1,4 +1,4 @@
 export default interface SidebarProps {
-  isOpened: boolean,
-  onListItemClick: () => void
+  isOpened: boolean;
+  onListItemClick: () => void;
 }

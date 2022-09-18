@@ -1,8 +1,8 @@
-import React from 'react'
-import { GlassProps } from '../../interfaces'
-import Extra from '../Extra/Extra'
-import Ingredient from '../Ingredient/Ingredient'
-import "./Glass.sass"
+import React from 'react';
+import { GlassProps } from '../../interfaces';
+import Extra from '../Extra/Extra';
+import Ingredient from '../Ingredient/Ingredient';
+import './Glass.sass';
 
 const Glass = ({ ingredientList, ingredientCount, extras }: GlassProps) => {
   return (
@@ -11,21 +11,23 @@ const Glass = ({ ingredientList, ingredientCount, extras }: GlassProps) => {
       <div className='glass__content'>
         <span className='glass__ice' />
         <span className='glass__ice' />
-        {
-          ingredientList.map((ingredient) => {
-            return (
-              <Ingredient key={ingredient.name} ingredient={ingredient} ingredientCount={ingredientCount}></Ingredient>
-            )
-          })
-        }
+        {ingredientList.map((ingredient) => {
+          return (
+            <Ingredient
+              key={ingredient.name}
+              ingredient={ingredient}
+              ingredientCount={ingredientCount}
+            ></Ingredient>
+          );
+        })}
         <>
-          {
-            extras.map((extra) => <Extra key={extra} extra={extra} />)
-          }
+          {extras.map((extra) => (
+            <Extra key={extra} extra={extra} />
+          ))}
         </>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Glass
+export default Glass;

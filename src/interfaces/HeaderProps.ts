@@ -1,4 +1,4 @@
 export default interface HeaderProps {
-  closeSidebar: () => void,
-  isSidebarOpened: boolean
+  closeSidebar: () => void;
+  isSidebarOpened: boolean;
 }

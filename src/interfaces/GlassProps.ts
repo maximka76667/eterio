@@ -1,7 +1,7 @@
-import IngredientInterface from "./IngredientInterface";
+import IngredientInterface from './IngredientInterface';
 
 export default interface GlassProps {
-  ingredientList: IngredientInterface[],
-  ingredientCount: number,
-  extras: string[]
+  ingredientList: IngredientInterface[];
+  ingredientCount: number;
+  extras: string[];
 }

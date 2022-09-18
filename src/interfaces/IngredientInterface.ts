@@ -1,4 +1,4 @@
 export default interface IngredientInterface {
-  name: string,
-  amount: number
+  name: string;
+  amount: number;
 }

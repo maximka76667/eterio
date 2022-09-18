@@ -7,20 +7,19 @@ import { DrinkInterface } from './interfaces';
 import api from './utils/api';
 
 function App() {
-
   const [drinks, setDrinks] = useState<DrinkInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   async function getDrinks() {
     setIsLoading(true);
-    const { drinks } = await api.getDrinks()
+    const { drinks } = await api.getDrinks();
     setDrinks(drinks);
     setIsLoading(false);
   }
 
   useEffect(() => {
-    getDrinks();
-  }, [])
+    getDrinks().catch((err) => console.log(err));
+  }, []);
 
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
 
@@ -33,16 +32,18 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className='app'>
       <Header isSidebarOpened={isSidebarOpened} closeSidebar={closeSidebar} />
       <DrinksContext.Provider value={drinks}>
-        {isLoading ?
-          <Loading /> :
+        {isLoading ? (
+          <Loading />
+        ) : (
           <Content
             isSidebarOpened={isSidebarOpened}
             toggleSidebar={toggleSidebar}
             closeSidebar={closeSidebar}
-          />}
+          />
+        )}
       </DrinksContext.Provider>
     </div>
   );

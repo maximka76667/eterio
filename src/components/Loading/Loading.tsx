@@ -1,6 +1,6 @@
-import React from 'react'
-import "./Loading.sass"
-import { motion } from "framer-motion";
+import React from 'react';
+import './Loading.sass';
+import { motion } from 'framer-motion';
 
 const loadingContainerVariants = {
   start: {
@@ -17,37 +17,41 @@ const loadingContainerVariants = {
 
 const loadingCircleVariants = {
   start: {
-    y: "0%",
+    y: '0%',
   },
   end: {
-    y: "60%",
+    y: '60%',
   },
 };
 
 const loadingCircleTransition = {
   duration: 0.4,
   repeat: Infinity,
-  repeatType: "reverse" as const,
-  ease: 'easeInOut'
-}
+  repeatType: 'reverse' as const,
+  ease: 'easeInOut',
+};
 
 const Loading = () => {
   return (
     <div className='loading'>
-      <motion.div className='loading__container'
+      <motion.div
+        className='loading__container'
         variants={loadingContainerVariants}
-        initial="start"
-        animate="end"
+        initial='start'
+        animate='end'
       >
-        <motion.span className='loading__circle'
+        <motion.span
+          className='loading__circle'
           variants={loadingCircleVariants}
           transition={loadingCircleTransition}
         ></motion.span>
-        <motion.span className='loading__circle'
+        <motion.span
+          className='loading__circle'
           variants={loadingCircleVariants}
           transition={loadingCircleTransition}
         ></motion.span>
-        <motion.span className='loading__circle'
+        <motion.span
+          className='loading__circle'
           variants={loadingCircleVariants}
           transition={loadingCircleTransition}
         ></motion.span>
