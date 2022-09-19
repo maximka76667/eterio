@@ -13,6 +13,7 @@ import Bottle from '../Bottle/Bottle';
 import Match from '../Match/Match';
 import './Home.sass';
 
+// Component of the home page
 const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
   const drinks = useContext(DrinksContext);
 
@@ -33,7 +34,7 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
     Array<{ drink: Drink; match: number }>
   >([]);
 
-  const bottles = ['Vodka', 'Cranberry juice'];
+  const bottles = ['Vodka', 'Cranberry juice', 'Orange juice'];
 
   function pourDrink() {
     setIsPouring(true);
