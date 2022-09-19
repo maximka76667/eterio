@@ -17,7 +17,7 @@ const Glass = ({ ingredientList, ingredientCount, extras }: GlassProps) => {
               key={ingredient.name}
               ingredient={ingredient}
               ingredientCount={ingredientCount}
-            ></Ingredient>
+            />
           );
         })}
         <>

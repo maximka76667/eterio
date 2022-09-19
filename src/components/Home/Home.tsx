@@ -64,7 +64,7 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
   ) {
     let result = 0;
     for (const ingr in drink1) {
-      if (drink2[ingr]) {
+      if (drink2[ingr] !== undefined) {
         result +=
           ((drink1[ingr] < drink2[ingr] ? drink1[ingr] : drink2[ingr]) / 6.5) *
           100;
@@ -107,9 +107,9 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
   useEffect(() => {
     let bulking: NodeJS.Timer;
 
-    if (currentDrink && isPouring && ingredientCount <= 10) {
+    if (currentDrink !== '' && isPouring && ingredientCount <= 10) {
       bulking = setInterval(() => {
-        const initValue = glassContent[currentDrink] || 0;
+        const initValue = glassContent[currentDrink] ?? 0;
         setGlassContent({
           ...glassContent,
           [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100,
@@ -134,7 +134,7 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
   }, [currentDrink]);
 
   useEffect(() => {
-    if (!isSearchListOpen && !searchValue) setSearchValue(currentDrink);
+    if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
   }, [isSearchListOpen, searchValue, currentDrink]);
 
   return (
@@ -199,7 +199,7 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
       </button>
       <div className='matches'>
         {matches.map((match) => (
-          <Match match={match} />
+          <Match key={match.drink._id} match={match} />
         ))}
       </div>
     </div>
