@@ -1,139 +1,149 @@
-import React from 'react'; // MouseEventHandler, // FocusEventHandler, // ChangeEventHandler, // useContext, // useEffect, // useState,
-// import DrinksContext from '../../contexts/DrinksContext';
+import React, {
+  MouseEventHandler,
+  FocusEventHandler,
+  ChangeEventHandler,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import DrinksContext from '../../contexts/DrinksContext';
 import { HomeProps } from '../../interfaces';
-// import Drink from '../../interfaces/DrinkInterface';
-// import Bottle from '../Bottle/Bottle';
-// import Match from '../Match/Match';
+import Drink from '../../interfaces/DrinkInterface';
+import Bottle from '../Bottle/Bottle';
+import Match from '../Match/Match';
 import './Home.sass';
 
 // Component of the home page
 const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
-  // const drinks = useContext(DrinksContext);
+  const drinks = useContext(DrinksContext);
 
-  // const [isSearchListOpen, setIsSearchListOpen] = useState(false);
-  // const [searchValue, setSearchValue] = useState('');
+  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [isSubmittedOnce, setIsSubmittedOnce] = useState(false);
 
-  // const [isPouring, setIsPouring] = useState(false);
-  // const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
-  //   {}
-  // );
+  const [isPouring, setIsPouring] = useState(false);
+  const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
+    {}
+  );
 
-  // const [currentDrink, setCurrentDrink] = useState('');
-  // const [currentDrinkCode, setCurrentDrinkCode] = useState('');
+  const [currentDrink, setCurrentDrink] = useState('');
+  const [currentDrinkCode, setCurrentDrinkCode] = useState('');
 
-  // const [ingredientCount, setIngredientCount] = useState<number>(0);
+  const [ingredientCount, setIngredientCount] = useState<number>(0);
 
-  // const [matches, setMatches] = useState<
-  //   Array<{ drink: Drink; match: number }>
-  // >([]);
+  const [matches, setMatches] = useState<
+    Array<{ drink: Drink; match: number }>
+  >([]);
 
-  // const bottles = ['Vodka', 'Cranberry juice', 'Orange juice'];
+  const bottles = ['Vodka', 'Cranberry juice', 'Orange juice', 'Coke', 'Rum'];
 
-  // function pourDrink() {
-  //   setIsPouring(true);
-  // }
+  function pourDrink() {
+    setIsPouring(true);
+  }
 
-  // function unpourDrink() {
-  //   setIsPouring(false);
-  // }
+  function unpourDrink() {
+    setIsPouring(false);
+  }
 
-  // const changeDrink = (drink: string) => {
-  //   setCurrentDrink(drink);
-  // };
+  const changeDrink = (drink: string) => {
+    setCurrentDrink(drink);
+  };
 
-  // function searchMatches() {
-  //   setMatches([]);
-  //   for (const drink of drinks) {
-  //     setMatches((matches) => [
-  //       ...matches,
-  //       { drink, match: compareComposition(drink.ingredients, glassContent) },
-  //     ]);
-  //   }
-  //   setMatches((matches) => matches.sort((a, b) => b.match - a.match));
-  // }
+  function searchMatches() {
+    setMatches([]);
+    for (const drink of drinks) {
+      const drinkMatch =
+        Math.floor(compareComposition(drink.ingredients, glassContent) * 10) /
+        10;
 
-  // function compareComposition(
-  //   drink1: { [key: string]: number },
-  //   drink2: { [key: string]: number }
-  // ) {
-  //   let result = 0;
-  //   for (const ingr in drink1) {
-  //     if (drink2[ingr] !== undefined) {
-  //       result +=
-  //         ((drink1[ingr] < drink2[ingr] ? drink1[ingr] : drink2[ingr]) / 6.5) *
-  //         100;
-  //     }
-  //   }
-  //   return result;
-  // }
+      if (drinkMatch > 0) {
+        setMatches((matches) => [...matches, { drink, match: drinkMatch }]);
+      }
+    }
+    setMatches((matches) => matches.sort((a, b) => b.match - a.match));
+    setIsSubmittedOnce(true);
+  }
 
-  // function formatDrinkName(drink: string) {
-  //   return drink.replaceAll(' ', '-');
-  // }
+  function compareComposition(
+    drink1: { [key: string]: number },
+    drink2: { [key: string]: number }
+  ) {
+    let result = 0;
+    for (const ingr in drink1) {
+      if (drink2[ingr] !== undefined) {
+        result +=
+          ((drink1[ingr] < drink2[ingr] ? drink1[ingr] : drink2[ingr]) / 6.5) *
+          100;
+      }
+    }
+    return result;
+  }
 
-  // function showInput() {
-  //   setIsSearchListOpen(true);
-  // }
+  function formatDrinkName(drink: string) {
+    return drink.replaceAll(' ', '-');
+  }
 
-  // const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {
-  //   if (e.relatedTarget == null) {
-  //     hideInput();
-  //   }
-  // };
+  function showInput() {
+    setIsSearchListOpen(true);
+  }
 
-  // const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
-  //   setSearchValue(e.target.value);
-  // };
+  const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {
+    if (e.relatedTarget == null) {
+      hideInput();
+    }
+  };
 
-  // function handleInputClick() {
-  //   setSearchValue('');
-  //   showInput();
-  // }
+  const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchValue(e.target.value);
+  };
 
-  // const handleBottleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-  //   hideInput();
-  // };
+  function handleInputClick() {
+    setSearchValue('');
+    showInput();
+  }
 
-  // function hideInput() {
-  //   setIsSearchListOpen(false);
-  // }
+  const handleBottleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    hideInput();
+  };
 
-  // useEffect(() => {
-  //   let bulking: NodeJS.Timer;
+  function hideInput() {
+    setIsSearchListOpen(false);
+  }
 
-  //   if (currentDrink !== '' && isPouring && ingredientCount <= 10) {
-  //     bulking = setInterval(() => {
-  //       const initValue = glassContent[currentDrink] ?? 0;
-  //       setGlassContent({
-  //         ...glassContent,
-  //         [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100,
-  //       });
-  //       console.log(glassContent);
-  //     }, 100);
-  //   }
-  //   return () => clearInterval(bulking);
-  // }, [isPouring, glassContent, ingredientCount, currentDrink]);
+  useEffect(() => {
+    let bulking: NodeJS.Timer;
 
-  // useEffect(() => {
-  //   let sum = 0;
-  //   for (const key in glassContent) sum += glassContent[key];
+    if (currentDrink !== '' && isPouring && ingredientCount <= 10) {
+      bulking = setInterval(() => {
+        const initValue = glassContent[currentDrink] ?? 0;
+        setGlassContent({
+          ...glassContent,
+          [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100,
+        });
+      }, 100);
+    }
+    return () => clearInterval(bulking);
+  }, [isPouring, glassContent, ingredientCount, currentDrink]);
 
-  //   setIngredientCount(Math.floor(sum * 100) / 100);
-  //   console.log(ingredientCount);
-  // }, [glassContent, ingredientCount]);
+  useEffect(() => {
+    let sum = 0;
+    for (const key in glassContent) sum += glassContent[key];
 
-  // useEffect(() => {
-  //   setCurrentDrinkCode(formatDrinkName(currentDrink));
-  //   setSearchValue(currentDrink);
-  // }, [currentDrink]);
+    setIngredientCount(Math.floor(sum * 100) / 100);
+  }, [glassContent, ingredientCount]);
 
-  // useEffect(() => {
-  //   if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
-  // }, [isSearchListOpen, searchValue, currentDrink]);
+  useEffect(() => {
+    setCurrentDrinkCode(formatDrinkName(currentDrink));
+    setSearchValue(currentDrink);
+  }, [currentDrink]);
+
+  useEffect(() => {
+    if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
+  }, [isSearchListOpen, searchValue, currentDrink]);
 
   return (
     <div className='home'>
-      <h1 className='home__title'>
+      {/* <h1 className='home__title'>
         Welcome to <span className='home__name'>Alcopedia</span>
       </h1>
       <p className='home__text'>
@@ -147,9 +157,9 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
         onClick={toggleSidebar}
       >
         Search for a drink
-      </button>
+      </button> */}
 
-      {/* <div className='home__glass glass'>
+      <div className='home__glass glass'>
         {Object.keys(glassContent).map((key) => (
           <div
             className={`glass__ingredient ${formatDrinkName(key)}`}
@@ -203,10 +213,18 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
         Find matches
       </button>
       <div className='matches'>
-        {matches.map((match) => (
-          <Match key={match.drink._id} match={match} />
-        ))}
-      </div> */}
+        {isSubmittedOnce ? (
+          matches.length !== 0 ? (
+            matches.map((match) => (
+              <Match key={match.drink._id} match={match} />
+            ))
+          ) : (
+            <p className='matches__not-found'>Nothing is found</p>
+          )
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 };
