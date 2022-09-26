@@ -9,3 +9,4 @@ export type { default as HomeProps } from './HomeProps';
 export type { default as GlassProps } from './GlassProps';
 export type { default as BottleProps } from './BottleProps';
 export type { default as MatchProps } from './MatchProps';
+export type { default as SidebarLinkProps } from './SidebarLinkProps';
