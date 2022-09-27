@@ -2,7 +2,6 @@
   "name": "alcopedia",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://maximka76667.github.io/alcopedia",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -11,6 +10,7 @@
     "@types/node": "^16.11.58",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
+    "axios": "^0.27.2",
     "framer-motion": "^7.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,7 +27,7 @@
     "lint": "npx eslint .",
     "fix": "npx eslint . --fix",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npx netlify deploy"
   },
   "eslintConfig": {
     "extends": [

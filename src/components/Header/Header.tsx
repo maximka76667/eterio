@@ -1,10 +1,10 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.sass';
 import logo from '../../images/logo512.png';
 import { HeaderProps } from '../../interfaces';
 
-const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
+const Header = ({ closeSidebar, isSidebarOpened, signIn }: HeaderProps) => {
   const { pathname } = useLocation();
 
   const [email, setEmail] = useState('');
@@ -14,7 +14,12 @@ const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
   };
 
   const handleLogin = () => {
-    console.log(email);
+    signIn(email);
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   return (
@@ -32,7 +37,7 @@ const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
           Alcopedia
         </p>
       )}
-      <div className='header__buttons'>
+      <form className='header__buttons' onSubmit={handleSubmit}>
         <input
           name='email'
           type='text'
@@ -42,7 +47,7 @@ const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
         <button className='header__login' onClick={handleLogin}>
           Login
         </button>
-      </div>
+      </form>
     </header>
   );
 };

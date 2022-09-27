@@ -1,3 +1,4 @@
+export { default as Auth } from './Auth/Auth';
 export { default as Bottle } from './Bottle/Bottle';
 export { default as Content } from './Content/Content';
 export { default as Drink } from './Drink/Drink';
