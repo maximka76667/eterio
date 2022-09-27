@@ -30,6 +30,11 @@ class Auth {
       magicLink,
     });
   };
+
+  async verifyToken(token: string) {
+    axios.defaults.headers.common.Authorization = token;
+    return await axios.post(`${this._baseUrl}/verify`);
+  }
 }
 
 const auth = new Auth({

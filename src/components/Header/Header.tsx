@@ -4,7 +4,12 @@ import './Header.sass';
 import logo from '../../images/logo512.png';
 import { HeaderProps } from '../../interfaces';
 
-const Header = ({ closeSidebar, isSidebarOpened, signIn }: HeaderProps) => {
+const Header = ({
+  closeSidebar,
+  isSidebarOpened,
+  signIn,
+  isLoggedIn,
+}: HeaderProps) => {
   const { pathname } = useLocation();
 
   const [email, setEmail] = useState('');
@@ -13,13 +18,9 @@ const Header = ({ closeSidebar, isSidebarOpened, signIn }: HeaderProps) => {
     setEmail(e.target.value);
   };
 
-  const handleLogin = () => {
-    signIn(email);
-  };
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    handleLogin();
+    signIn(email);
   };
 
   return (
@@ -37,17 +38,21 @@ const Header = ({ closeSidebar, isSidebarOpened, signIn }: HeaderProps) => {
           Alcopedia
         </p>
       )}
-      <form className='header__buttons' onSubmit={handleSubmit}>
-        <input
-          name='email'
-          type='text'
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <button className='header__login' onClick={handleLogin}>
-          Login
-        </button>
-      </form>
+      {isLoggedIn ? (
+        321
+      ) : (
+        <form className='header__buttons' onSubmit={handleSubmit}>
+          <input
+            name='email'
+            type='text'
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <button className='header__login' type='submit'>
+            Login
+          </button>
+        </form>
+      )}
     </header>
   );
 };
