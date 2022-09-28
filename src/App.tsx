@@ -61,8 +61,9 @@ function App() {
     auth
       .signInWithLink(email, magicLink)
       .then((res) => {
-        if (res !== null) {
+        if (res.data.ok === true) {
           console.log(res);
+          g;
           login(res.data.token);
           setUser(res.data.succ);
         }
@@ -73,24 +74,32 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    console.log(token);
-
-    if (token === undefined || token === null || token === '') {
-      setIsLoggedIn(false);
-    } else {
-      auth
-        .verifyToken(JSON.parse(token))
-        .then((res) => {
-          console.log(token);
-          // login(res.data.token);
-          // setUser(res.data.succ);
-          setIsLoggedIn(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoggedIn(false);
-        });
+    if (
+      token === undefined ||
+      token === null ||
+      token === '' ||
+      token === 'undefined'
+    ) {
+      return setIsLoggedIn(false);
     }
+
+    const parsedToken = JSON.parse(token);
+
+    console.log(parsedToken);
+
+    auth
+      .verifyToken(parsedToken)
+      .then((res) => {
+        console.log(token);
+        if (res.data.ok === true) {
+          login(res.data.token);
+          setUser(res.data.succ);
+          setIsLoggedIn(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
