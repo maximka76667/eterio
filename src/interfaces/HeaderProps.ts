@@ -3,4 +3,5 @@ export default interface HeaderProps {
   isSidebarOpened: boolean;
   signIn: (email: string) => void;
   isLoggedIn: boolean;
+  logout: () => void;
 }

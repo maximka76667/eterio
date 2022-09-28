@@ -1,3 +1,4 @@
+export type { default as AuthProps } from './AuthProps';
 export type { default as IngredientInterface } from './IngredientInterface';
 export type { default as DrinkInterface } from './DrinkInterface';
 export type { default as SearchProps } from './SearchProps';
@@ -9,3 +10,4 @@ export type { default as HomeProps } from './HomeProps';
 export type { default as GlassProps } from './GlassProps';
 export type { default as BottleProps } from './BottleProps';
 export type { default as MatchProps } from './MatchProps';
+export type { default as UserInterface } from './UserInterface';

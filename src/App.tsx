@@ -4,11 +4,13 @@ import './App.sass';
 import { Auth, Header, Loading } from './components';
 import Content from './components/Content/Content';
 import DrinksContext from './contexts/DrinksContext';
-import { DrinkInterface } from './interfaces';
+import UserContext from './contexts/UserContext';
+import { DrinkInterface, UserInterface } from './interfaces';
 import api from './utils/api';
 import auth from './utils/auth';
 
 function App() {
+  const [user, setUser] = useState<UserInterface>({ name: '', email: '' });
   const [drinks, setDrinks] = useState<DrinkInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,10 +41,10 @@ function App() {
     setIsLoggedIn(true);
   };
 
-  // const logout = () => {
-  //   localStorage.removeItem('token');
-  //   setIsLoggedIn(false);
-  // };
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  };
 
   const signIn = (email: string) => {
     auth
@@ -60,16 +62,11 @@ function App() {
       .signInWithLink(email, magicLink)
       .then((res) => {
         if (res !== null) {
+          console.log(res);
           login(res.data.token);
+          setUser(res.data.succ);
         }
       })
-      .catch((err) => console.log(err));
-  };
-
-  const verifyToken = async (token: string) => {
-    auth
-      .verifyToken(token)
-      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
@@ -78,49 +75,59 @@ function App() {
 
     console.log(token);
 
-    if (token === null) {
-      return setIsLoggedIn(false);
+    if (token === undefined || token === null || token === '') {
+      setIsLoggedIn(false);
+    } else {
+      auth
+        .verifyToken(JSON.parse(token))
+        .then((res) => {
+          console.log(token);
+          // login(res.data.token);
+          // setUser(res.data.succ);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoggedIn(false);
+        });
     }
-
-    verifyToken(JSON.parse(token))
-      .then((res) => {
-        setIsLoggedIn(true);
-      })
-      .catch((err) => console.log(err));
   }, []);
 
   return (
     <div className='app'>
-      <Routes>
-        <Route
-          path='/auth/:email/:link'
-          element={<Auth signInWithLink={signInWithLink} />}
-        />
-        <Route
-          path='/*'
-          element={
-            <>
-              <Header
-                isSidebarOpened={isSidebarOpened}
-                closeSidebar={closeSidebar}
-                signIn={signIn}
-                isLoggedIn={isLoggedIn}
-              />
-              <DrinksContext.Provider value={drinks}>
-                {isLoading ? (
-                  <Loading />
-                ) : (
-                  <Content
-                    isSidebarOpened={isSidebarOpened}
-                    toggleSidebar={toggleSidebar}
-                    closeSidebar={closeSidebar}
-                  />
-                )}
-              </DrinksContext.Provider>
-            </>
-          }
-        />
-      </Routes>
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route
+            path='/auth/:email/:link'
+            element={<Auth signInWithLink={signInWithLink} />}
+          />
+          <Route
+            path='/*'
+            element={
+              <>
+                <Header
+                  isSidebarOpened={isSidebarOpened}
+                  closeSidebar={closeSidebar}
+                  signIn={signIn}
+                  isLoggedIn={isLoggedIn}
+                  logout={logout}
+                />
+                <DrinksContext.Provider value={drinks}>
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <Content
+                      isSidebarOpened={isSidebarOpened}
+                      toggleSidebar={toggleSidebar}
+                      closeSidebar={closeSidebar}
+                    />
+                  )}
+                </DrinksContext.Provider>
+              </>
+            }
+          />
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }

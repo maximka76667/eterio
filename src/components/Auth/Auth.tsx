@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { AuthProps } from '../../interfaces';
 
-const Auth = ({
-  signInWithLink,
-}: {
-  signInWithLink: (email: string, magicLink: string) => void;
-}) => {
+const Auth = ({ signInWithLink }: AuthProps) => {
   const { email, link } = useParams<{ email: string; link: string }>();
   const navigate = useNavigate();
 
@@ -16,11 +13,7 @@ const Auth = ({
     }
   }, []);
 
-  return (
-    <div>
-      {email} {link}
-    </div>
-  );
+  return <></>;
 };
 
 export default Auth;
