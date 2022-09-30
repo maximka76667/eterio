@@ -32,9 +32,14 @@ class Auth {
   };
 
   async verifyToken(token: string) {
-    axios.defaults.headers.common.Authorization = token;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     return await axios.post(`${this._baseUrl}/verify`);
   }
+
+  getUser = async (token: string) => {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    return await axios.get(`${this._baseUrl}/me`);
+  };
 }
 
 const auth = new Auth({

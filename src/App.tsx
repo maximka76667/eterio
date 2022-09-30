@@ -37,7 +37,7 @@ function App() {
   }
 
   const login = (token: string) => {
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', token);
     setIsLoggedIn(true);
   };
 
@@ -61,10 +61,19 @@ function App() {
     auth
       .signInWithLink(email, magicLink)
       .then((res) => {
-        if (res !== null) {
-          console.log(res);
+        if (res.data.ok === true) {
           login(res.data.token);
-          setUser(res.data.succ);
+
+          console.log(res.data.token);
+
+          auth
+            .getUser(res.data.token)
+            .then((res) => {
+              if (res.status === 200) {
+                setUser(res.data.user);
+              }
+            })
+            .catch((err) => console.log(err));
         }
       })
       .catch((err) => console.log(err));
@@ -79,17 +88,26 @@ function App() {
       setIsLoggedIn(false);
     } else {
       auth
-        .verifyToken(JSON.parse(token))
+        .getUser(token)
         .then((res) => {
-          console.log(token);
-          // login(res.data.token);
-          // setUser(res.data.succ);
-          setIsLoggedIn(true);
+          if (res.status === 200) {
+            login(token);
+            setUser(res.data.user);
+          }
         })
-        .catch((err) => {
-          console.log(err);
-          setIsLoggedIn(false);
-        });
+        .catch((err) => console.log(err));
+      // auth
+      //   .verifyToken(JSON.parse(token))
+      //   .then((res) => {
+      //     console.log(token);
+      //     // login(token);
+      //     // setUser(res.data.succ);
+      //     setIsLoggedIn(true);
+      //   })
+      //   .catch((err) => {
+      //     console.log('Error: ', err);
+      //     setIsLoggedIn(false);
+      //   });
     }
   }, []);
 
