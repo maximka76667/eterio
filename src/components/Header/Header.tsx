@@ -16,6 +16,7 @@ const Header = ({
   signIn,
   isLoggedIn,
   logout,
+  loginMessage,
 }: HeaderProps) => {
   const user = useContext(UserContext);
 
@@ -44,18 +45,21 @@ const Header = ({
           </button>
         </div>
       ) : (
-        <form className='header__login-form' onSubmit={handleSubmit}>
-          <input
-            className='header__login-input'
-            name='email'
-            type='text'
-            value={email}
-            onChange={handleEmailChange}
-          />
-          <button className='header__login-button' type='submit'>
-            Login
-          </button>
-        </form>
+        <>
+          <form className='header__login-form' onSubmit={handleSubmit}>
+            <span className='header__login-message'>{loginMessage}</span>
+            <input
+              className='header__login-input'
+              name='email'
+              type='text'
+              value={email}
+              onChange={handleEmailChange}
+            />
+            <button className='header__login-button' type='submit'>
+              Login
+            </button>
+          </form>
+        </>
       )}
     </header>
   );

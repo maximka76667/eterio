@@ -15,6 +15,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [loginMessage, setLoginMessage] = useState('');
+
   async function getDrinks() {
     setIsLoading(true);
     const { drinks } = await api.getDrinks();
@@ -56,9 +58,18 @@ function App() {
   };
 
   const signIn = (email: string) => {
-    auth.signIn(email).catch((err) => {
-      console.log(err);
-    });
+    setLoginMessage('');
+    auth
+      .signIn(email)
+      .then((res) => {
+        if (res.data.ok === true) {
+          setLoginMessage('Check link in your email!');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginMessage('Something went wrong! Please try again');
+      });
   };
 
   const signInWithLink = (email: string, magicLink: string) => {
@@ -100,6 +111,7 @@ function App() {
                   signIn={signIn}
                   isLoggedIn={isLoggedIn}
                   logout={logout}
+                  loginMessage={loginMessage}
                 />
                 <DrinksContext.Provider value={drinks}>
                   {isLoading ? (
