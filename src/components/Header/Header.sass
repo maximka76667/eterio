@@ -1,3 +1,5 @@
+@import "../../sass/mixins"
+
 .header
   height: 3.75rem
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1)
@@ -9,7 +11,7 @@
   display: flex
   align-items: center
   justify-content: space-between
-  padding: 0 1rem
+  padding: 0.5rem 1rem
   font-size: 2.5rem
 
   &__logo
@@ -23,3 +25,57 @@
       width: 30px
       height: 30px
       margin-right: 5px
+
+  &__user-info
+    display: flex
+    align-items: center
+    font-size: 2rem
+    font-weight: bold
+    letter-spacing: 1px
+
+  &__logout
+    width: 100px
+    margin: 0
+    margin-left: 1.5rem
+    padding: 0.2rem 0
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 1.5rem
+    border-radius: 0.25rem
+    outline: 0
+    border: 0
+    transition: all 0.2s
+    background-color: $primary
+    color: #fff
+
+    &:hover
+      background-color: $primary-dark
+
+  &__login-form
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 1.5rem
+    height: 100%
+    border-radius: 1rem
+
+  &__login-input
+    min-width: 250px
+    border-radius: 0.5rem 0 0 0.5rem
+    border: solid 1px black
+    margin: 0
+    height: 100%
+    padding: 0.5rem 0.5rem
+    text-align: right
+
+  &__login-button
+    height: 100%
+    width: 80px
+    background-color: $primary
+    color: #fff
+    border-radius: 0 0.5rem 0.5rem 0
+    border: 0
+
+    &:hover
+      background-color: $primary-dark

@@ -36,25 +36,29 @@ function App() {
     setIsSidebarOpened(false);
   }
 
-  const login = (token: string) => {
-    localStorage.setItem('token', token);
-    setIsLoggedIn(true);
-  };
-
   const logout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
   };
 
-  const signIn = (email: string) => {
+  const authorize = (token: string) => {
+    localStorage.setItem('token', token);
+    setIsLoggedIn(true);
+
     auth
-      .signIn(email)
+      .getUser(token)
       .then((res) => {
-        console.log(res);
+        if (res.status === 200) {
+          setUser(res.data.user);
+        }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
+  };
+
+  const signIn = (email: string) => {
+    auth.signIn(email).catch((err) => {
+      console.log(err);
+    });
   };
 
   const signInWithLink = (email: string, magicLink: string) => {
@@ -62,18 +66,7 @@ function App() {
       .signInWithLink(email, magicLink)
       .then((res) => {
         if (res.data.ok === true) {
-          login(res.data.token);
-
-          console.log(res.data.token);
-
-          auth
-            .getUser(res.data.token)
-            .then((res) => {
-              if (res.status === 200) {
-                setUser(res.data.user);
-              }
-            })
-            .catch((err) => console.log(err));
+          authorize(res.data.token);
         }
       })
       .catch((err) => console.log(err));
@@ -82,33 +75,11 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    console.log(token);
-
     if (token === undefined || token === null || token === '') {
-      setIsLoggedIn(false);
-    } else {
-      auth
-        .getUser(token)
-        .then((res) => {
-          if (res.status === 200) {
-            login(token);
-            setUser(res.data.user);
-          }
-        })
-        .catch((err) => console.log(err));
-      // auth
-      //   .verifyToken(JSON.parse(token))
-      //   .then((res) => {
-      //     console.log(token);
-      //     // login(token);
-      //     // setUser(res.data.succ);
-      //     setIsLoggedIn(true);
-      //   })
-      //   .catch((err) => {
-      //     console.log('Error: ', err);
-      //     setIsLoggedIn(false);
-      //   });
+      return;
     }
+
+    authorize(token);
   }, []);
 
   return (
