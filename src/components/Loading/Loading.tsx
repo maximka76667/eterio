@@ -31,7 +31,8 @@ const loadingCircleTransition = {
   ease: 'easeInOut',
 };
 
-const Loading = () => {
+const Loading = ({ size }: { size: number }) => {
+  const remSize = String(size) + 'rem';
   return (
     <div className='loading'>
       <motion.div
@@ -42,16 +43,19 @@ const Loading = () => {
       >
         <motion.span
           className='loading__circle'
+          style={{ width: remSize, height: remSize }}
           variants={loadingCircleVariants}
           transition={loadingCircleTransition}
         ></motion.span>
         <motion.span
           className='loading__circle'
+          style={{ width: remSize, height: remSize }}
           variants={loadingCircleVariants}
           transition={loadingCircleTransition}
         ></motion.span>
         <motion.span
           className='loading__circle'
+          style={{ width: remSize, height: remSize }}
           variants={loadingCircleVariants}
           transition={loadingCircleTransition}
         ></motion.span>

@@ -11,3 +11,4 @@ export type { default as GlassProps } from './GlassProps';
 export type { default as BottleProps } from './BottleProps';
 export type { default as MatchProps } from './MatchProps';
 export type { default as UserInterface } from './UserInterface';
+export type { default as PopupProps } from './PopupProps';

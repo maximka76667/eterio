@@ -1,0 +1,72 @@
+@import "../../sass/mixins"
+
+.popup
+  display: flex
+  visibility: hidden
+  opacity: 0
+  top: 50%
+  left: 50%
+  width: 100vw
+  height: 100vh
+  position: fixed
+  transform: translate(-50%, -50%)
+  z-index: 10
+
+  &__content
+    width: 35%
+    position: absolute
+    top: 50%
+    left: 50%
+    min-height: 300px
+    transform: translate(-50%, -50%)
+    background-color: #fff
+    border-radius: 15px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 30px
+    text-align: center
+
+    @include lg
+      width: 70%
+
+    @include md
+      width: 80%
+
+    @include sm
+      width: 95%
+
+  &__overlay
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: rgba(0, 0, 0, .3)
+
+  &__title
+    font-size: 5rem
+
+  &__message
+    font-size: 1.5rem
+
+  &_visible
+    visibility: visible
+    opacity: 1
+
+  &__close-button
+    position: absolute
+    top: 0
+    right: 0
+    width: 70px
+    height: 70px
+    font-size: 2rem
+    font-family: "IndieFlower"
+    background-color: transparent
+    border: 0
+    outline: 0
+    transition: all 0.2s
+
+    &:hover
+      transform: scale(1.5) rotate(10deg)

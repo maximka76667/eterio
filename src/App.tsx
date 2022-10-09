@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.sass';
-import { Auth, Header, Loading } from './components';
+import { Auth, Header, Loading, Popup } from './components';
 import Content from './components/Content/Content';
 import DrinksContext from './contexts/DrinksContext';
 import UserContext from './contexts/UserContext';
@@ -14,6 +14,10 @@ function App() {
   const [drinks, setDrinks] = useState<DrinkInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isPopupOpened, setIsPopupOpened] = useState(false);
+  const [isLoginProcessing, setIsLoginProcessing] = useState(false);
+
+  const [popupTitle, setPopupTitle] = useState('Message');
 
   const [loginMessage, setLoginMessage] = useState('');
 
@@ -58,17 +62,25 @@ function App() {
   };
 
   const signIn = (email: string) => {
-    setLoginMessage('');
+    setLoginMessage('Sending...');
+    setIsPopupOpened(false);
+    setIsLoginProcessing(true);
     auth
       .signIn(email)
       .then((res) => {
-        if (res.data.ok === true) {
+        if (res.status === 200) {
+          setPopupTitle('Got you! 🙃');
           setLoginMessage('Check link in your email!');
         }
       })
       .catch((err) => {
         console.log(err);
+        setPopupTitle('Oopsy! 😢');
         setLoginMessage('Something went wrong! Please try again');
+      })
+      .finally(() => {
+        setIsPopupOpened(true);
+        setIsLoginProcessing(false);
       });
   };
 
@@ -76,12 +88,16 @@ function App() {
     auth
       .signInWithLink(email, magicLink)
       .then((res) => {
-        if (res.data.ok === true) {
+        if (res.status === 200) {
           authorize(res.data.token);
         }
       })
       .catch((err) => console.log(err));
   };
+
+  function closePopup() {
+    setIsPopupOpened(false);
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -111,11 +127,11 @@ function App() {
                   signIn={signIn}
                   isLoggedIn={isLoggedIn}
                   logout={logout}
-                  loginMessage={loginMessage}
+                  isLoginProcessing={isLoginProcessing}
                 />
                 <DrinksContext.Provider value={drinks}>
                   {isLoading ? (
-                    <Loading />
+                    <Loading size={5} />
                   ) : (
                     <Content
                       isSidebarOpened={isSidebarOpened}
@@ -129,6 +145,12 @@ function App() {
           />
         </Routes>
       </UserContext.Provider>
+      <Popup
+        isPopupOpened={isPopupOpened}
+        closePopup={closePopup}
+        popupTitle={popupTitle}
+        loginMessage={loginMessage}
+      />
     </div>
   );
 }

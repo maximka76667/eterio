@@ -10,5 +10,6 @@ export { default as Ingredient } from './Ingredient/Ingredient';
 export { default as Loading } from './Loading/Loading';
 export { default as Main } from './Main/Main';
 export { default as Match } from './Match/Match';
+export { default as Popup } from './Popup/Popup';
 export { default as Search } from './Search/Search';
 export { default as Sidebar } from './Sidebar/Sidebar';

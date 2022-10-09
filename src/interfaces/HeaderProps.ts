@@ -4,5 +4,5 @@ export default interface HeaderProps {
   signIn: (email: string) => void;
   isLoggedIn: boolean;
   logout: () => void;
-  loginMessage: string;
+  isLoginProcessing: boolean;
 }
