@@ -26,12 +26,53 @@
       height: 30px
       margin-right: 5px
 
+  &__menu-button
+    font-size: 2rem
+    justify-content: center
+    align-items: center
+    overflow: hidden
+    width: 45px
+    height: 100%
+    display: none
+    border: 0
+    outline: 0
+    background-color: transparent
+
+    @include md
+      display: flex
+
   &__user-info
     display: flex
     align-items: center
     font-size: 2rem
     font-weight: bold
     letter-spacing: 1px
+
+    @include md
+      position: fixed
+      flex-direction: column
+      background-color: #fff
+      top: 3.75rem
+      justify-content: space-between
+      right: 0
+      width: 50%
+      padding: 1rem 1rem 2rem 2rem
+      border-radius: 0 0 15px 15px
+      visibility: hidden
+      opacity: 0
+
+      &_opened
+        visibility: visible
+        opacity: 1
+
+    @include sm
+      width: 100%
+      visibility: hidden
+      opacity: 0
+
+      &_opened
+        visibility: visible
+        opacity: 1
 
   &__logout
     width: 100px
@@ -60,6 +101,22 @@
     height: 100%
     border-radius: 1rem
 
+    @include md
+      position: fixed
+      background-color: #fff
+      top: 3.75rem
+      height: 80px
+      right: 0
+      width: 100%
+      padding: 1rem
+      border-radius: 0 0 15px 15px
+      visibility: hidden
+      opacity: 0
+
+      &_opened
+        visibility: visible
+        opacity: 1
+
   &__loader
     width: 50px
     height: 100%
@@ -78,6 +135,9 @@
     outline: 0
     transition: all 0.2s
     border-right: 1px solid transparent
+
+    @include md
+      min-width: 100px
 
     &_invalid
       border: 1px solid red

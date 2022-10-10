@@ -20,7 +20,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://apqr5t.deta.dev',
+  baseUrl: 'https://alcopedia-api.deta.dev',
 });
 
 export default api;

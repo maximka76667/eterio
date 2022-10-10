@@ -31,11 +31,6 @@ class Auth {
     });
   };
 
-  async verifyToken(token: string) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    return await axios.post(`${this._baseUrl}/verify`);
-  }
-
   getUser = async (token: string) => {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     return await axios.get(`${this._baseUrl}/me`);
@@ -43,7 +38,7 @@ class Auth {
 }
 
 const auth = new Auth({
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'https://alcopedia-api.deta.dev',
 });
 
 export default auth;

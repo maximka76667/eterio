@@ -58,11 +58,13 @@ function App() {
           setUser(res.data.user);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        logout();
+        console.log(err);
+      });
   };
 
   const signIn = (email: string) => {
-    setLoginMessage('Sending...');
     setIsPopupOpened(false);
     setIsLoginProcessing(true);
     auth
@@ -75,7 +77,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setPopupTitle('Oopsy! 😢');
+        setPopupTitle('Oopsy! 🦀');
         setLoginMessage('Something went wrong! Please try again');
       })
       .finally(() => {

@@ -27,6 +27,7 @@ const Header = ({
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isChangedOnce, setIsChangedOnce] = useState(false);
   const [isValidForm, setIsValidForm] = useState(false);
+  const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setIsChangedOnce(true);
@@ -46,6 +47,10 @@ const Header = ({
     signIn(email);
   };
 
+  function toggleMenu() {
+    setIsMenuOpened(!isMenuOpened);
+  }
+
   useEffect(() => {
     setIsValidForm(isValidEmail);
   }, [email]);
@@ -56,16 +61,30 @@ const Header = ({
         <img className='header__logo-img' src={logo} alt='Alcopedia' />
         <span>Alcopedia</span>
       </Logo>
+      <button className='header__menu-button' onClick={toggleMenu}>
+        👦🏼
+      </button>
       {isLoggedIn ? (
-        <div className='header__user-info'>
-          <span className='header__user-email'>{user.email}</span>
-          <button className='header__logout' onClick={logout}>
-            Logout
-          </button>
-        </div>
+        <>
+          <div
+            className={`header__user-info ${
+              isMenuOpened ? 'header__user-info_opened' : ''
+            }`}
+          >
+            <span className='header__user-email'>{user.email}</span>
+            <button className='header__logout' onClick={logout}>
+              Logout
+            </button>
+          </div>
+        </>
       ) : (
         <>
-          <form className='header__login-form' onSubmit={handleSubmit}>
+          <form
+            className={`header__login-form ${
+              isMenuOpened ? 'header__login-form_opened' : ''
+            }`}
+            onSubmit={handleSubmit}
+          >
             <span className='header__loader'>
               {isLoginProcessing && <LineLoader />}
             </span>
