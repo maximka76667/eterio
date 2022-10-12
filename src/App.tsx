@@ -12,28 +12,37 @@ import auth from './utils/auth';
 function App() {
   const [user, setUser] = useState<UserInterface>({ name: '', email: '' });
   const [drinks, setDrinks] = useState<DrinkInterface[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Main Loading
+  const [isAppLoading, setIsAppLoading] = useState(true);
+
+  // Auth States
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isPopupOpened, setIsPopupOpened] = useState(false);
   const [isLoginProcessing, setIsLoginProcessing] = useState(false);
 
-  const [popupTitle, setPopupTitle] = useState('Message');
-
-  const [loginMessage, setLoginMessage] = useState('');
-
-  async function getDrinks() {
-    setIsLoading(true);
-    const { drinks } = await api.getDrinks();
-    setDrinks(drinks);
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    getDrinks().catch((err) => console.log(err));
-  }, []);
-
+  // Sidebar States
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
 
+  // Popup States
+  const [isPopupOpened, setIsPopupOpened] = useState(false);
+  const [popupTitle, setPopupTitle] = useState('');
+  const [popupMessage, setPopupMessage] = useState('');
+
+  // Drinks functions
+  function fetchDrinks() {
+    setIsAppLoading(true);
+    api
+      .getDrinks()
+      .then((res) => {
+        setDrinks(res.data.drinks);
+      })
+      .catch((err: Error) => {
+        showNotification('Oops', 'Error on loading drinks', err);
+      })
+      .finally(() => setIsAppLoading(false));
+  }
+
+  // Sidebar functions
   function toggleSidebar() {
     setIsSidebarOpened(!isSidebarOpened);
   }
@@ -42,11 +51,21 @@ function App() {
     setIsSidebarOpened(false);
   }
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-  };
+  // Popup functions
+  function closePopup() {
+    setIsPopupOpened(false);
+  }
 
+  function showNotification(title: string, message: string, err?: Error) {
+    setIsPopupOpened(true);
+    setPopupTitle(title);
+    if (err) {
+      return setPopupMessage(`${message}. ${err.message}`);
+    }
+    setPopupMessage(message);
+  }
+
+  // Auth functions
   const authorize = (token: string) => {
     localStorage.setItem('token', token);
     setIsLoggedIn(true);
@@ -54,9 +73,7 @@ function App() {
     auth
       .getUser(token)
       .then((res) => {
-        if (res.status === 200) {
-          setUser(res.data.user);
-        }
+        setUser(res.data.user);
       })
       .catch((err) => {
         logout();
@@ -65,23 +82,21 @@ function App() {
   };
 
   const signIn = (email: string) => {
-    setIsPopupOpened(false);
     setIsLoginProcessing(true);
     auth
       .signIn(email)
-      .then((res) => {
-        if (res.status === 200) {
-          setPopupTitle('Got you! 🙃');
-          setLoginMessage('Check link in your email!');
-        }
+      .then(() => {
+        showNotification('Got you! 🙃', 'Check link in your email!');
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.log(err);
-        setPopupTitle('Oopsy! 🦀');
-        setLoginMessage('Something went wrong! Please try again');
+        showNotification(
+          'Oopsy! 🦀',
+          'Something went wrong! Please try again',
+          err
+        );
       })
       .finally(() => {
-        setIsPopupOpened(true);
         setIsLoginProcessing(false);
       });
   };
@@ -90,17 +105,22 @@ function App() {
     auth
       .signInWithLink(email, magicLink)
       .then((res) => {
-        if (res.status === 200) {
-          authorize(res.data.token);
-        }
+        authorize(res.data.token);
       })
       .catch((err) => console.log(err));
   };
 
-  function closePopup() {
-    setIsPopupOpened(false);
-  }
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  };
 
+  // Fetch drinks
+  useEffect(() => {
+    fetchDrinks();
+  }, []);
+
+  // Check auth login
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -132,7 +152,7 @@ function App() {
                   isLoginProcessing={isLoginProcessing}
                 />
                 <DrinksContext.Provider value={drinks}>
-                  {isLoading ? (
+                  {isAppLoading ? (
                     <Loading size={5} />
                   ) : (
                     <Content
@@ -151,7 +171,7 @@ function App() {
         isPopupOpened={isPopupOpened}
         closePopup={closePopup}
         popupTitle={popupTitle}
-        loginMessage={loginMessage}
+        loginMessage={popupMessage}
       />
     </div>
   );

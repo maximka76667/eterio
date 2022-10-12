@@ -1,28 +1,18 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { LogoProps } from '../../interfaces';
+import LogoContainer from '../LogoContainer/LogoContainer';
+import logo from '../../images/logo512.png';
 
-function Logo({
-  isSidebarOpened,
-  closeSidebar,
-  children,
-}: {
-  isSidebarOpened: boolean;
-  closeSidebar: () => void;
-  children: JSX.Element[];
-}) {
-  const { pathname } = useLocation();
-
+const Logo = ({ isSidebarOpened, closeSidebar }: LogoProps) => {
   return (
-    <>
-      {pathname !== '/' || isSidebarOpened ? (
-        <Link to='/' onClick={closeSidebar} className='header__logo'>
-          {children}
-        </Link>
-      ) : (
-        <p className='header__logo'>{children}</p>
-      )}
-    </>
+    <LogoContainer
+      isSidebarOpened={isSidebarOpened}
+      closeSidebar={closeSidebar}
+    >
+      <img className='header__logo-img' src={logo} alt='Alcopedia' />
+      <span>Alcopedia</span>
+    </LogoContainer>
   );
-}
+};
 
 export default Logo;

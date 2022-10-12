@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 class Api {
   private readonly _baseUrl;
 
@@ -5,17 +7,8 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  private static async _checkResponse(res: Response) {
-    if (res.ok) return await res.json();
-    return await Promise.reject(new Error(`Error ${res.status}`));
-  }
-
   async getDrinks() {
-    return await fetch(`${this._baseUrl}/drink`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(Api._checkResponse);
+    return await axios.get(`${this._baseUrl}/drink`);
   }
 }
 
