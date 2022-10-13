@@ -29,17 +29,8 @@ function App() {
   const [popupMessage, setPopupMessage] = useState('');
 
   // Drinks functions
-  function fetchDrinks() {
-    setIsAppLoading(true);
-    api
-      .getDrinks()
-      .then((res) => {
-        setDrinks(res.data.drinks);
-      })
-      .catch((err: Error) => {
-        showNotification('Oops', 'Error on loading drinks', err);
-      })
-      .finally(() => setIsAppLoading(false));
+  async function getDrinks() {
+    return (await api.getDrinks()).data.drinks;
   }
 
   // Sidebar functions
@@ -115,13 +106,7 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  // Fetch drinks
-  useEffect(() => {
-    fetchDrinks();
-  }, []);
-
-  // Check auth login
-  useEffect(() => {
+  function checkToken() {
     const token = localStorage.getItem('token');
 
     if (token === undefined || token === null || token === '') {
@@ -129,6 +114,22 @@ function App() {
     }
 
     authorize(token);
+  }
+
+  // Fetch drinks and check auth token
+  useEffect(() => {
+    setIsAppLoading(true);
+    Promise.all([getDrinks(), checkToken()])
+      .then(([drinks]) => {
+        setDrinks(drinks);
+      })
+      .catch((err) => {
+        console.log(err);
+        showNotification('Oops', 'Error on loading app', err);
+      })
+      .finally(() => {
+        setIsAppLoading(false);
+      });
   }, []);
 
   return (
