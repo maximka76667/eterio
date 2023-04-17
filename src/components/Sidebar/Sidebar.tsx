@@ -29,7 +29,6 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
       randomIndex = Math.floor(Math.random() * drinks.length);
     }
 
-    console.log(randomIndex);
     navigate(drinks[randomIndex].code);
     setPrevRandomIndex(randomIndex);
     onListItemClick();

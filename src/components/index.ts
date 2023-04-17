@@ -1,4 +1,5 @@
 export { default as Bottle } from './Bottle/Bottle';
+export { default as Community } from './Community/Community';
 export { default as Content } from './Content/Content';
 export { default as Drink } from './Drink/Drink';
 export { default as Extra } from './Extra/Extra';

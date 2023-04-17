@@ -5,6 +5,7 @@ import { MainProps } from '../../interfaces';
 import Drink from '../Drink/Drink';
 import Home from '../Home/Home';
 import './Main.sass';
+import Community from '../Community/Community';
 
 const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
   const drinks = useContext(DrinksContext);
@@ -28,6 +29,7 @@ const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
             element={<Drink drink={drink}></Drink>}
           />
         ))}
+        <Route path='/community' element={<Community />} />
       </Routes>
     </main>
   );
