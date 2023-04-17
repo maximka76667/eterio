@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
 import { DrinkInterface, SidebarProps } from '../../interfaces';
 import Search from '../Search/Search';
@@ -10,6 +10,7 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
   const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState('');
   const [filteredDrinks, setFilteredDrinks] = useState<DrinkInterface[]>([]);
+  const [prevRandomIndex, setPrevRandomIndex] = useState<number>(0);
 
   const navigate = useNavigate();
 
@@ -18,8 +19,19 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
   }
 
   function directRandomDrink() {
-    const randomIndex = Math.floor(Math.random() * drinks.length);
+    let randomIndex = Math.floor(Math.random() * drinks.length);
+
+    while (true) {
+      if (randomIndex !== prevRandomIndex) {
+        break;
+      }
+
+      randomIndex = Math.floor(Math.random() * drinks.length);
+    }
+
+    console.log(randomIndex);
     navigate(drinks[randomIndex].code);
+    setPrevRandomIndex(randomIndex);
     onListItemClick();
   }
 
@@ -56,6 +68,16 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
               <p className='sidebar__not-found'>Nothing is found</p>
             </li>
           )}
+          <li className='sidebar__item'>
+            <NavLink
+              className={({ isActive }) =>
+                'sidebar__link' + (isActive ? ' sidebar__link_active' : '')
+              }
+              to='/community'
+            >
+              Comunidad
+            </NavLink>
+          </li>
         </ul>
       </aside>
     </div>
