@@ -24,7 +24,7 @@ const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
         />
         {drinks.map((drink) => (
           <Route
-            key={drink._id}
+            key={drink.id}
             path={drink.code}
             element={<Drink drink={drink}></Drink>}
           />

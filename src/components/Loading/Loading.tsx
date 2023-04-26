@@ -5,30 +5,30 @@ import { motion } from 'framer-motion';
 const loadingContainerVariants = {
   start: {
     transition: {
-      staggerChildren: 0.15,
-    },
+      staggerChildren: 0.15
+    }
   },
   end: {
     transition: {
-      staggerChildren: 0.15,
-    },
-  },
+      staggerChildren: 0.15
+    }
+  }
 };
 
 const loadingCircleVariants = {
   start: {
-    y: '0%',
+    y: '0%'
   },
   end: {
-    y: '60%',
-  },
+    y: '60%'
+  }
 };
 
 const loadingCircleTransition = {
   duration: 0.4,
   repeat: Infinity,
   repeatType: 'reverse' as const,
-  ease: 'easeInOut',
+  ease: 'easeInOut'
 };
 
 const Loading = () => {

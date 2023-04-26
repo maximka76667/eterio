@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 class Api {
   private readonly _baseUrl;
 
@@ -5,22 +7,18 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  private static async _checkResponse(res: Response) {
-    if (res.ok) return await res.json();
-    return await Promise.reject(new Error(`Error ${res.status}`));
-  }
-
   async getDrinks() {
-    return await fetch(`${this._baseUrl}/drink`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(Api._checkResponse);
+    try {
+      const drinks = await axios.get(`${this._baseUrl}/drinks`);
+      return drinks.data;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
 const api = new Api({
-  baseUrl: 'https://apqr5t.deta.dev',
+  baseUrl: 'http://localhost:8000'
 });
 
 export default api;

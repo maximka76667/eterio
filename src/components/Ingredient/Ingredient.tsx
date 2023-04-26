@@ -3,7 +3,7 @@ import IngredientInterface from '../../interfaces/IngredientInterface';
 
 const Ingredient = ({
   ingredient,
-  ingredientCount,
+  ingredientCount
 }: {
   ingredient: IngredientInterface;
   ingredientCount: number;

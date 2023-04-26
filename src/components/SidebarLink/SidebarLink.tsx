@@ -6,7 +6,7 @@ import './SidebarLink.sass';
 
 const SidebarLink = ({
   drink: { code, name },
-  onListItemClick,
+  onListItemClick
 }: SidebarLinkProps) => {
   const handleAddFavorites: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();

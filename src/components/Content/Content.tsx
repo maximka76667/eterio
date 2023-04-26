@@ -8,7 +8,7 @@ import icon from '../../images/logo512.png';
 const Content = ({
   toggleSidebar,
   closeSidebar,
-  isSidebarOpened,
+  isSidebarOpened
 }: ContentProps) => {
   return (
     <div className='content'>

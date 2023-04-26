@@ -19,14 +19,18 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
   }
 
   function directRandomDrink() {
-    let randomIndex = Math.floor(Math.random() * drinks.length);
+    let randomIndex = 0;
 
-    while (true) {
-      if (randomIndex !== prevRandomIndex) {
-        break;
-      }
-
+    if (drinks.length !== 1) {
       randomIndex = Math.floor(Math.random() * drinks.length);
+
+      while (true) {
+        if (randomIndex !== prevRandomIndex) {
+          break;
+        }
+
+        randomIndex = Math.floor(Math.random() * drinks.length);
+      }
     }
 
     navigate(drinks[randomIndex].code);
@@ -58,7 +62,7 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
           </li>
           {filteredDrinks.length !== 0 ? (
             filteredDrinks.map((drink) => (
-              <li key={drink._id} className='sidebar__item'>
+              <li key={drink.id} className='sidebar__item'>
                 <SidebarLink drink={drink} onListItemClick={onListItemClick} />
               </li>
             ))

@@ -18,7 +18,7 @@ const Drink = ({ drink }: { drink: DrinkInterface }) => {
       );
       setIngredientList((ingredientList) => [
         ...ingredientList,
-        { name: ingridient, amount: drink.ingredients[ingridient] },
+        { name: ingridient, amount: drink.ingredients[ingridient] }
       ]);
     }
   }, [drink]);

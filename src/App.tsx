@@ -12,7 +12,7 @@ function App() {
 
   async function getDrinks() {
     setIsLoading(true);
-    const { drinks } = await api.getDrinks();
+    const drinks = await api.getDrinks();
     setDrinks(drinks);
     setIsLoading(false);
   }

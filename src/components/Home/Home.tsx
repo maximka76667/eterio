@@ -4,7 +4,7 @@ import React, {
   ChangeEventHandler,
   useContext,
   useEffect,
-  useState,
+  useState
 } from 'react';
 import DrinksContext from '../../contexts/DrinksContext';
 import { HomeProps } from '../../interfaces';
@@ -118,7 +118,7 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
         const initValue = glassContent[currentDrink] ?? 0;
         setGlassContent({
           ...glassContent,
-          [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100,
+          [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100
         });
       }, 100);
     }
@@ -215,9 +215,7 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
       <div className='matches'>
         {isSubmittedOnce ? (
           matches.length !== 0 ? (
-            matches.map((match) => (
-              <Match key={match.drink._id} match={match} />
-            ))
+            matches.map((match) => <Match key={match.drink.id} match={match} />)
           ) : (
             <p className='matches__not-found'>Nothing is found</p>
           )

@@ -1,5 +1,5 @@
 export default interface Drink {
-  _id: string;
+  id: string;
   name: string;
   img: string;
   code: string;
