@@ -1,40 +1,34 @@
 import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import './Header.sass';
-import logo from '../../images/logo512.png';
 import HeaderProps from './HeaderProps';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import Logo from '../Logo/Logo';
 
 const Header = ({
   closeSidebar,
   isSidebarOpened,
-  openLoginPopup
+  openLoginPopup,
+  handleLogout
 }: HeaderProps) => {
-  const { pathname } = useLocation();
-
   const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
-      {pathname !== '/' || isSidebarOpened ? (
-        <Link to='/' onClick={closeSidebar} className='header__logo'>
-          {' '}
-          <img className='header__logo-img' src={logo} alt='Alcopedia' />{' '}
-          Alcopedia
-        </Link>
+      <Logo closeSidebar={closeSidebar} isSidebarOpened={isSidebarOpened} />
+      {currentUser != null ? (
+        <div className='header__auth-buttons'>
+          <p>{currentUser.email}</p>
+          <button className='header__auth-button' onClick={handleLogout}>
+            Sign out
+          </button>
+        </div>
       ) : (
-        <p className='header__logo'>
-          {' '}
-          <img className='header__logo-img' src={logo} alt='Alcopedia' />{' '}
-          Alcopedia
-        </p>
+        <div className='header__auth-buttons'>
+          <button className='header__auth-button'>Sign up</button>
+          <button className='header__auth-button' onClick={openLoginPopup}>
+            Sign in
+          </button>
+        </div>
       )}
-      <div className='header__auth-buttons'>
-        <button className='header__auth-button'>Sign up</button>
-        <button className='header__auth-button' onClick={openLoginPopup}>
-          Sign in
-        </button>
-      </div>
-      {currentUser?.id}
     </header>
   );
 };

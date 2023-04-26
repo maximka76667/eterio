@@ -66,6 +66,10 @@ function App() {
     return await api.getCurrentUser(token);
   }
 
+  function handleLogout() {
+    setCurrentUser(null);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='app'>
@@ -73,6 +77,7 @@ function App() {
           isSidebarOpened={isSidebarOpened}
           closeSidebar={closeSidebar}
           openLoginPopup={openLoginPopup}
+          handleLogout={handleLogout}
         />
         <DrinksContext.Provider value={drinks}>
           {isLoading ? (
