@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
-import { DrinkInterface, SidebarProps } from '../../interfaces';
+import { DrinkInterface } from '../../interfaces';
 import Search from '../Search/Search';
 import SidebarLink from '../SidebarLink/SidebarLink';
 import './Sidebar.sass';
+import SidebarProps from './SidebarProps';
 
 const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
   const drinks = useContext(DrinksContext);

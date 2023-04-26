@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContentProps } from '../../interfaces';
+import ContentProps from './ContentProps';
 import Main from '../Main/Main';
 import Sidebar from '../Sidebar/Sidebar';
 import './Content.sass';

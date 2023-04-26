@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import DrinksContext from '../../contexts/DrinksContext';
-import { HomeProps } from '../../interfaces';
+import HomeProps from './HomeProps';
 import Drink from '../../interfaces/DrinkInterface';
 import Bottle from '../Bottle/Bottle';
 import Match from '../Match/Match';

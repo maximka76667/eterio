@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, FormEventHandler } from 'react';
-import { SearchProps } from '../../interfaces';
+import SearchProps from './SearchProps';
 import './Search.sass';
 
 const Search = ({ search, onSearch }: SearchProps) => {

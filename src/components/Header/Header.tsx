@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.sass';
 import logo from '../../images/logo512.png';
-import { HeaderProps } from '../../interfaces';
+import HeaderProps from './HeaderProps';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
+const Header = ({
+  closeSidebar,
+  isSidebarOpened,
+  openLoginPopup
+}: HeaderProps) => {
   const { pathname } = useLocation();
 
+  const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
       {pathname !== '/' || isSidebarOpened ? (
@@ -22,6 +28,13 @@ const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
           Alcopedia
         </p>
       )}
+      <div className='header__auth-buttons'>
+        <button className='header__auth-button'>Sign up</button>
+        <button className='header__auth-button' onClick={openLoginPopup}>
+          Sign in
+        </button>
+      </div>
+      {currentUser?.id}
     </header>
   );
 };

@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { SidebarLinkProps } from '../../interfaces';
+import SidebarLinkProps from './SidebarLinkProps';
 import FavoritesStar from '../FavoritesStar/FavoritesStar';
 import './SidebarLink.sass';
 

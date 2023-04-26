@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react';
-import { BottleProps } from '../../interfaces';
+import BottleProps from './BottleProps';
 import './Bottle.sass';
 
 const Bottle = ({ bottle, changeDrink, onClick }: BottleProps) => {

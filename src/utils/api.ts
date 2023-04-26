@@ -15,6 +15,12 @@ class Api {
       console.log(err);
     }
   }
+
+  async getCurrentUser(token: string) {
+    axios.defaults.headers.get.Authorization = `Bearer ${token}`;
+    const response = await axios.get(`${this._baseUrl}/users/me`);
+    return response.data;
+  }
 }
 
 const api = new Api({

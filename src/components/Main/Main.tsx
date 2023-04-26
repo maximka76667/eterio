@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
-import { MainProps } from '../../interfaces';
+import MainProps from './MainProps';
 import Drink from '../Drink/Drink';
 import Home from '../Home/Home';
 import './Main.sass';

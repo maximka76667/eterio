@@ -1,5 +1,5 @@
 import React from 'react';
-import { GlassProps } from '../../interfaces';
+import GlassProps from './GlassProps';
 import Extra from '../Extra/Extra';
 import Ingredient from '../Ingredient/Ingredient';
 import './Glass.sass';

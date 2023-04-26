@@ -1,4 +1,4 @@
-import Drink from './DrinkInterface';
+import Drink from '../../interfaces/DrinkInterface';
 
 export default interface SidebarLinkProps {
   drink: Drink;

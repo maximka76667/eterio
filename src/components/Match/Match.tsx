@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MatchProps } from '../../interfaces';
+import MatchProps from './MatchProps';
 import './Match.sass';
 
 const Match = ({ match: { drink, match } }: MatchProps) => {
