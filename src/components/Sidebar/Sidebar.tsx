@@ -59,7 +59,7 @@ const Sidebar = ({
         <ul className='sidebar__list'>
           <li className='sidebar__item'>
             <button
-              className='sidebar__link sidebar__link_random'
+              className='sidebar__link sidebar__link_random ff-montse text-lg'
               onClick={directRandomDrink}
             >
               Get a random drink
@@ -83,7 +83,8 @@ const Sidebar = ({
           <li className='sidebar__item'>
             <NavLink
               className={({ isActive }) =>
-                'sidebar__link' + (isActive ? ' sidebar__link_active' : '')
+                'sidebar__link ff-montse text-lg' +
+                (isActive ? ' sidebar__link_active' : '')
               }
               to='/community'
             >

@@ -42,7 +42,8 @@ const SidebarLink = ({
     <NavLink
       onClick={onListItemClick}
       className={({ isActive }) =>
-        'sidebar__link' + (isActive ? ' sidebar__link_active' : '')
+        'text-lg sidebar__link ff-montse' +
+        (isActive ? ' sidebar__link_active' : '')
       }
       to={code}
     >

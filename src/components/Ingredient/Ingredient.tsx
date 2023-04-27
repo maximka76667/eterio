@@ -20,7 +20,7 @@ const Ingredient = ({
     >
       <p className='ingredient__name'>{ingredient.name}</p>
       <p className='ingredient__amount'>
-        {ingredient.amount} ounces ({proportion}% of glass)
+        {ingredient.amount / 100} ounces ({proportion}% of glass)
       </p>
     </div>
   );

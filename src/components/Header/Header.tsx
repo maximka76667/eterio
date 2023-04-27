@@ -17,7 +17,7 @@ const Header = ({
       <Logo closeSidebar={closeSidebar} isSidebarOpened={isSidebarOpened} />
       {currentUser != null ? (
         <div className='header__auth-buttons'>
-          <p>{currentUser.email}</p>
+          <p className='text-xl'>{currentUser.email}</p>
           <button className='header__auth-button' onClick={handleLogout}>
             Sign out
           </button>
@@ -25,12 +25,15 @@ const Header = ({
       ) : (
         <div className='header__auth-buttons'>
           <button
-            className='header__auth-button'
+            className='header__auth-button w-full py-1.5 px-2'
             onClick={openRegistrationPopup}
           >
             Sign up
           </button>
-          <button className='header__auth-button' onClick={openLoginPopup}>
+          <button
+            className='header__auth-button w-full py-1.5 px-2'
+            onClick={openLoginPopup}
+          >
             Sign in
           </button>
         </div>
