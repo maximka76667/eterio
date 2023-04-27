@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { DrinkInterface } from '../interfaces';
+import { IDrink } from '../interfaces';
 
-const DrinksContext = createContext<DrinkInterface[]>([]);
+const DrinksContext = createContext<IDrink[]>([]);
 
 export default DrinksContext;

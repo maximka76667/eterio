@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { DrinkInterface } from '../../interfaces';
+import { IDrink } from '../../interfaces';
 import Glass from '../Glass/Glass';
 import './Drink.sass';
 
-const Drink = ({ drink }: { drink: DrinkInterface }) => {
+const Drink = ({ drink }: { drink: IDrink }) => {
   const [ingredientList, setIngredientList] = useState<
     Array<{ name: string; amount: number }>
   >([]);

@@ -14,7 +14,7 @@ const Search = ({ search, onSearch }: SearchProps) => {
   return (
     <form className='search' onSubmit={handleSubmit}>
       <input
-        className='search__input ff-monste text-lg'
+        className='search__input ff-monste text-lg py-3 px-3'
         type='text'
         value={search}
         placeholder='Search a drink'

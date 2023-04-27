@@ -1,61 +1,25 @@
-import React, {
-  MouseEventHandler,
-  useState,
-  useContext,
-  useEffect
-} from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import SidebarLinkProps from './SidebarLinkProps';
-import FavoritesStar from '../FavoritesStar/FavoritesStar';
 import './SidebarLink.sass';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 const SidebarLink = ({
-  drink: { id, code, name },
+  link: code,
   onListItemClick,
-  onToggleFavorite
+  children,
+  extraClass
 }: SidebarLinkProps) => {
-  const toggleFavorite: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-
-    onToggleFavorite(isFavorite, id);
-    setIsFavorite((isFavorite) => !isFavorite);
-  };
-
-  const user = useContext(CurrentUserContext);
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  useEffect(() => {
-    if (user === null) {
-      setIsFavorite(false);
-      return;
-    }
-
-    const favorites = user.favourite_drinks;
-
-    if (favorites.includes(id)) {
-      setIsFavorite(true);
-    }
-  }, [user]);
-
   return (
     <NavLink
       onClick={onListItemClick}
       className={({ isActive }) =>
-        'text-lg sidebar__link ff-montse' +
-        (isActive ? ' sidebar__link_active' : '')
+        'text-lg sidebar__link ff-montse py-3 px-3 ' +
+        (isActive ? ' sidebar__link_active' : '') +
+        ` ${extraClass}`
       }
       to={code}
     >
-      {name}
-      <button
-        className={`sidebar__favorites ${
-          isFavorite ? 'sidebar__favorites_active' : ''
-        }`}
-        onClick={toggleFavorite}
-      >
-        <FavoritesStar />
-      </button>
+      {children}
     </NavLink>
   );
 };

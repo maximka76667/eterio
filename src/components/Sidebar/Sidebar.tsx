@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
-import { DrinkInterface } from '../../interfaces';
+import { IDrink } from '../../interfaces';
 import Search from '../Search/Search';
 import SidebarLink from '../SidebarLink/SidebarLink';
 import './Sidebar.sass';
 import SidebarProps from './SidebarProps';
+import SidebarLinkFav from '../SidebarLinkFav/SidebarLinkFav';
 
 const Sidebar = ({
   isOpened,
@@ -14,7 +15,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState('');
-  const [filteredDrinks, setFilteredDrinks] = useState<DrinkInterface[]>([]);
+  const [filteredDrinks, setFilteredDrinks] = useState<IDrink[]>([]);
   const [prevRandomIndex, setPrevRandomIndex] = useState<number>(0);
 
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const Sidebar = ({
         <ul className='sidebar__list'>
           <li className='sidebar__item'>
             <button
-              className='sidebar__link sidebar__link_random ff-montse text-lg'
+              className='sidebar__link sidebar__link_random ff-montse text-lg py-3 px-3'
               onClick={directRandomDrink}
             >
               Get a random drink
@@ -68,7 +69,7 @@ const Sidebar = ({
           {filteredDrinks.length !== 0 ? (
             filteredDrinks.map((drink) => (
               <li key={drink.id} className='sidebar__item'>
-                <SidebarLink
+                <SidebarLinkFav
                   drink={drink}
                   onListItemClick={onListItemClick}
                   onToggleFavorite={onToggleFavorite}
@@ -81,15 +82,13 @@ const Sidebar = ({
             </li>
           )}
           <li className='sidebar__item'>
-            <NavLink
-              className={({ isActive }) =>
-                'sidebar__link ff-montse text-lg' +
-                (isActive ? ' sidebar__link_active' : '')
-              }
-              to='/community'
+            <SidebarLink
+              extraClass='bg-indigo-500'
+              onListItemClick={onListItemClick}
+              link='/community'
             >
-              Comunidad
-            </NavLink>
+              Community
+            </SidebarLink>
           </li>
         </ul>
       </aside>

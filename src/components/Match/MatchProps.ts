@@ -1,4 +1,4 @@
-import Drink from '../../interfaces/DrinkInterface';
+import Drink from '../../interfaces/IDrink';
 
 export default interface MatchProps {
   match: {

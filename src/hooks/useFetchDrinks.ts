@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { DrinkInterface } from '../interfaces';
+import { IDrink } from '../interfaces';
 import api from '../utils/api';
 
 const useFetchDrinks = () => {
-  const [drinks, setDrinks] = useState<DrinkInterface[]>([]);
+  const [drinks, setDrinks] = useState<IDrink[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

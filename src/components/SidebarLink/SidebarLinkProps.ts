@@ -1,7 +1,8 @@
-import Drink from '../../interfaces/DrinkInterface';
+import { ReactNode } from 'react';
 
 export default interface SidebarLinkProps {
-  drink: Drink;
+  link: string;
   onListItemClick: () => void;
-  onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
+  children: ReactNode;
+  extraClass: string;
 }
