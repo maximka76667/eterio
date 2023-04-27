@@ -7,7 +7,11 @@ import SidebarLink from '../SidebarLink/SidebarLink';
 import './Sidebar.sass';
 import SidebarProps from './SidebarProps';
 
-const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
+const Sidebar = ({
+  isOpened,
+  onListItemClick,
+  onToggleFavorite
+}: SidebarProps) => {
   const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState('');
   const [filteredDrinks, setFilteredDrinks] = useState<DrinkInterface[]>([]);
@@ -64,7 +68,11 @@ const Sidebar = ({ isOpened, onListItemClick }: SidebarProps) => {
           {filteredDrinks.length !== 0 ? (
             filteredDrinks.map((drink) => (
               <li key={drink.id} className='sidebar__item'>
-                <SidebarLink drink={drink} onListItemClick={onListItemClick} />
+                <SidebarLink
+                  drink={drink}
+                  onListItemClick={onListItemClick}
+                  onToggleFavorite={onToggleFavorite}
+                />
               </li>
             ))
           ) : (

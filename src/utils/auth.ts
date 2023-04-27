@@ -8,15 +8,20 @@ class AuthApi {
   }
 
   async login(email: string, password: string) {
-    try {
-      const response = await axios.post(`${this._baseUrl}/auth/login`, {
-        email,
-        password
-      });
-      return response.data;
-    } catch (err) {
-      console.log(err);
-    }
+    const response = await axios.post(`${this._baseUrl}/auth/login`, {
+      email,
+      password
+    });
+    return response.data;
+  }
+
+  async register(email: string, name: string, password: string) {
+    const response = await axios.post(`${this._baseUrl}/users`, {
+      email,
+      name,
+      password
+    });
+    return response.data;
   }
 }
 

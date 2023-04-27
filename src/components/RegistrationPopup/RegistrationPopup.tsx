@@ -1,27 +1,27 @@
 import React, { FormEvent, useState } from 'react';
 import Popup from '../Popup/Popup';
-// import Popup from '../Popup/Popup';
 
-interface LoginPopupProps {
+interface RegistrationPopupProps {
   isOpen: boolean;
+  handleRegistration: (email: string, name: string, password: string) => void;
+  redirectSignin: () => void;
   onClose: () => void;
-  redirectSignup: () => void;
-  handleLogin: (email: string, password: string) => void;
 }
 
-const LoginPopup = ({
-  onClose,
+const RegistrationPopup = ({
   isOpen,
-  redirectSignup,
-  handleLogin
-}: LoginPopupProps) => {
+  handleRegistration,
+  redirectSignin,
+  onClose
+}: RegistrationPopupProps) => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    handleLogin(email, password);
+    handleRegistration(email, name, password);
   };
 
   return (
@@ -33,8 +33,8 @@ const LoginPopup = ({
             src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
             alt='Your Company'
           />
-          <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
-            Sign in to your account
+          <h2 className='mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900'>
+            Create a new account
           </h2>
         </div>
 
@@ -42,14 +42,14 @@ const LoginPopup = ({
           <form className='space-y-6' onSubmit={handleSubmit}>
             <div>
               <label
-                htmlFor='email'
-                className='block font-medium leading-6 text-gray-900'
+                htmlFor='signup__email'
+                className='block text-base	 font-medium leading-6 text-gray-900'
               >
-                Email address
+                Email
               </label>
               <div className='mt-2'>
                 <input
-                  id='email'
+                  id='signup__email'
                   name='email'
                   type='email'
                   autoComplete='email'
@@ -62,25 +62,38 @@ const LoginPopup = ({
             </div>
 
             <div>
+              <label
+                htmlFor='signup__name'
+                className='block text-base font-medium leading-6 text-gray-900'
+              >
+                Name
+              </label>
+              <div className='mt-2'>
+                <input
+                  id='signup__name'
+                  name='name'
+                  type='name'
+                  autoComplete='name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                />
+              </div>
+            </div>
+
+            <div>
               <div className='flex items-center justify-between'>
                 <label
-                  htmlFor='password'
-                  className='block font-medium leading-6 text-gray-900'
+                  htmlFor='signup__password'
+                  className='block text-base font-medium leading-6 text-gray-900'
                 >
                   Password
                 </label>
-                <div className='text-sm'>
-                  <a
-                    href='#'
-                    className='font-semibold text-indigo-600 hover:text-indigo-500'
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className='mt-2'>
                 <input
-                  id='password'
+                  id='signup__password'
                   name='password'
                   type='password'
                   autoComplete='current-password'
@@ -97,18 +110,18 @@ const LoginPopup = ({
                 type='submit'
                 className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               >
-                Sign in
+                Sign up
               </button>
             </div>
           </form>
 
           <p className='mt-10 text-center text-sm text-gray-500'>
-            Don&apos;t have an account?{' '}
+            Already has an account?{' '}
             <button
-              onClick={redirectSignup}
+              onClick={redirectSignin}
               className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
             >
-              Sign up
+              Sign in
             </button>
           </p>
         </div>
@@ -117,4 +130,4 @@ const LoginPopup = ({
   );
 };
 
-export default LoginPopup;
+export default RegistrationPopup;

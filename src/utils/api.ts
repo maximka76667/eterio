@@ -17,8 +17,25 @@ class Api {
   }
 
   async getCurrentUser(token: string) {
-    axios.defaults.headers.get.Authorization = `Bearer ${token}`;
-    const response = await axios.get(`${this._baseUrl}/users/me`);
+    const response = await axios.get(`${this._baseUrl}/users/me`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  }
+
+  async toggleFavorite(isFavorite: boolean, token: string, id: string) {
+    if (!isFavorite) {
+      const response = await axios.put(
+        `${this._baseUrl}/users/favs/${id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return response.data;
+    }
+
+    const response = await axios.delete(`${this._baseUrl}/users/favs/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   }
 }

@@ -8,6 +8,7 @@ const Header = ({
   closeSidebar,
   isSidebarOpened,
   openLoginPopup,
+  openRegistrationPopup,
   handleLogout
 }: HeaderProps) => {
   const currentUser = useContext(CurrentUserContext);
@@ -23,7 +24,12 @@ const Header = ({
         </div>
       ) : (
         <div className='header__auth-buttons'>
-          <button className='header__auth-button'>Sign up</button>
+          <button
+            className='header__auth-button'
+            onClick={openRegistrationPopup}
+          >
+            Sign up
+          </button>
           <button className='header__auth-button' onClick={openLoginPopup}>
             Sign in
           </button>

@@ -8,7 +8,8 @@ import icon from '../../images/logo512.png';
 const Content = ({
   toggleSidebar,
   closeSidebar,
-  isSidebarOpened
+  isSidebarOpened,
+  onToggleFavorite
 }: ContentProps) => {
   return (
     <div className='content'>
@@ -19,7 +20,11 @@ const Content = ({
           alt='sidebar icon'
         />
       </button>
-      <Sidebar isOpened={isSidebarOpened} onListItemClick={closeSidebar} />
+      <Sidebar
+        isOpened={isSidebarOpened}
+        onListItemClick={closeSidebar}
+        onToggleFavorite={onToggleFavorite}
+      />
       <Main isSidebarOpened={isSidebarOpened} toggleSidebar={toggleSidebar} />
     </div>
   );
