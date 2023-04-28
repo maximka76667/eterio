@@ -1,4 +1,5 @@
 @import "../../sass/mixins"
+@import "../../sass/colors"
 
 .drink
 
@@ -16,7 +17,7 @@
       bottom: 0
       width: 100%
       height: 30%
-      background-color: transparentize($primary, .7)
+      background-color: transparentize($primary-color, .7)
       transform: skew(-60deg)
       z-index: -1
 
@@ -83,7 +84,7 @@
 
   &__subheading
     line-height: 1.5
-    text-shadow: -1px -1px 0 $primary
+    text-shadow: -1px -1px 0 var(--primary-color)
     position: relative
     display: inline-block
 
@@ -94,7 +95,7 @@
       bottom: 0
       width: 100%
       height: 30%
-      background-color: transparentize($primary, .7)
+      background-color: transparentize($primary-color, .7)
       transform: skew(-60deg)
       z-index: -1
 
@@ -122,4 +123,4 @@
         left: -18px
         position: absolute
         border-radius: 2px
-        background-color: $primary
+        background-color: var(--primary-color)

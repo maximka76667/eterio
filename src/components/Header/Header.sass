@@ -1,3 +1,5 @@
+@import "../../sass/mixins"
+
 .header
   height: 70px
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1)
@@ -32,8 +34,11 @@
   &__auth-button
     outline: 0
     white-space: nowrap
-    background-color: #39B37B
+    background-color: var(--primary-color)
     color: #fff
     border-radius: 5px
     transition: all 0.2s
     border: 0
+
+    &:hover
+      background-color: var(--primary-color-dark)

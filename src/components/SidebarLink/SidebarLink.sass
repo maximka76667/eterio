@@ -1,4 +1,5 @@
 @import "../../sass/mixins"
+@import "../../sass/themes"
 
 .sidebar
   &__link
@@ -18,21 +19,21 @@
       border: 0
       width: 100%
       text-align: left
-      background-color: $primary
+      background-color: var(--primary-color)
       color: #fff
 
       &:hover
-        background-color: $primary-dark
+        background-color: var(--primary-color-dark)
 
     &_active
-      color: $primary
+      color: var(--primary-color)
 
     &_dark
-      background-color: #39B37B
+      background-color: var(--primary-color)
       color: #fff
 
       &:hover
-        background-color: $primary-dark
+        background-color: var(--primary-color-dark)
 
   &__favorites
     background-color: transparent
