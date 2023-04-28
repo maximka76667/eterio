@@ -27,16 +27,29 @@
     &_active
       color: $primary
 
+    &_dark
+      background-color: #39B37B
+      color: #fff
+
+      &:hover
+        background-color: $primary-dark
+
   &__favorites
     background-color: transparent
     border: 0
     outline: 0
 
     path
-      fill: white
-      stroke: black
+      fill: transparent
+      stroke: #030712
       stroke-width: 2
 
-    &:hover, &_active
+    &:hover
       path
-        fill: yellow
+        stroke: #030712
+        fill: #facc15
+
+    &_active
+      path
+        fill: #facc15
+        stroke: #facc15

@@ -6,15 +6,17 @@
   position: sticky
   top: 0
   height: 100%
-  overflow: auto
+  display: flex
+  flex-direction: column
+  justify-content: space-between
 
   &-wrapper
     display: flex
     flex-direction: column
-    height: 90vh
+    height: 92vh
     position: sticky
-    top: 60px
-    min-width: 300px
+    top: 70px
+    min-width: 320px
     background-color: rgba(255, 255, 255, 0.95)
     z-index: 4
     transition: all 0.2s, font-size 0.1s
@@ -37,7 +39,9 @@
   &__list
     padding: 0
     margin: 0
+    height: 100%
     list-style-type: none
+    overflow: auto
 
   &__item
     margin: 0.25rem 0

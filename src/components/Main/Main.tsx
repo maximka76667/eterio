@@ -6,6 +6,7 @@ import Drink from '../Drink/Drink';
 import Home from '../Home/Home';
 import './Main.sass';
 import Community from '../Community/Community';
+import NotFound from '../NotFound/NotFound';
 
 const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
   const drinks = useContext(DrinksContext);
@@ -30,6 +31,7 @@ const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
           />
         ))}
         <Route path='/community' element={<Community />} />
+        <Route path='*' element={<NotFound />}></Route>
       </Routes>
     </main>
   );

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './Header.sass';
 import HeaderProps from './HeaderProps';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import Logo from '../Logo/Logo';
+import LogoWrapper from '../LogoWrapper/LogoWrapper';
 
 const Header = ({
   closeSidebar,
@@ -14,30 +14,37 @@ const Header = ({
   const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
-      <Logo closeSidebar={closeSidebar} isSidebarOpened={isSidebarOpened} />
-      {currentUser != null ? (
-        <div className='header__auth-buttons'>
-          <p className='text-xl'>{currentUser.email}</p>
-          <button className='header__auth-button' onClick={handleLogout}>
-            Sign out
-          </button>
-        </div>
-      ) : (
-        <div className='header__auth-buttons'>
-          <button
-            className='header__auth-button w-full py-1.5 px-2'
-            onClick={openRegistrationPopup}
-          >
-            Sign up
-          </button>
-          <button
-            className='header__auth-button w-full py-1.5 px-2'
-            onClick={openLoginPopup}
-          >
-            Sign in
-          </button>
-        </div>
-      )}
+      <LogoWrapper
+        closeSidebar={closeSidebar}
+        isSidebarOpened={isSidebarOpened}
+      />
+      <div className='header__auth-buttons'>
+        {currentUser != null ? (
+          <>
+            <button
+              className='header__auth-button w-[100px] py-2 px-4 ff-montse'
+              onClick={handleLogout}
+            >
+              Sign out
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className='header__auth-button w-[100px] py-2 px-4 ff-amasic'
+              onClick={openRegistrationPopup}
+            >
+              Sign up
+            </button>
+            <button
+              className='header__auth-button w-[100px] py-2 px-4 ff-amasic'
+              onClick={openLoginPopup}
+            >
+              Sign in
+            </button>
+          </>
+        )}
+      </div>
     </header>
   );
 };
