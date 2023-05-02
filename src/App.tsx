@@ -11,19 +11,34 @@ import RegistrationPopup from './components/RegistrationPopup/RegistrationPopup'
 import useFetchDrinks from './hooks/useFetchDrinks';
 import ErrorPopup from './components/ErrorPopup/ErrorPopup';
 import { AxiosError, AxiosResponse } from 'axios';
+import UserUpdate from './interfaces/UserUpdate';
+import InfoPopup from './components/InfoPopup/InfoPopup';
+import CommunityDrinksContext from './contexts/CommunityDrinksContext';
 
 function App() {
-  const { drinks, isLoading, error: fetchDrinksError } = useFetchDrinks();
+  const {
+    drinks,
+    communityDrinks,
+    isLoading,
+    error: fetchDrinksError
+  } = useFetchDrinks();
 
   // Popups
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
 
   // Error popup
-  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(true);
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [errorResponse, setErrorResponse] = useState<AxiosResponse>();
   // const [errorTitle, seterrorTitle] = useState('Error');
   // const [errorMessage, setErrorMessage] = useState('Something went wrong...');
+
+  // Info
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
+  const [info, setInfo] = useState<{ title: string; message: string }>({
+    title: 'Info title',
+    message: 'Info message'
+  });
 
   // Current user context
   const [currentUser, setCurrentUser] = useState(null);
@@ -38,6 +53,11 @@ function App() {
   function showError(error: AxiosError) {
     setErrorResponse(error.response);
     setIsErrorPopupOpen(true);
+  }
+
+  function showInfo(info: { title: string; message: string }) {
+    setIsInfoPopupOpen(true);
+    setInfo(info);
   }
 
   function handleLogin(email: string, password: string) {
@@ -99,6 +119,26 @@ function App() {
     setIsLoginPopupOpen(toSignin);
   };
 
+  async function updateUser(newUser: UserUpdate) {
+    try {
+      const token = localStorage.getItem('access-token');
+
+      if (token === null) {
+        throw new Error('Token error');
+      }
+
+      const updatedUser = await api.updateUser(token, newUser);
+
+      setCurrentUser(updatedUser);
+
+      showInfo({ title: 'Perfect!', message: 'User updated successfully' });
+    } catch (error: any) {
+      showError(error);
+      console.log(error);
+      throw new Error('Updating error');
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('access-token');
 
@@ -136,18 +176,21 @@ function App() {
           handleLogout={handleLogout}
         />
         <DrinksContext.Provider value={drinks}>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Content
-              isSidebarOpened={isSidebarOpened}
-              toggleSidebar={() => {
-                setIsSidebarOpened((isSidebarOpened) => !isSidebarOpened);
-              }}
-              closeSidebar={closeSidebar}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          )}
+          <CommunityDrinksContext.Provider value={communityDrinks}>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <Content
+                isSidebarOpened={isSidebarOpened}
+                toggleSidebar={() => {
+                  setIsSidebarOpened((isSidebarOpened) => !isSidebarOpened);
+                }}
+                closeSidebar={closeSidebar}
+                onToggleFavorite={handleToggleFavorite}
+                onUserUpdate={updateUser}
+              />
+            )}
+          </CommunityDrinksContext.Provider>
         </DrinksContext.Provider>
         <LoginPopup
           handleLogin={handleLogin}
@@ -168,6 +211,15 @@ function App() {
             errorTitle={errorResponse.request.statusText}
             isOpen={isErrorPopupOpen}
             onClose={() => setIsErrorPopupOpen(false)}
+          />
+        )}
+        {info !== undefined && (
+          <InfoPopup
+            classNames='lg:w-1/3 sm:w-5/6'
+            title={info.title}
+            message={info.message}
+            isOpen={isInfoPopupOpen}
+            onClose={() => setIsInfoPopupOpen(false)}
           />
         )}
       </div>

@@ -1,4 +1,5 @@
 import axios, { CancelTokenSource } from 'axios';
+import UserUpdate from '../interfaces/UserUpdate';
 
 class Api {
   private readonly _baseUrl;
@@ -22,6 +23,14 @@ class Api {
     const response = await axios.get(`${this._baseUrl}/users/me`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    return response.data;
+  }
+
+  async updateUser(token: string, newUser: UserUpdate) {
+    const response = await axios.put(`${this._baseUrl}/users/me`, newUser, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
     return response.data;
   }
 

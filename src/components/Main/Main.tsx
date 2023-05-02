@@ -6,9 +6,19 @@ import { Route, Routes } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
 
 import { Home, DrinkInfo, Community, NotFound } from '../../pages';
+import UserInfo from '../../pages/UserInfo/UserInfo';
+import EditUser from '../../pages/EditUser/EditUser';
+import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 
-const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
+const Main = ({
+  toggleSidebar,
+  isSidebarOpened,
+  onUserUpdate,
+  onListItemClick,
+  onToggleFavorite
+}: MainProps) => {
   const drinks = useContext(DrinksContext);
+  const communityDrinks = useContext(CommunityDrinksContext);
 
   return (
     <main className='main'>
@@ -29,8 +39,29 @@ const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
             element={<DrinkInfo drink={drink}></DrinkInfo>}
           />
         ))}
-        <Route path='/community' element={<Community />} />
-        <Route path='*' element={<NotFound />}></Route>
+        <Route
+          path='/community'
+          element={
+            <Community
+              onListItemClick={onListItemClick}
+              onToggleFavorite={onToggleFavorite}
+            />
+          }
+        />
+
+        {communityDrinks?.map((drink) => (
+          <Route
+            key={drink.id}
+            path={`community/${drink.code}`}
+            element={<DrinkInfo drink={drink}></DrinkInfo>}
+          />
+        ))}
+        <Route path='/me' element={<UserInfo />} />
+        <Route
+          path='/me/edit'
+          element={<EditUser onUserUpdate={onUserUpdate} />}
+        />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </main>
   );

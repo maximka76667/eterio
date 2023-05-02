@@ -8,4 +8,5 @@ export default interface Drink {
   };
   extra: string[];
   description: string;
+  is_community: boolean;
 }

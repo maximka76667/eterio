@@ -114,6 +114,14 @@ const Sidebar = ({
               />
               <p>{currentUser.name}</p>
             </div>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                navigate('/me/edit');
+              }}
+            >
+              Edit
+            </button>
           </SidebarLink>
         )}
       </aside>
