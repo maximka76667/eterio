@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 
 class Api {
   private readonly _baseUrl;
@@ -7,9 +7,11 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  async getDrinks() {
+  async getDrinks(source: CancelTokenSource) {
     try {
-      const drinks = await axios.get(`${this._baseUrl}/drinks`);
+      const drinks = await axios.get(`${this._baseUrl}/drinks`, {
+        cancelToken: source.token
+      });
       return drinks.data;
     } catch (err) {
       console.log(err);

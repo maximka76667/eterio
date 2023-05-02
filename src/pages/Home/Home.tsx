@@ -9,8 +9,8 @@ import React, {
 import DrinksContext from '../../contexts/DrinksContext';
 import HomeProps from './HomeProps';
 import Drink from '../../interfaces/Drink';
-import Bottle from '../Bottle/Bottle';
-import Match from '../Match/Match';
+import Bottle from '../../components/Bottle/Bottle';
+import Match from '../../components/Match/Match';
 import './Home.sass';
 import BottlesContext from '../../contexts/BottlesContext';
 

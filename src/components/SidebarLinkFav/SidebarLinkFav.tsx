@@ -21,7 +21,7 @@ const SidebarLinkFav = ({
   onListItemClick,
   onToggleFavorite
 }: SidebarLinkFavProps) => {
-  const user = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -29,7 +29,7 @@ const SidebarLinkFav = ({
 
     onToggleFavorite(isFavorite, id);
 
-    if (user == null) {
+    if (currentUser == null) {
       return;
     }
 
@@ -37,17 +37,17 @@ const SidebarLinkFav = ({
   };
 
   useEffect(() => {
-    if (user === null) {
+    if (currentUser === null) {
       setIsFavorite(false);
       return;
     }
 
-    const favorites = user.favourite_drinks;
+    const favorites = currentUser.favourite_drinks;
 
     if (favorites.includes(id)) {
       setIsFavorite(true);
     }
-  }, [user]);
+  }, [currentUser]);
 
   return (
     <SidebarLink extraClass='' link={code} onListItemClick={onListItemClick}>

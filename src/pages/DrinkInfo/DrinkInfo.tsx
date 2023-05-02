@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Drink, Ingredient } from '../../interfaces';
-import Glass from '../Glass/Glass';
+import Glass from '../../components/Glass/Glass';
 import './DrinkInfo.sass';
 
 const DrinkInfo = ({ drink }: { drink: Drink }) => {

@@ -47,9 +47,14 @@ const Sidebar = ({
   }
 
   useEffect(() => {
+    if (drinks === undefined) {
+      return;
+    }
+
     const newDrinks = drinks.filter((drink) =>
       drink.name.toLowerCase().includes(search.toLowerCase())
     );
+
     setFilteredDrinks(newDrinks);
   }, [search, drinks]);
 
@@ -58,32 +63,36 @@ const Sidebar = ({
       className={`sidebar-wrapper ${isOpened ? 'sidebar-wrapper_opened' : ''}`}
     >
       <aside className='sidebar'>
-        <Search search={search} onSearch={handleSearch} />
-        <ul className='sidebar__list'>
-          <li className='sidebar__item'>
-            <button
-              className='sidebar__link sidebar__link_random ff-montse text-lg py-3 px-3'
-              onClick={directRandomDrink}
-            >
-              Get a random drink
-            </button>
-          </li>
-          {filteredDrinks.length !== 0 ? (
-            filteredDrinks.map((drink) => (
-              <li key={drink.id} className='sidebar__item'>
-                <SidebarLinkFav
-                  drink={drink}
-                  onListItemClick={onListItemClick}
-                  onToggleFavorite={onToggleFavorite}
-                />
+        {drinks !== undefined && (
+          <>
+            <Search search={search} onSearch={handleSearch} />
+            <ul className='sidebar__list'>
+              <li className='sidebar__item'>
+                <button
+                  className='sidebar__link sidebar__link_random ff-montse text-lg py-3 px-3'
+                  onClick={directRandomDrink}
+                >
+                  Get a random drink
+                </button>
               </li>
-            ))
-          ) : (
-            <li className='sidebar__item'>
-              <p className='sidebar__not-found'>Nothing is found</p>
-            </li>
-          )}
-        </ul>
+              {filteredDrinks.length !== 0 ? (
+                filteredDrinks.map((drink) => (
+                  <li key={drink.id} className='sidebar__item'>
+                    <SidebarLinkFav
+                      drink={drink}
+                      onListItemClick={onListItemClick}
+                      onToggleFavorite={onToggleFavorite}
+                    />
+                  </li>
+                ))
+              ) : (
+                <li className='sidebar__item'>
+                  <p className='sidebar__not-found'>Nothing is found</p>
+                </li>
+              )}
+            </ul>
+          </>
+        )}
         <SidebarLink
           extraClass='sidebar__link_dark mb-1'
           onListItemClick={onListItemClick}

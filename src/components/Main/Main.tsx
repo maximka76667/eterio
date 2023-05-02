@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
+import './Main.sass';
+import MainProps from './MainProps';
+
 import { Route, Routes } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
-import MainProps from './MainProps';
-import DrinkInfo from '../DrinkInfo/DrinkInfo';
-import Home from '../Home/Home';
-import './Main.sass';
-import Community from '../Community/Community';
-import NotFound from '../NotFound/NotFound';
+
+import { Home, DrinkInfo, Community, NotFound } from '../../pages';
 
 const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
   const drinks = useContext(DrinksContext);
@@ -23,7 +22,7 @@ const Main = ({ toggleSidebar, isSidebarOpened }: MainProps) => {
             />
           }
         />
-        {drinks.map((drink) => (
+        {drinks?.map((drink) => (
           <Route
             key={drink.id}
             path={drink.code}

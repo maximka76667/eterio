@@ -9,37 +9,35 @@ import authApi from './utils/auth';
 import CurrentUserContext from './contexts/CurrentUserContext';
 import RegistrationPopup from './components/RegistrationPopup/RegistrationPopup';
 import useFetchDrinks from './hooks/useFetchDrinks';
+import ErrorPopup from './components/ErrorPopup/ErrorPopup';
+import { AxiosError, AxiosResponse } from 'axios';
 
 function App() {
-  const { drinks, isLoading } = useFetchDrinks();
+  const { drinks, isLoading, error: fetchDrinksError } = useFetchDrinks();
 
-  // Popups' states
+  // Popups
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+
+  // Error popup
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(true);
+  const [errorResponse, setErrorResponse] = useState<AxiosResponse>();
+  // const [errorTitle, seterrorTitle] = useState('Error');
+  // const [errorMessage, setErrorMessage] = useState('Something went wrong...');
 
   // Current user context
   const [currentUser, setCurrentUser] = useState(null);
 
+  // Sidebar mobiles opened state
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
-
-  function toggleSidebar() {
-    setIsSidebarOpened((isSidebarOpened) => !isSidebarOpened);
-  }
 
   function closeSidebar() {
     setIsSidebarOpened(false);
   }
 
-  function toggleIsLoginPopupOpen(isOpen: boolean) {
-    setIsLoginPopupOpen(isOpen);
-  }
-
-  function toggleIsRegistrationPopupOpen(isOpen: boolean) {
-    setIsRegistrationPopupOpen(isOpen);
-  }
-
-  function openLoginPopup() {
-    toggleIsLoginPopupOpen(true);
+  function showError(error: AxiosError) {
+    setErrorResponse(error.response);
+    setIsErrorPopupOpen(true);
   }
 
   function handleLogin(email: string, password: string) {
@@ -52,24 +50,26 @@ function App() {
             setCurrentUser(currentUser);
             setIsLoginPopupOpen(false);
             localStorage.setItem('access-token', res.access_token);
+            // change it to cookies
           })
           .catch((err) => console.log(err));
       })
-      .catch((err) => {
-        console.log(err);
-        // todo error popup
+      .catch((error: AxiosError) => {
+        console.log(error);
+        showError(error);
       });
   }
 
   function handleRegistration(email: string, name: string, password: string) {
     authApi
       .register(email, name, password)
-      .then((res) => {
-        console.log(res);
-        toggleIsRegistrationPopupOpen(false);
-        toggleIsLoginPopupOpen(true);
+      .then(() => {
+        toggleAuthPopups(true);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        showError(error);
+        console.log(error);
+      });
   }
 
   function handleToggleFavorite(isFavorite: boolean, drinkId: string) {
@@ -83,7 +83,10 @@ function App() {
     api
       .toggleFavorite(isFavorite, token, drinkId)
       .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        showError(error);
+        console.log(error);
+      });
   }
 
   function handleLogout() {
@@ -91,9 +94,9 @@ function App() {
     localStorage.removeItem('access-token');
   }
 
-  const redirectAuthPopups = (toSignin: boolean) => {
-    toggleIsRegistrationPopupOpen(!toSignin);
-    toggleIsLoginPopupOpen(toSignin);
+  const toggleAuthPopups = (toSignin: boolean) => {
+    setIsRegistrationPopupOpen(!toSignin);
+    setIsLoginPopupOpen(toSignin);
   };
 
   useEffect(() => {
@@ -109,8 +112,18 @@ function App() {
         setCurrentUser(currentUser);
         setIsLoginPopupOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.log(error.response);
+        showError(error);
+      });
   }, []);
+
+  useEffect(() => {
+    if (fetchDrinksError === null) {
+      return;
+    }
+    showError(fetchDrinksError);
+  }, [fetchDrinksError]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -118,8 +131,8 @@ function App() {
         <Header
           isSidebarOpened={isSidebarOpened}
           closeSidebar={closeSidebar}
-          openLoginPopup={openLoginPopup}
-          openRegistrationPopup={() => toggleIsRegistrationPopupOpen(true)}
+          openLoginPopup={() => setIsLoginPopupOpen(true)}
+          openRegistrationPopup={() => setIsRegistrationPopupOpen(true)}
           handleLogout={handleLogout}
         />
         <DrinksContext.Provider value={drinks}>
@@ -128,7 +141,9 @@ function App() {
           ) : (
             <Content
               isSidebarOpened={isSidebarOpened}
-              toggleSidebar={toggleSidebar}
+              toggleSidebar={() => {
+                setIsSidebarOpened((isSidebarOpened) => !isSidebarOpened);
+              }}
               closeSidebar={closeSidebar}
               onToggleFavorite={handleToggleFavorite}
             />
@@ -136,16 +151,25 @@ function App() {
         </DrinksContext.Provider>
         <LoginPopup
           handleLogin={handleLogin}
-          onClose={() => toggleIsLoginPopupOpen(false)}
-          redirectSignup={() => redirectAuthPopups(false)}
+          onClose={() => setIsLoginPopupOpen(false)}
+          redirectSignup={() => toggleAuthPopups(false)}
           isOpen={isLoginPopupOpen}
         />
         <RegistrationPopup
           handleRegistration={handleRegistration}
-          redirectSignin={() => redirectAuthPopups(true)}
-          onClose={() => toggleIsRegistrationPopupOpen(false)}
+          redirectSignin={() => toggleAuthPopups(true)}
+          onClose={() => setIsRegistrationPopupOpen(false)}
           isOpen={isRegistrationPopupOpen}
         />
+        {errorResponse !== undefined && (
+          <ErrorPopup
+            classNames='lg:w-1/3 sm:w-5/6'
+            errorMessage={errorResponse.data?.detail}
+            errorTitle={errorResponse.request.statusText}
+            isOpen={isErrorPopupOpen}
+            onClose={() => setIsErrorPopupOpen(false)}
+          />
+        )}
       </div>
     </CurrentUserContext.Provider>
   );

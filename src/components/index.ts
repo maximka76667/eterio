@@ -1,11 +1,8 @@
 export { default as Bottle } from './Bottle/Bottle';
-export { default as Community } from './Community/Community';
 export { default as Content } from './Content/Content';
-export { default as DrinkInfo } from './DrinkInfo/DrinkInfo';
 export { default as Extra } from './Extra/Extra';
 export { default as Glass } from './Glass/Glass';
 export { default as Header } from './Header/Header';
-export { default as Home } from './Home/Home';
 export { default as Ingredient } from './Ingredient/Ingredient';
 export { default as Loading } from './Loading/Loading';
 export { default as Main } from './Main/Main';
