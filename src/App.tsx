@@ -75,7 +75,7 @@ function App() {
   function handleToggleFavorite(isFavorite: boolean, drinkId: string) {
     const token = localStorage.getItem('access-token');
 
-    if (token === null) {
+    if (currentUser === null || token == null) {
       setIsLoginPopupOpen(true);
       return;
     }

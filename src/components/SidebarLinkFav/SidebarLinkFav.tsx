@@ -8,10 +8,10 @@ import FavoritesStar from '../FavoritesStar/FavoritesStar';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 import SidebarLink from '../SidebarLink/SidebarLink';
-import { IDrink } from '../../interfaces';
+import { Drink } from '../../interfaces';
 
 interface SidebarLinkFavProps {
-  drink: IDrink;
+  drink: Drink;
   onListItemClick: () => void;
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
 }

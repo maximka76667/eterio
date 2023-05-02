@@ -1,5 +1,5 @@
 import React from 'react';
-import IngredientInterface from '../../interfaces/IngredientInterface';
+import IngredientInterface from '../../interfaces/Ingredient';
 
 const Ingredient = ({
   ingredient,

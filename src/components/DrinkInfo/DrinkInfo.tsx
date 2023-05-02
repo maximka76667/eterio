@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { IDrink } from '../../interfaces';
+import { Drink, Ingredient } from '../../interfaces';
 import Glass from '../Glass/Glass';
-import './Drink.sass';
+import './DrinkInfo.sass';
 
-const Drink = ({ drink }: { drink: IDrink }) => {
-  const [ingredientList, setIngredientList] = useState<
-    Array<{ name: string; amount: number }>
-  >([]);
+const DrinkInfo = ({ drink }: { drink: Drink }) => {
+  const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
   const [ingredientCount, setIngredientCount] = useState<number>(0);
 
   useEffect(() => {
@@ -65,4 +63,4 @@ const Drink = ({ drink }: { drink: IDrink }) => {
   );
 };
 
-export default Drink;
+export default DrinkInfo;

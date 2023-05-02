@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
-import { IDrink } from '../../interfaces';
+import { Drink } from '../../interfaces';
 import Search from '../Search/Search';
 import SidebarLink from '../SidebarLink/SidebarLink';
 import './Sidebar.sass';
@@ -16,7 +16,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState('');
-  const [filteredDrinks, setFilteredDrinks] = useState<IDrink[]>([]);
+  const [filteredDrinks, setFilteredDrinks] = useState<Drink[]>([]);
   const [prevRandomIndex, setPrevRandomIndex] = useState<number>(0);
 
   const currentUser = useContext(CurrentUserContext);

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { IUser } from '../interfaces';
+import { User } from '../interfaces';
 
-const CurrentUserContext = createContext<IUser | null>(null);
+const CurrentUserContext = createContext<User | null>(null);
 
 export default CurrentUserContext;

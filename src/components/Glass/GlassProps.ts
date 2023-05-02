@@ -1,4 +1,4 @@
-import IngredientInterface from '../../interfaces/IngredientInterface';
+import IngredientInterface from '../../interfaces/Ingredient';
 
 export default interface GlassProps {
   ingredientList: IngredientInterface[];

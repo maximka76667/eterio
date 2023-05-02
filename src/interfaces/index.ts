@@ -1,3 +1,3 @@
-export type { default as IngredientInterface } from './IngredientInterface';
-export type { default as IDrink } from './IDrink';
-export type { default as IUser } from './IUser';
+export type { default as Ingredient } from './Ingredient';
+export type { default as Drink } from './Drink';
+export type { default as User } from './User';

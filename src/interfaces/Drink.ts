@@ -1,4 +1,4 @@
-export default interface IDrink {
+export default interface Drink {
   id: string;
   name: string;
   img: string;
