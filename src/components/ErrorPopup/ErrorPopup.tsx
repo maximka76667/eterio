@@ -25,10 +25,10 @@ const ErrorPopup = ({
             alt='Your Company'
           />
           <h2 className='mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900'>
-            {errorTitle}
+            {errorMessage}
           </h2>
           <p className='mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900'>
-            {errorMessage}
+            {errorTitle}
           </p>
         </div>
       </div>

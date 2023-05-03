@@ -25,7 +25,11 @@ const RegistrationPopup = ({
   };
 
   return (
-    <Popup isOpen={isOpen} onClose={onClose}>
+    <Popup
+      isOpen={isOpen}
+      onClose={onClose}
+      classNames='w-full sm:w-full md:w-5/6 lg:w-3/6'
+    >
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <img
