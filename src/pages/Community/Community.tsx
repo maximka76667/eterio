@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
+import './Community.sass';
+
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 import { Search } from '../../components';
-import SidebarLinkFav from '../../components/SidebarLinkFav/SidebarLinkFav';
 import { Drink } from '../../interfaces';
+import CommunityDrinkLink from '../../components/CommunityDrinkLink/CommunityDrinkLink';
+import { NavLink } from 'react-router-dom';
+import plusIcon from '../../images/plus.png';
 
 interface CommunityProps {
   onListItemClick: () => void;
@@ -37,13 +41,33 @@ const Community = ({ onListItemClick, onToggleFavorite }: CommunityProps) => {
         {communityDrinks !== undefined && (
           <>
             <Search search={search} onSearch={handleSearch} />
-            <ul className='sidebar__list'>
+            <ul className='community__list'>
+              <NavLink
+                className={({ isActive }) =>
+                  'text-lg sidebar__link w-full h-[550px] ff-montse py-4 px-4 flex flex-col' +
+                  (isActive ? ' sidebar__link_active' : '')
+                }
+                to='add'
+              >
+                <div
+                  className='w-full h-full flex justify-center items-center'
+                  style={{ backgroundColor: '#e6e6e6' }}
+                >
+                  <img
+                    className='w-1/2 object-cover object-center'
+                    src={plusIcon}
+                    alt='321'
+                  />
+                </div>
+                <div className='sidebar__info w-full mt-5 pb-2 px-4 flex justify-between'>
+                  <p>Add a drink</p>
+                </div>
+              </NavLink>
               {filteredDrinks.length !== 0 ? (
                 filteredDrinks.map((drink) => (
                   <li key={drink.id} className='sidebar__item'>
-                    <SidebarLinkFav
+                    <CommunityDrinkLink
                       drink={drink}
-                      onListItemClick={onListItemClick}
                       onToggleFavorite={onToggleFavorite}
                     />
                   </li>
