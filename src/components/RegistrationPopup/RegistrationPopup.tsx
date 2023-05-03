@@ -47,7 +47,7 @@ const RegistrationPopup = ({
             <div>
               <label
                 htmlFor='signup__email'
-                className='block text-base	 font-medium leading-6 text-gray-900'
+                className='block text-base font-medium leading-6 text-gray-900'
               >
                 Email
               </label>
