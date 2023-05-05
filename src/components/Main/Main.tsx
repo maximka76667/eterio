@@ -9,13 +9,15 @@ import { Home, DrinkInfo, Community, NotFound } from '../../pages';
 import UserInfo from '../../pages/UserInfo/UserInfo';
 import EditUser from '../../pages/EditUser/EditUser';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
+import AddDrink from '../../pages/AddDrink/AddDrink';
 
 const Main = ({
   toggleSidebar,
   isSidebarOpened,
   onUserUpdate,
   onListItemClick,
-  onToggleFavorite
+  onToggleFavorite,
+  onOpenLoginPopup
 }: MainProps) => {
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
@@ -45,10 +47,11 @@ const Main = ({
             <Community
               onListItemClick={onListItemClick}
               onToggleFavorite={onToggleFavorite}
+              openLoginPopup={onOpenLoginPopup}
             />
           }
         />
-
+        <Route path='community/add' element={<AddDrink />} />
         {communityDrinks?.map((drink) => (
           <Route
             key={drink.id}

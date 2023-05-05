@@ -6,4 +6,5 @@ export default interface ContentProps {
   isSidebarOpened: boolean;
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
+  onOpenLoginPopup: () => void;
 }

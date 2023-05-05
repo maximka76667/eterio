@@ -1,26 +1,51 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  MouseEventHandler,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import './Community.sass';
 
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 import { Search } from '../../components';
 import { Drink } from '../../interfaces';
 import CommunityDrinkLink from '../../components/CommunityDrinkLink/CommunityDrinkLink';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import plusIcon from '../../images/plus.png';
+import { CurrentUserContext } from '../../contexts';
 
 interface CommunityProps {
   onListItemClick: () => void;
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
+  openLoginPopup: () => void;
 }
 
-const Community = ({ onListItemClick, onToggleFavorite }: CommunityProps) => {
+const Community = ({
+  onListItemClick,
+  onToggleFavorite,
+  openLoginPopup
+}: CommunityProps) => {
   const communityDrinks = useContext(CommunityDrinksContext);
   const [search, setSearch] = useState('');
   const [filteredDrinks, setFilteredDrinks] = useState<Drink[]>([]);
 
+  const currentUser = useContext(CurrentUserContext);
+
+  const navigate = useNavigate();
+
   function handleSearch(search: string) {
     setSearch(search);
   }
+
+  const addDrinkRedirect: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (currentUser === null) {
+      event.preventDefault();
+      openLoginPopup();
+      return;
+    }
+
+    navigate('add');
+  };
 
   useEffect(() => {
     if (communityDrinks === undefined) {
@@ -48,6 +73,7 @@ const Community = ({ onListItemClick, onToggleFavorite }: CommunityProps) => {
                   (isActive ? ' sidebar__link_active' : '')
                 }
                 to='add'
+                onClick={addDrinkRedirect}
               >
                 <div
                   className='w-full h-full flex justify-center items-center'
@@ -56,7 +82,7 @@ const Community = ({ onListItemClick, onToggleFavorite }: CommunityProps) => {
                   <img
                     className='w-1/2 object-cover object-center'
                     src={plusIcon}
-                    alt='321'
+                    alt='plus'
                   />
                 </div>
                 <div className='sidebar__info w-full mt-5 pb-2 px-4 flex justify-between'>

@@ -111,6 +111,12 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
     setIsSearchListOpen(false);
   }
 
+  function removeIngredient(bottleName: string) {
+    const { [bottleName]: _, ...newGlassContent } = glassContent;
+
+    setGlassContent(newGlassContent);
+  }
+
   useEffect(() => {
     let bulking: NodeJS.Timer;
 
@@ -144,28 +150,13 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
 
   return (
     <div className='home'>
-      {/* <h1 className='home__title'>
-        Welcome to <span className='home__name'>Alcopedia</span>
-      </h1>
-      <p className='home__text'>
-        Here you can find ingredients and proportions for cocktails&apos;
-        preparing
-      </p>
-      <button
-        className={`home__sidebar-button ${
-          !isSidebarOpened ? 'home__sidebar-button_animated' : ''
-        }`}
-        onClick={toggleSidebar}
-      >
-        Search for a drink
-      </button> */}
-
       <div className='home__glass glass'>
-        {Object.keys(glassContent).map((key) => (
+        {Object.keys(glassContent).map((bottleName) => (
           <div
-            className={`glass__ingredient ${formatDrinkName(key)}`}
-            key={key}
-            style={{ height: `${glassContent[key] * 10}%` }}
+            className={`glass__ingredient ${formatDrinkName(bottleName)}`}
+            key={bottleName}
+            style={{ height: `${glassContent[bottleName] * 10}%` }}
+            onClick={() => removeIngredient(bottleName)}
           ></div>
         ))}
       </div>

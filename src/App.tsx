@@ -153,7 +153,7 @@ function App() {
         setIsLoginPopupOpen(false);
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error);
         showError(error);
       });
   }, []);
@@ -162,6 +162,7 @@ function App() {
     if (fetchDrinksError === null) {
       return;
     }
+
     showError(fetchDrinksError);
   }, [fetchDrinksError]);
 
@@ -188,6 +189,7 @@ function App() {
                 closeSidebar={closeSidebar}
                 onToggleFavorite={handleToggleFavorite}
                 onUserUpdate={updateUser}
+                onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
               />
             )}
           </CommunityDrinksContext.Provider>

@@ -6,4 +6,5 @@ export default interface MainProps {
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
   onListItemClick: () => void;
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
+  onOpenLoginPopup: () => void;
 }
