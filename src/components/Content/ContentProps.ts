@@ -1,3 +1,4 @@
+import { DrinkCreate } from '../../interfaces';
 import UserUpdate from '../../interfaces/UserUpdate';
 
 export default interface ContentProps {
@@ -7,4 +8,5 @@ export default interface ContentProps {
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
   onOpenLoginPopup: () => void;
+  onCreateDrink: (newDrink: DrinkCreate) => void;
 }

@@ -25,12 +25,15 @@ const ListViewerItem = ({
   return (
     <div>
       <input
+        className='px-1.5 py-1'
         disabled={!isEditing}
         value={inputValue}
         onChange={(event) => setInputValue(event.target.value)}
       />
-      <button onClick={handleButtonClick}>{isEditing ? 'Save' : 'Edit'}</button>
-      <button onClick={() => deleteItem(extra)}>delete</button>
+      <button className='mx-3' onClick={handleButtonClick}>
+        {isEditing ? 'Save' : 'Edit'}
+      </button>
+      <button onClick={() => deleteItem(extra)}>Delete</button>
     </div>
   );
 };

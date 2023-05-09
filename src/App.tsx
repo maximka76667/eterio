@@ -8,20 +8,54 @@ import LoginPopup from './components/LoginPopup/LoginPopup';
 import authApi from './utils/auth';
 import CurrentUserContext from './contexts/CurrentUserContext';
 import RegistrationPopup from './components/RegistrationPopup/RegistrationPopup';
-import useFetchDrinks from './hooks/useFetchDrinks';
 import ErrorPopup from './components/ErrorPopup/ErrorPopup';
-import { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import UserUpdate from './interfaces/UserUpdate';
 import InfoPopup from './components/InfoPopup/InfoPopup';
 import CommunityDrinksContext from './contexts/CommunityDrinksContext';
+import { Drink, DrinkCreate } from './interfaces';
 
 function App() {
-  const {
-    drinks,
-    communityDrinks,
-    isLoading,
-    error: fetchDrinksError
-  } = useFetchDrinks();
+  const [drinks, setDrinks] = useState<Drink[]>([]);
+  const [communityDrinks, setCommunityDrinks] = useState<Drink[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+
+    api
+      .getDrinks(source)
+      .then((res) => {
+        const [matchDrinks, nonMatchDrinks] = partition<Drink>(
+          res,
+          (drink) => !drink.is_community
+        );
+
+        setDrinks(matchDrinks);
+        setCommunityDrinks(nonMatchDrinks);
+      })
+      .catch((error) => {
+        setErrorResponse(error.response);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+  function partition<T>(array: T[], callback: (element: T) => boolean) {
+    const matches: T[] = [];
+    const nonMatches: T[] = [];
+
+    array.forEach((element) =>
+      (callback(element) ? matches : nonMatches).push(element)
+    );
+
+    return [matches, nonMatches];
+  }
 
   // Popups
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -139,6 +173,21 @@ function App() {
     }
   }
 
+  function handleCreateDrink(newDrink: DrinkCreate) {
+    const token = localStorage.getItem('access-token');
+
+    if (token === null) {
+      throw new Error('Token error');
+    }
+
+    api
+      .createDrink(token, newDrink)
+      .then((newCreatedDrink) => {
+        setCommunityDrinks((drinks) => [...drinks, newCreatedDrink]);
+      })
+      .catch((error) => console.log(error));
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('access-token');
 
@@ -157,14 +206,6 @@ function App() {
         showError(error);
       });
   }, []);
-
-  useEffect(() => {
-    if (fetchDrinksError === null) {
-      return;
-    }
-
-    showError(fetchDrinksError);
-  }, [fetchDrinksError]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -190,6 +231,7 @@ function App() {
                 onToggleFavorite={handleToggleFavorite}
                 onUserUpdate={updateUser}
                 onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
+                onCreateDrink={handleCreateDrink}
               />
             )}
           </CommunityDrinksContext.Provider>

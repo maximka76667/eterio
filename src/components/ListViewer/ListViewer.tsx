@@ -1,8 +1,13 @@
-import React, { useState, MouseEventHandler } from 'react';
+import React, { useState, MouseEventHandler, useEffect } from 'react';
 import './ListViewer.sass';
 import ListViewerItem from '../ListViewerItem/ListViewerItem';
+// import { DrinkCreate } from '../../interfaces';
 
-const ListViewer = () => {
+interface ListViewerProps {
+  onUpdate: (newExtras: string[]) => void;
+}
+
+const ListViewer = ({ onUpdate }: ListViewerProps) => {
   const [extras, setExtras] = useState<string[]>([]);
   const [newExtra, setNewExtra] = useState('');
 
@@ -32,11 +37,15 @@ const ListViewer = () => {
     setExtras(newExtras);
   }
 
+  useEffect(() => {
+    onUpdate(extras);
+  }, [extras]);
+
   return (
-    <div>
+    <div className='mt-0'>
       <input
         type='text'
-        className={`list-viewer__adder ${
+        className={`px-1.5 py-1 list-viewer__adder ${
           extras.includes(newExtra) ? 'list-viewer__adder_error' : ''
         }`}
         value={newExtra}

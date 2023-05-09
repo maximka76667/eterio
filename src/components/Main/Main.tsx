@@ -17,7 +17,8 @@ const Main = ({
   onUserUpdate,
   onListItemClick,
   onToggleFavorite,
-  onOpenLoginPopup
+  onOpenLoginPopup,
+  onCreateDrink
 }: MainProps) => {
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
@@ -51,7 +52,10 @@ const Main = ({
             />
           }
         />
-        <Route path='community/add' element={<AddDrink />} />
+        <Route
+          path='community/add'
+          element={<AddDrink onCreateDrink={onCreateDrink} />}
+        />
         {communityDrinks?.map((drink) => (
           <Route
             key={drink.id}

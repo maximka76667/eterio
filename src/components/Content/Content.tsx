@@ -11,7 +11,8 @@ const Content = ({
   isSidebarOpened,
   onToggleFavorite,
   onUserUpdate,
-  onOpenLoginPopup
+  onOpenLoginPopup,
+  onCreateDrink
 }: ContentProps) => {
   return (
     <div className='content'>
@@ -34,6 +35,7 @@ const Content = ({
         onListItemClick={closeSidebar}
         onToggleFavorite={onToggleFavorite}
         onOpenLoginPopup={onOpenLoginPopup}
+        onCreateDrink={onCreateDrink}
       />
     </div>
   );

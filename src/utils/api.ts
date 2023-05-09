@@ -1,5 +1,6 @@
 import axios, { CancelTokenSource } from 'axios';
 import UserUpdate from '../interfaces/UserUpdate';
+import { DrinkCreate } from '../interfaces';
 
 class Api {
   private readonly _baseUrl;
@@ -47,6 +48,14 @@ class Api {
     const response = await axios.delete(`${this._baseUrl}/users/favs/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    return response.data;
+  }
+
+  async createDrink(token: string, newDrink: DrinkCreate) {
+    const response = await axios.post(`${this._baseUrl}/drinks`, newDrink, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
     return response.data;
   }
 }

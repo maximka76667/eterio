@@ -8,11 +8,17 @@ import React, {
 } from 'react';
 import './AddDrink.sass';
 
-import { BottlesContext } from '../../contexts';
+import { BottlesContext, DrinksContext } from '../../contexts';
 import { Bottle } from '../../components';
 import ListViewer from '../../components/ListViewer/ListViewer';
+import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
+import { DrinkCreate } from '../../interfaces';
 
-const AddDrink = () => {
+interface AddDrinkProps {
+  onCreateDrink: (drinkCreate: DrinkCreate) => void;
+}
+
+const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   const [isPouring, setIsPouring] = useState(false);
   const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
     {}
@@ -31,8 +37,13 @@ const AddDrink = () => {
   const [code, setCode] = useState('');
   const [img, setImg] = useState('');
   const [description, setDescription] = useState('');
+  const [extra, setExtra] = useState<string[]>([]);
 
+  const drinks = useContext(DrinksContext);
+  const communityDrinks = useContext(CommunityDrinksContext);
   const bottles = useContext(BottlesContext);
+
+  const [isCodeOccupied, setIsCodeOccupied] = useState(false);
 
   function pourDrink() {
     setIsPouring(true);
@@ -83,6 +94,46 @@ const AddDrink = () => {
     setGlassContent(newGlassContent);
   }
 
+  function checkIsCodeOccupied() {
+    let result = false;
+
+    // I use two arrays because lengths of drinks and communityDrinks are different
+    drinks.forEach((drink) => {
+      console.log(drink.code);
+      if (drink.code === code) {
+        return (result = true);
+      }
+    });
+
+    communityDrinks.forEach((drink) => {
+      if (drink.code === code) {
+        return (result = true);
+      }
+    });
+
+    return result;
+  }
+
+  function updateExtras(newExtras: string[]) {
+    setExtra(newExtras);
+  }
+
+  const publishDrink: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+
+    const newDrink: DrinkCreate = {
+      name,
+      description,
+      code,
+      is_community: true,
+      img,
+      ingredients: glassContent,
+      extra
+    };
+
+    onCreateDrink(newDrink);
+  };
+
   useEffect(() => {
     let bulking: NodeJS.Timer;
 
@@ -114,29 +165,44 @@ const AddDrink = () => {
     if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
   }, [isSearchListOpen, searchValue, currentDrink]);
 
+  useEffect(() => {
+    setIsCodeOccupied(checkIsCodeOccupied());
+  }, [code]);
+
   return (
     <>
       <form>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
-            <h2 className='text-base font-semibold leading-7 text-gray-900'>
-              Profile
-            </h2>
-            <p className='mt-1 text-sm leading-6 text-gray-600'>
-              This inhtmlFormation will be displayed publicly so be careful what
-              you share.
-            </p>
+            <div
+              style={{
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <div className='flex justify-between'>
+                <h2 className='add-drink__title-smile text-9xl font-semibold ff-montse text-emerald-500 my-12 text-right'>
+                  ( ͡° ͜ʖ ͡°)
+                </h2>
+                <h2 className='add-drink__title text-9xl font-semibold ff-montse text-emerald-500 my-12 text-right'>
+                  New drink
+                </h2>
+              </div>
+            </div>
 
-            <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
+            <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>
+              Info
+            </h3>
+
+            <div className='mt-4 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6'>
               <div className='sm:col-span-4'>
                 <label
                   htmlFor='drinkName'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='block font-medium leading-6 text-grey-800'
                 >
                   Name
                 </label>
                 <div className='mt-2'>
-                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-600 sm:max-w-md'>
                     <input
                       type='text'
                       name='drinkName'
@@ -144,16 +210,18 @@ const AddDrink = () => {
                       className='block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
                       placeholder='e.g. Rum & Coke'
                       value={name}
+                      required
                       onChange={(event) => setName(event.target.value)}
                     />
                   </div>
+                  <p className='pt-1 text-sm' style={{ height: '1lh' }}></p>
                 </div>
               </div>
 
               <div className='sm:col-span-4'>
                 <label
                   htmlFor='drinkCode'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='block font-medium leading-6 text-gray-900'
                 >
                   Unique code
                 </label>
@@ -163,47 +231,23 @@ const AddDrink = () => {
                       type='text'
                       name='drinkCode'
                       id='drinkCode'
+                      required
                       className='block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
                       placeholder='e.g. rumncoke'
                       value={code}
                       onChange={(event) => setCode(event.target.value)}
                     />
                   </div>
-                  <p style={{ height: '1lh' }}></p>
+                  <p className='add-drink_error pt-1 text-sm'>
+                    {isCodeOccupied && 'Code is ocuppied'}
+                  </p>
                 </div>
-              </div>
-
-              <div className='sm:col-span-4'>
-                <label
-                  htmlFor='img'
-                  className='block text-sm font-medium leading-6 text-gray-900'
-                >
-                  Image
-                </label>
-                <div className='mt-2'>
-                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md'>
-                    <input
-                      type='text'
-                      name='img'
-                      id='img'
-                      className='block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
-                      placeholder='Image link'
-                      value={img}
-                      onChange={(event) => setImg(event.target.value)}
-                    />
-                  </div>
-                </div>
-                <img
-                  style={{ width: '200px', height: '200px' }}
-                  src=''
-                  alt=''
-                />
               </div>
 
               <div className='col-span-full'>
                 <label
                   htmlFor='description'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='block font-medium leading-6 text-gray-900'
                 >
                   Description
                 </label>
@@ -219,8 +263,45 @@ const AddDrink = () => {
                   ></textarea>
                 </div>
               </div>
+
+              <div className='sm:col-span-6'>
+                <label
+                  htmlFor='img'
+                  className='block font-medium leading-6 text-gray-900'
+                >
+                  Image
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-lg'>
+                    <input
+                      type='text'
+                      name='img'
+                      id='img'
+                      className='block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
+                      placeholder='Image link'
+                      value={img}
+                      onChange={(event) => setImg(event.target.value)}
+                    />
+                  </div>
+                </div>
+                <img
+                  className='w-full mt-8 h-[600px]'
+                  style={{
+                    objectFit: 'cover',
+                    borderRadius: '30px'
+                  }}
+                  src={img}
+                  alt=''
+                />
+              </div>
             </div>
           </div>
+
+          <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>
+            Proportions
+          </h3>
+
+          {/* Glass */}
           <div style={{ widows: '100%', position: 'relative' }}>
             <div className='home__glass glass'>
               {Object.keys(glassContent).map((bottleName) => (
@@ -248,7 +329,7 @@ const AddDrink = () => {
             </button>
             <div className='home__search-container' onBlur={handleSearchBlur}>
               <input
-                className='home__search'
+                className='home__search ff-montse'
                 type='text'
                 value={searchValue}
                 onChange={handleSearch}
@@ -276,9 +357,21 @@ const AddDrink = () => {
             </div>
           </div>
           {/* Glass */}
-          <ListViewer />
+
+          <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>
+            Extra Ingredients
+          </h3>
+
+          <ListViewer onUpdate={updateExtras} />
           <div className='add-drink__form-buttons'>
-            <button className='add-drink__submit'>Publish</button>
+            <button
+              onClick={publishDrink}
+              className='add-drink__submit bg-emerald-500 py-2 px-3'
+              type='submit'
+              disabled={name === '' && code === ''}
+            >
+              Publish
+            </button>
             <button className='add-drink__cancel'>Cancel</button>
           </div>
         </div>

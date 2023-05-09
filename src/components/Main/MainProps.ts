@@ -1,3 +1,4 @@
+import { DrinkCreate } from '../../interfaces';
 import UserUpdate from '../../interfaces/UserUpdate';
 
 export default interface MainProps {
@@ -7,4 +8,5 @@ export default interface MainProps {
   onListItemClick: () => void;
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
   onOpenLoginPopup: () => void;
+  onCreateDrink: (newDrink: DrinkCreate) => void;
 }
