@@ -8,17 +8,26 @@ import React, {
 } from 'react';
 import './AddDrink.sass';
 
-import { BottlesContext, DrinksContext } from '../../contexts';
+import {
+  BottlesContext,
+  CurrentUserContext,
+  DrinksContext
+} from '../../contexts';
 import { Bottle } from '../../components';
 import ListViewer from '../../components/ListViewer/ListViewer';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 import { DrinkCreate } from '../../interfaces';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 interface AddDrinkProps {
   onCreateDrink: (drinkCreate: DrinkCreate) => void;
 }
 
 const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
+  const navigate = useNavigate();
+
+  const currentUser = useContext(CurrentUserContext);
+
   const [isPouring, setIsPouring] = useState(false);
   const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
     {}
@@ -121,6 +130,10 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   const publishDrink: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
 
+    if (currentUser === null) {
+      return;
+    }
+
     const newDrink: DrinkCreate = {
       name,
       description,
@@ -128,24 +141,30 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
       is_community: true,
       img,
       ingredients: glassContent,
-      extra
+      author: currentUser.id,
+      extra,
+      favorites: []
     };
 
     onCreateDrink(newDrink);
+    navigate('../');
   };
 
   useEffect(() => {
     let bulking: NodeJS.Timer;
 
-    if (currentDrink !== '' && isPouring && ingredientCount <= 10) {
+    if (currentDrink !== '' && isPouring && ingredientCount < 1000) {
       bulking = setInterval(() => {
         const initValue = glassContent[currentDrink] ?? 0;
         setGlassContent({
           ...glassContent,
-          [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100
+          [currentDrink]: initValue + 10
         });
       }, 100);
     }
+
+    console.log(glassContent);
+
     return () => clearInterval(bulking);
   }, [isPouring, glassContent, ingredientCount, currentDrink]);
 
@@ -174,11 +193,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
       <form>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
-            <div
-              style={{
-                whiteSpace: 'nowrap'
-              }}
-            >
+            <div>
               <div className='flex justify-between'>
                 <h2 className='add-drink__title-smile text-9xl font-semibold ff-montse text-emerald-500 my-12 text-right'>
                   ( ͡° ͜ʖ ͡°)
@@ -308,7 +323,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
                 <div
                   className={`glass__ingredient ${formatDrinkName(bottleName)}`}
                   key={bottleName}
-                  style={{ height: `${glassContent[bottleName] * 10}%` }}
+                  style={{ height: `${glassContent[bottleName] * 0.1}%` }}
                   onClick={() => removeIngredient(bottleName)}
                 ></div>
               ))}
@@ -320,6 +335,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
               onMouseDown={pourDrink}
               onMouseUp={unpourDrink}
               onMouseLeave={unpourDrink}
+              type='button'
             >
               <div
                 className={`home__drink bottle_${currentDrinkCode} ${
@@ -366,13 +382,15 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
           <div className='add-drink__form-buttons'>
             <button
               onClick={publishDrink}
-              className='add-drink__submit bg-emerald-500 py-2 px-3'
+              className='add-drink__submit bg-emerald-500 py-2 px-3 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200'
               type='submit'
-              disabled={name === '' && code === ''}
+              disabled={name === '' || code === ''}
             >
               Publish
             </button>
-            <button className='add-drink__cancel'>Cancel</button>
+            <NavLink to='../' className='add-drink__cancel'>
+              Cancel
+            </NavLink>
           </div>
         </div>
       </form>

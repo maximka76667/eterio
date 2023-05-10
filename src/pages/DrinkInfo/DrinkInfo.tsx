@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Drink, Ingredient } from '../../interfaces';
 import Glass from '../../components/Glass/Glass';
 import './DrinkInfo.sass';
+import { CurrentUserContext } from '../../contexts';
+import { useNavigate } from 'react-router-dom';
 
-const DrinkInfo = ({ drink }: { drink: Drink }) => {
+interface DrinkInfoProps {
+  drink: Drink;
+  onDeleteDrink: (id: string) => void;
+}
+
+const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
+  const currentUser = useContext(CurrentUserContext);
+
+  const navigate = useNavigate();
+
   const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
   const [ingredientCount, setIngredientCount] = useState<number>(0);
 
@@ -21,9 +32,27 @@ const DrinkInfo = ({ drink }: { drink: Drink }) => {
     }
   }, [drink]);
 
+  const handleDrinkDelete = () => {
+    onDeleteDrink(drink.id);
+
+    navigate('../');
+  };
+
   return (
     <div className='drink'>
-      <h1 className='drink__name ff-amatic font-bold text-7xl'>{drink.name}</h1>
+      <div className='drink__title'>
+        <h1 className='drink__name ff-amatic font-bold text-7xl'>
+          {drink.name}
+        </h1>
+        {currentUser !== null && drink.author === currentUser.id && (
+          <button
+            onClick={handleDrinkDelete}
+            className='drink__delete bg-red-500 py-1.5 px-3 rounded-xl text-white hover:bg-red-600'
+          >
+            Delete
+          </button>
+        )}
+      </div>
       <div className='drink__container'>
         <div
           className='drink__img'

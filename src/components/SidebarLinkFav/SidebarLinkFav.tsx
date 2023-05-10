@@ -17,7 +17,7 @@ interface SidebarLinkFavProps {
 }
 
 const SidebarLinkFav = ({
-  drink: { id, code, name },
+  drink: { id, code, name, favorites },
   onListItemClick,
   onToggleFavorite
 }: SidebarLinkFavProps) => {
@@ -42,9 +42,7 @@ const SidebarLinkFav = ({
       return;
     }
 
-    const favorites = currentUser.favourite_drinks;
-
-    if (favorites.includes(id)) {
+    if (favorites.includes(currentUser.id)) {
       setIsFavorite(true);
     }
   }, [currentUser]);

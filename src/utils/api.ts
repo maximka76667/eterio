@@ -38,14 +38,14 @@ class Api {
   async toggleFavorite(isFavorite: boolean, token: string, id: string) {
     if (!isFavorite) {
       const response = await axios.put(
-        `${this._baseUrl}/users/favs/${id}`,
+        `${this._baseUrl}/drinks/favs/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return response.data;
     }
 
-    const response = await axios.delete(`${this._baseUrl}/users/favs/${id}`, {
+    const response = await axios.delete(`${this._baseUrl}/drinks/favs/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;
@@ -53,6 +53,14 @@ class Api {
 
   async createDrink(token: string, newDrink: DrinkCreate) {
     const response = await axios.post(`${this._baseUrl}/drinks`, newDrink, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    return response.data;
+  }
+
+  async deleteDrink(token: string, id: string) {
+    const response = await axios.delete(`${this._baseUrl}/drinks/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 

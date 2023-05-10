@@ -9,4 +9,5 @@ export default interface MainProps {
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
   onOpenLoginPopup: () => void;
   onCreateDrink: (newDrink: DrinkCreate) => void;
+  onDeleteDrink: (id: string) => void;
 }

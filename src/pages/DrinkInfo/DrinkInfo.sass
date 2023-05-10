@@ -3,9 +3,14 @@
 
 .drink
 
+  &__title
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-bottom: 25px
+
   &__name
     line-height: 1.5
-    margin-bottom: 25px
     display: inline-block
     position: relative
     text-shadow: -3px -3px 0 transparentize(#FF6852, .3)
@@ -24,6 +29,9 @@
     @include md
       font-size: 3rem
       margin-bottom: 0.5em
+
+  &__edit
+    display: flex
 
   &__container
     max-width: 100%

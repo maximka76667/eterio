@@ -9,4 +9,5 @@ export default interface ContentProps {
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
   onOpenLoginPopup: () => void;
   onCreateDrink: (newDrink: DrinkCreate) => void;
+  onDeleteDrink: (id: string) => void;
 }

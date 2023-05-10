@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './Main.sass';
 import MainProps from './MainProps';
 
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import DrinksContext from '../../contexts/DrinksContext';
 
 import { Home, DrinkInfo, Community, NotFound } from '../../pages';
@@ -10,6 +10,7 @@ import UserInfo from '../../pages/UserInfo/UserInfo';
 import EditUser from '../../pages/EditUser/EditUser';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 import AddDrink from '../../pages/AddDrink/AddDrink';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 const Main = ({
   toggleSidebar,
@@ -18,7 +19,8 @@ const Main = ({
   onListItemClick,
   onToggleFavorite,
   onOpenLoginPopup,
-  onCreateDrink
+  onCreateDrink,
+  onDeleteDrink
 }: MainProps) => {
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
@@ -39,35 +41,57 @@ const Main = ({
           <Route
             key={drink.id}
             path={drink.code}
-            element={<DrinkInfo drink={drink}></DrinkInfo>}
+            element={
+              <DrinkInfo
+                onDeleteDrink={onDeleteDrink}
+                drink={drink}
+              ></DrinkInfo>
+            }
           />
         ))}
-        <Route
-          path='/community'
-          element={
-            <Community
-              onListItemClick={onListItemClick}
-              onToggleFavorite={onToggleFavorite}
-              openLoginPopup={onOpenLoginPopup}
-            />
-          }
-        />
-        <Route
-          path='community/add'
-          element={<AddDrink onCreateDrink={onCreateDrink} />}
-        />
-        {communityDrinks?.map((drink) => (
+
+        {/* Community Routes START */}
+        <Route path='community' element={<Outlet />}>
           <Route
-            key={drink.id}
-            path={`community/${drink.code}`}
-            element={<DrinkInfo drink={drink}></DrinkInfo>}
+            index
+            element={
+              <Community
+                onListItemClick={onListItemClick}
+                onToggleFavorite={onToggleFavorite}
+                openLoginPopup={onOpenLoginPopup}
+              />
+            }
           />
-        ))}
-        <Route path='/me' element={<UserInfo />} />
-        <Route
-          path='/me/edit'
-          element={<EditUser onUserUpdate={onUserUpdate} />}
-        />
+          <Route element={<PrivateRoute />}>
+            <Route
+              path='add'
+              element={<AddDrink onCreateDrink={onCreateDrink} />}
+            />
+          </Route>
+          {communityDrinks?.map((drink) => (
+            <Route
+              key={drink.id}
+              path={drink.code}
+              element={
+                <DrinkInfo onDeleteDrink={onDeleteDrink} drink={drink} />
+              }
+            />
+          ))}
+        </Route>
+        {/* Community Routes END */}
+
+        {/* Me Routes START */}
+        <Route element={<PrivateRoute />}>
+          <Route path='me' element={<Outlet />}>
+            <Route index element={<UserInfo />} />
+            <Route
+              path='edit'
+              element={<EditUser onUserUpdate={onUserUpdate} />}
+            />
+          </Route>
+        </Route>
+        {/* Me Routes END */}
+
         <Route path='*' element={<NotFound />} />
       </Routes>
     </main>

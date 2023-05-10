@@ -12,7 +12,8 @@ const Content = ({
   onToggleFavorite,
   onUserUpdate,
   onOpenLoginPopup,
-  onCreateDrink
+  onCreateDrink,
+  onDeleteDrink
 }: ContentProps) => {
   return (
     <div className='content'>
@@ -36,6 +37,7 @@ const Content = ({
         onToggleFavorite={onToggleFavorite}
         onOpenLoginPopup={onOpenLoginPopup}
         onCreateDrink={onCreateDrink}
+        onDeleteDrink={onDeleteDrink}
       />
     </div>
   );

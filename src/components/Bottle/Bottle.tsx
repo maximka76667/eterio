@@ -11,7 +11,7 @@ const Bottle = ({ bottle, changeDrink, onClick }: BottleProps) => {
   };
 
   return (
-    <button className='bottle' onClick={handleClick}>
+    <button className='bottle' onClick={handleClick} type='button'>
       <div className={`bottle__img bottle_${className}`} />
       <p className='bottle__name'>{bottle}</p>
     </button>

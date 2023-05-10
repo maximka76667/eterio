@@ -16,6 +16,7 @@ import CommunityDrinksContext from './contexts/CommunityDrinksContext';
 import { Drink, DrinkCreate } from './interfaces';
 
 function App() {
+  const [allDrinks, setAllDrinks] = useState<Drink[]>([]);
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [communityDrinks, setCommunityDrinks] = useState<Drink[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,13 +27,7 @@ function App() {
     api
       .getDrinks(source)
       .then((res) => {
-        const [matchDrinks, nonMatchDrinks] = partition<Drink>(
-          res,
-          (drink) => !drink.is_community
-        );
-
-        setDrinks(matchDrinks);
-        setCommunityDrinks(nonMatchDrinks);
+        setAllDrinks(res);
       })
       .catch((error) => {
         setErrorResponse(error.response);
@@ -45,6 +40,16 @@ function App() {
       source.cancel();
     };
   }, []);
+
+  useEffect(() => {
+    const [matchDrinks, nonMatchDrinks] = partition<Drink>(
+      allDrinks,
+      (drink) => !drink.is_community
+    );
+
+    setDrinks(matchDrinks);
+    setCommunityDrinks(nonMatchDrinks);
+  }, [allDrinks]);
 
   function partition<T>(array: T[], callback: (element: T) => boolean) {
     const matches: T[] = [];
@@ -136,7 +141,16 @@ function App() {
 
     api
       .toggleFavorite(isFavorite, token, drinkId)
-      .then((res) => console.log(res))
+      .then((res) => {
+        const newAllDrinks = allDrinks.map((drink) => {
+          if (drink.id === drinkId) {
+            return { ...res };
+          }
+          return drink;
+        });
+
+        setAllDrinks(newAllDrinks);
+      })
       .catch((error) => {
         showError(error);
         console.log(error);
@@ -158,7 +172,7 @@ function App() {
       const token = localStorage.getItem('access-token');
 
       if (token === null) {
-        throw new Error('Token error');
+        return;
       }
 
       const updatedUser = await api.updateUser(token, newUser);
@@ -169,7 +183,6 @@ function App() {
     } catch (error: any) {
       showError(error);
       console.log(error);
-      throw new Error('Updating error');
     }
   }
 
@@ -177,7 +190,7 @@ function App() {
     const token = localStorage.getItem('access-token');
 
     if (token === null) {
-      throw new Error('Token error');
+      return;
     }
 
     api
@@ -185,7 +198,29 @@ function App() {
       .then((newCreatedDrink) => {
         setCommunityDrinks((drinks) => [...drinks, newCreatedDrink]);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        showError(error);
+      });
+  }
+
+  function handleDeleteDrink(id: string) {
+    const token = localStorage.getItem('access-token');
+
+    if (token === null) {
+      return;
+    }
+
+    api
+      .deleteDrink(token, id)
+      .then((res) => {
+        const newAllDrinks = allDrinks.filter((drink) => drink.id !== id);
+        setAllDrinks(newAllDrinks);
+      })
+      .catch((error) => {
+        console.log(error);
+        showError(error);
+      });
   }
 
   useEffect(() => {
@@ -232,6 +267,7 @@ function App() {
                 onUserUpdate={updateUser}
                 onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
                 onCreateDrink={handleCreateDrink}
+                onDeleteDrink={handleDeleteDrink}
               />
             )}
           </CommunityDrinksContext.Provider>

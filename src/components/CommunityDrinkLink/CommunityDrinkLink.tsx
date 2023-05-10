@@ -15,7 +15,7 @@ interface CommunityDrinksLinkProps {
 }
 
 const CommunityDrinkLink = ({
-  drink: { id, code, name, img },
+  drink: { id, code, name, img, favorites },
   onToggleFavorite
 }: CommunityDrinksLinkProps) => {
   const currentUser = useContext(CurrentUserContext);
@@ -39,9 +39,7 @@ const CommunityDrinkLink = ({
       return;
     }
 
-    const favorites = currentUser.favourite_drinks;
-
-    if (favorites.includes(id)) {
+    if (favorites.includes(currentUser.id)) {
       setIsFavorite(true);
     }
   }, [currentUser]);
@@ -58,16 +56,21 @@ const CommunityDrinkLink = ({
         className='w-full h-full flex justify-center items-center'
         style={{ backgroundColor: '#e6e6e6' }}
       >
-        <img className='w-full max-h-[450px] rounded' src={img} alt={name} />
+        <img
+          className='w-full h-full rounded object-cover'
+          src={img}
+          alt={name}
+        />
       </div>
       <div className='sidebar__info w-full mt-5 pb-2 px-4 flex justify-between'>
         <p>{name}</p>
         <button
-          className={`sidebar__favorites ${
+          className={`flex sidebar__favorites ${
             isFavorite ? 'sidebar__favorites_active' : ''
           }`}
           onClick={toggleFavorite}
         >
+          <p className='mr-2'>{favorites.length}</p>
           <FavoritesStar />
         </button>
       </div>
