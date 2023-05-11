@@ -13,10 +13,17 @@ import Bottle from '../../components/Bottle/Bottle';
 import Match from '../../components/Match/Match';
 import './Home.sass';
 import BottlesContext from '../../contexts/BottlesContext';
+import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
+
+type IMatch = Array<{
+  drink: Drink;
+  match: number;
+}>;
 
 // Component of the home page
 const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
   const drinks = useContext(DrinksContext);
+  const communityDrinks = useContext(CommunityDrinksContext);
 
   const [isSearchListOpen, setIsSearchListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -32,9 +39,8 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
 
   const [ingredientCount, setIngredientCount] = useState<number>(0);
 
-  const [matches, setMatches] = useState<
-    Array<{ drink: Drink; match: number }>
-  >([]);
+  const [matches, setMatches] = useState<IMatch>([]);
+  const [communityMatches, setCommunityMatches] = useState<IMatch>([]);
 
   const bottles = useContext(BottlesContext);
 
@@ -52,6 +58,8 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
 
   function searchMatches() {
     setMatches([]);
+    setCommunityMatches([]);
+
     for (const drink of drinks) {
       const drinkMatch =
         Math.floor(compareComposition(drink.ingredients, glassContent) * 10) /
@@ -61,7 +69,23 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
         setMatches((matches) => [...matches, { drink, match: drinkMatch }]);
       }
     }
+
+    for (const communityDrink of communityDrinks) {
+      const drinkMatch =
+        Math.floor(
+          compareComposition(communityDrink.ingredients, glassContent) * 10
+        ) / 10;
+
+      if (drinkMatch > 0) {
+        setCommunityMatches((matches) => [
+          ...matches,
+          { drink: communityDrink, match: drinkMatch }
+        ]);
+      }
+    }
+
     setMatches((matches) => matches.sort((a, b) => b.match - a.match));
+    setCommunityMatches((matches) => matches.sort((a, b) => b.match - a.match));
     setIsSubmittedOnce(true);
   }
 
@@ -205,14 +229,23 @@ const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
         Find matches
       </button>
       <div className='matches'>
-        {isSubmittedOnce ? (
-          matches.length !== 0 ? (
+        {isSubmittedOnce &&
+          (matches.length !== 0 ? (
             matches.map((match) => <Match key={match.drink.id} match={match} />)
           ) : (
             <p className='matches__not-found'>Nothing is found</p>
-          )
-        ) : (
-          ''
+          ))}
+        {isSubmittedOnce && (
+          <>
+            <h2>Search on community drinks</h2>
+            {communityMatches.length !== 0 ? (
+              communityMatches.map((match) => (
+                <Match key={match.drink.id} match={match} />
+              ))
+            ) : (
+              <p className='matches__not-found'>Nothing is found</p>
+            )}
+          </>
         )}
       </div>
     </div>
