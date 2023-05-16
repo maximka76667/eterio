@@ -111,6 +111,11 @@ const Sidebar = ({
                   onClick={toggleFilter}
                 >
                   Advanced filter
+                  <i
+                    className={`sidebar__menu-open-icon ${
+                      isFilterOpen ? 'sidebar__menu-open-icon_opened' : ''
+                    }`}
+                  ></i>
                 </button>
                 <div
                   className={`flex-col sidebar__filter ${

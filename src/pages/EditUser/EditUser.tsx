@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  FormEventHandler,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { CurrentUserContext } from '../../contexts';
 import UserUpdate from '../../interfaces/UserUpdate';
 
@@ -23,14 +28,15 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
     setAvatar(currentUser.avatar);
   }
 
-  function handleSubmit() {
+  const handleSubmit: FormEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
     const newUser: UserUpdate = { name, email, avatar };
 
     // Catch serves for a case when new user data is not valid
     onUserUpdate(newUser).catch(() => {
       setUserData();
     });
-  }
+  };
 
   useEffect(() => {
     setUserData();
@@ -38,7 +44,7 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
 
   return (
     <div>
-      <form className='flex flex-col items-center' onSubmit={handleSubmit}>
+      <form className='flex flex-col items-center'>
         <h2 className='text-5xl ff-montse mb-10'>Edit user</h2>
 
         <input
@@ -71,6 +77,7 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
         <button
           className='bg-emerald-500 py-1.5 px-3 mt-4 rounded text-white'
           type='submit'
+          onClick={handleSubmit}
         >
           Update
         </button>

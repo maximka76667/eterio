@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <>
       <img className='header__logo-img' src={logo} alt='Alcopedia' />
-      <p className='ff-montse text-2xl'>Alcopedia</p>
+      <p className='ff-montse text-2xl hidden md:block'>Alcopedia</p>
     </>
   );
 };

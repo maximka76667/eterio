@@ -174,32 +174,36 @@ const Mixer = (): JSX.Element => {
   return (
     <div className='home'>
       <h1 className='text-7xl ff-montse'>Put some drinks!</h1>
-      <div className='home__glass glass'>
-        {Object.keys(glassContent).map((bottleName) => (
+      <div className='home__glass-container relative'>
+        <div className='home__glass glass'>
+          {Object.keys(glassContent).map((bottleName) => (
+            <div
+              className={`glass__ingredient ${formatDrinkName(bottleName)}`}
+              key={bottleName}
+              style={{ height: `${glassContent[bottleName] * 10}%` }}
+              onClick={() => removeIngredient(bottleName)}
+            ></div>
+          ))}
+        </div>
+        <button
+          className='home__current-drink bottom-[50%] left-[55%] lg:left-[50%]'
+          data-type={currentDrinkCode}
+          onMouseDown={pourDrink}
+          onMouseUp={unpourDrink}
+          onMouseLeave={unpourDrink}
+          onTouchStart={pourDrink}
+          onTouchEnd={unpourDrink}
+        >
           <div
-            className={`glass__ingredient ${formatDrinkName(bottleName)}`}
-            key={bottleName}
-            style={{ height: `${glassContent[bottleName] * 10}%` }}
-            onClick={() => removeIngredient(bottleName)}
+            className={`w-[100px] lg:w-[200px] home__drink bottle_${currentDrinkCode} ${
+              isPouring ? 'home__drink_pouring' : ''
+            }`}
           ></div>
-        ))}
+        </button>
       </div>
-      <button
-        className='home__current-drink'
-        data-type={currentDrinkCode}
-        onMouseDown={pourDrink}
-        onMouseUp={unpourDrink}
-        onMouseLeave={unpourDrink}
-      >
-        <div
-          className={`home__drink bottle_${currentDrinkCode} ${
-            isPouring ? 'home__drink_pouring' : ''
-          }`}
-        ></div>
-      </button>
       <div className='home__search-container' onBlur={handleSearchBlur}>
         <input
-          className='home__search'
+          className='home__search w-full md:w-1/2'
           type='text'
           value={searchValue}
           onChange={handleSearch}
@@ -233,7 +237,7 @@ const Mixer = (): JSX.Element => {
           (matches.length !== 0 ? (
             matches.map((match) => <Match key={match.drink.id} match={match} />)
           ) : (
-            <p className='matches__not-found'>Nothing is found</p>
+            <p className='matches__not-found ff-montse'>Nothing is found</p>
           ))}
         {isSubmittedOnce && (
           <>
@@ -243,7 +247,7 @@ const Mixer = (): JSX.Element => {
                 <Match key={match.drink.id} match={match} />
               ))
             ) : (
-              <p className='matches__not-found'>Nothing is found</p>
+              <p className='matches__not-found ff-montse'>Nothing is found</p>
             )}
           </>
         )}

@@ -66,7 +66,7 @@ const Community = ({
         {communityDrinks !== undefined && (
           <>
             <Search search={search} onSearch={handleSearch} />
-            <ul className='community__list'>
+            <ul className='community__list grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
               <NavLink
                 className={({ isActive }) =>
                   'text-lg sidebar__link w-full h-[550px] ff-montse py-4 px-4 flex flex-col' +

@@ -28,7 +28,7 @@ const Header = ({
         {currentUser != null ? (
           <>
             <button
-              className='header__auth-button w-[100px] py-2 px-4 ff-montse'
+              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-montse'
               onClick={handleLogout}
             >
               Sign out
@@ -37,13 +37,13 @@ const Header = ({
         ) : (
           <>
             <button
-              className='header__auth-button w-[100px] py-2 px-4 ff-amasic'
+              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-amasic'
               onClick={openRegistrationPopup}
             >
               Sign up
             </button>
             <button
-              className='header__auth-button w-[100px] py-2 px-4 ff-amasic'
+              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-amasic'
               onClick={openLoginPopup}
             >
               Sign in

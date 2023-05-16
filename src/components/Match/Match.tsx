@@ -5,10 +5,10 @@ import './Match.sass';
 
 const Match = ({ match: { drink, match } }: MatchProps) => {
   return (
-    <Link to={`/${drink.code}`} className='match'>
+    <Link to={`/${drink.code}`} className='match flex-col xl:flex-row'>
       <div
         style={{ backgroundImage: `url(${drink.img})` }}
-        className='match__drink-img'
+        className='match__drink-img min-w-[100px] lg:min-w-[300px]'
       ></div>
       <div className='match__drink-info py-7 px-2'>
         <h2 className='match__drink-name text-6xl ff-amatic mb-3'>
