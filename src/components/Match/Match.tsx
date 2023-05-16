@@ -5,7 +5,7 @@ import './Match.sass';
 
 const Match = ({ match: { drink, match } }: MatchProps) => {
   return (
-    <Link to={drink.code} className='match'>
+    <Link to={`/${drink.code}`} className='match'>
       <div
         style={{ backgroundImage: `url(${drink.img})` }}
         className='match__drink-img'

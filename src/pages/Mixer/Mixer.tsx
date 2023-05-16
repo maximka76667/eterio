@@ -173,6 +173,7 @@ const Mixer = (): JSX.Element => {
 
   return (
     <div className='home'>
+      <h1 className='text-7xl ff-montse'>Put some drinks!</h1>
       <div className='home__glass glass'>
         {Object.keys(glassContent).map((bottleName) => (
           <div

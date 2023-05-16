@@ -392,11 +392,22 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
           </h3>
           <ListViewer onUpdate={updateExtras} />
           {/* / Extras */}
-          <select name='category' id='category' onChange={handleCategoryChange}>
-            {categories.map((category) => (
-              <option key={category.id}>{category.name}</option>
-            ))}
-          </select>
+          <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>
+            Category
+          </h3>
+
+          <div>
+            <select
+              className='text-xl'
+              name='category'
+              id='category'
+              onChange={handleCategoryChange}
+            >
+              {categories.map((category) => (
+                <option key={category.id}>{category.name}</option>
+              ))}
+            </select>
+          </div>
           <div className='add-drink__form-buttons'>
             <button
               onClick={publishDrink}
