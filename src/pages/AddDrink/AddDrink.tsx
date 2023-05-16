@@ -10,6 +10,7 @@ import './AddDrink.sass';
 
 import {
   BottlesContext,
+  CategoriesContext,
   CurrentUserContext,
   DrinksContext
 } from '../../contexts';
@@ -27,6 +28,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   const navigate = useNavigate();
 
   const currentUser = useContext(CurrentUserContext);
+  const categories = useContext(CategoriesContext);
 
   const [isPouring, setIsPouring] = useState(false);
   const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
@@ -51,6 +53,8 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
   const bottles = useContext(BottlesContext);
+
+  const [category, setCategory] = useState('');
 
   const [isCodeOccupied, setIsCodeOccupied] = useState(false);
 
@@ -143,7 +147,8 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
       ingredients: glassContent,
       author: currentUser.id,
       extra,
-      favorites: []
+      favorites: [],
+      category
     };
 
     onCreateDrink(newDrink);
@@ -187,6 +192,13 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   useEffect(() => {
     setIsCodeOccupied(checkIsCodeOccupied());
   }, [code]);
+
+  const handleCategoryChange: ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    console.log(event);
+    setCategory('');
+  };
 
   return (
     <>
@@ -374,11 +386,17 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
           </div>
           {/* Glass */}
 
+          {/* Extras */}
           <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>
             Extra Ingredients
           </h3>
-
           <ListViewer onUpdate={updateExtras} />
+          {/* / Extras */}
+          <select name='category' id='category' onChange={handleCategoryChange}>
+            {categories.map((category) => (
+              <option key={category.id}>{category.name}</option>
+            ))}
+          </select>
           <div className='add-drink__form-buttons'>
             <button
               onClick={publishDrink}

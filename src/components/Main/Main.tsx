@@ -11,6 +11,7 @@ import EditUser from '../../pages/EditUser/EditUser';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 import AddDrink from '../../pages/AddDrink/AddDrink';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Mixer from '../../pages/Mixer/Mixer';
 
 const Main = ({
   toggleSidebar,
@@ -37,6 +38,7 @@ const Main = ({
             />
           }
         />
+        <Route path='mixer' element={<Mixer />} />
         {drinks?.map((drink) => (
           <Route
             key={drink.id}

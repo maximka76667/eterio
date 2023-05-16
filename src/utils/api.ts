@@ -66,6 +66,14 @@ class Api {
 
     return response.data;
   }
+
+  async getCategories(source: CancelTokenSource) {
+    const response = await axios.get(`${this._baseUrl}/categories`, {
+      cancelToken: source.token
+    });
+
+    return response.data;
+  }
 }
 
 const api = new Api({

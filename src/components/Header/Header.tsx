@@ -3,6 +3,7 @@ import './Header.sass';
 import HeaderProps from './HeaderProps';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LogoWrapper from '../LogoWrapper/LogoWrapper';
+import { NavLink } from 'react-router-dom';
 
 const Header = ({
   closeSidebar,
@@ -14,10 +15,15 @@ const Header = ({
   const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
-      <LogoWrapper
-        closeSidebar={closeSidebar}
-        isSidebarOpened={isSidebarOpened}
-      />
+      <div className='flex items-center gap-10'>
+        <LogoWrapper
+          closeSidebar={closeSidebar}
+          isSidebarOpened={isSidebarOpened}
+        />
+        <NavLink className='text-xl' to='/mixer'>
+          Mixer
+        </NavLink>
+      </div>
       <div className='header__auth-buttons'>
         {currentUser != null ? (
           <>
