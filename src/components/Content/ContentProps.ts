@@ -5,7 +5,10 @@ export default interface ContentProps {
   toggleSidebar: () => void;
   closeSidebar: () => void;
   isSidebarOpened: boolean;
-  onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
+  onToggleFavorite: (
+    isFavorite: boolean,
+    drinkId: string
+  ) => Promise<void> | undefined;
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
   onOpenLoginPopup: () => void;
   onCreateDrink: (newDrink: DrinkCreate) => void;

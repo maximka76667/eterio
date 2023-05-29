@@ -160,7 +160,7 @@ function App() {
       return;
     }
 
-    api
+    return api
       .toggleFavorite(isFavorite, token, drinkId)
       .then((res) => {
         const newAllDrinks = allDrinks.map((drink) => {
@@ -234,7 +234,7 @@ function App() {
 
     api
       .deleteDrink(token, id)
-      .then((res) => {
+      .then(() => {
         const newAllDrinks = allDrinks.filter((drink) => drink.id !== id);
         setAllDrinks(newAllDrinks);
       })
