@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Drink } from '../interfaces';
-import api from '../utils/api';
+import api from '../dataServices/api';
 import axios, { AxiosError } from 'axios';
 
 const useFetchDrinks = () => {

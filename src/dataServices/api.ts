@@ -20,6 +20,17 @@ class Api {
     }
   }
 
+  async getUsers(source: CancelTokenSource) {
+    try {
+      const users = await axios.get(`${this._baseUrl}/users`, {
+        cancelToken: source.token
+      });
+      return users.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async getCurrentUser(token: string) {
     const response = await axios.get(`${this._baseUrl}/users/me`, {
       headers: { Authorization: `Bearer ${token}` }

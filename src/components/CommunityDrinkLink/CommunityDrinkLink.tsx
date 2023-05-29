@@ -21,19 +21,10 @@ const CommunityDrinkLink = ({
   const currentUser = useContext(CurrentUserContext);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const [isFavoriting, setIsFavoriting] = useState(false);
-
   const toggleFavorite: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
 
-    setIsFavoriting(true);
-
-    onToggleFavorite(isFavorite, id)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsFavoriting(false);
-      })
+    onToggleFavorite(isFavorite, id);
 
     if (currentUser == null) {
       return;
