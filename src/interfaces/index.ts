@@ -1,3 +1,4 @@
+export type { default as Bottle } from './Bottle';
 export type { default as Category } from './Category';
 export type { default as Drink } from './Drink';
 export type { default as DrinkCreate } from './DrinkCreate';

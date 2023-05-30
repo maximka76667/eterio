@@ -162,10 +162,10 @@ const GlassEditor = ({
         >
           {bottles
             .filter((bottle) =>
-              bottle.toLowerCase().includes(searchValue.toLowerCase())
+              bottle.name.toLowerCase().includes(searchValue.toLowerCase())
             )
             .map((bottle) => (
-              <li key={bottle} className='glass-editor__search-item'>
+              <li key={bottle.id} className='glass-editor__search-item'>
                 <Bottle
                   bottle={bottle}
                   changeDrink={changeDrink}

@@ -38,6 +38,11 @@ class Api {
     return response.data;
   }
 
+  async getBottles() {
+    const response = await axios.get(`${this._baseUrl}/bottles`);
+    return response.data;
+  }
+
   async updateUser(token: string, newUser: UserUpdate) {
     const response = await axios.put(`${this._baseUrl}/users/me`, newUser, {
       headers: { Authorization: `Bearer ${token}` }

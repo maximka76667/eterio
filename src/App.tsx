@@ -13,9 +13,10 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import UserUpdate from './interfaces/UserUpdate';
 import InfoPopup from './components/InfoPopup/InfoPopup';
 import CommunityDrinksContext from './contexts/CommunityDrinksContext';
-import { Category, Drink, DrinkCreate, User } from './interfaces';
+import { Bottle, Category, Drink, DrinkCreate, User } from './interfaces';
 import CategoriesContext from './contexts/CategoriesContext';
 import UsersContext from './contexts/UsersContext';
+import { BottlesContext } from './contexts';
 
 function App() {
   // Drinks
@@ -28,6 +29,9 @@ function App() {
 
   // Users
   const [users, setUsers] = useState<User[]>([]);
+
+  // Bottles
+  const [bottles, setBottles] = useState<Bottle[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -67,6 +71,11 @@ function App() {
       .catch((error) => {
         setErrorResponse(error.response);
       });
+
+    api
+      .getBottles()
+      .then((res) => setBottles(res))
+      .catch((error) => setErrorResponse(error.response));
   }, []);
 
   useEffect(() => {
@@ -285,22 +294,26 @@ function App() {
           <UsersContext.Provider value={users}>
             <CommunityDrinksContext.Provider value={communityDrinks}>
               <CategoriesContext.Provider value={categories}>
-                {isLoading ? (
-                  <Loading />
-                ) : (
-                  <Content
-                    isSidebarOpened={isSidebarOpened}
-                    toggleSidebar={() => {
-                      setIsSidebarOpened((isSidebarOpened) => !isSidebarOpened);
-                    }}
-                    closeSidebar={closeSidebar}
-                    onToggleFavorite={handleToggleFavorite}
-                    onUserUpdate={updateUser}
-                    onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
-                    onCreateDrink={handleCreateDrink}
-                    onDeleteDrink={handleDeleteDrink}
-                  />
-                )}
+                <BottlesContext.Provider value={bottles}>
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <Content
+                      isSidebarOpened={isSidebarOpened}
+                      toggleSidebar={() => {
+                        setIsSidebarOpened(
+                          (isSidebarOpened) => !isSidebarOpened
+                        );
+                      }}
+                      closeSidebar={closeSidebar}
+                      onToggleFavorite={handleToggleFavorite}
+                      onUserUpdate={updateUser}
+                      onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
+                      onCreateDrink={handleCreateDrink}
+                      onDeleteDrink={handleDeleteDrink}
+                    />
+                  )}
+                </BottlesContext.Provider>
               </CategoriesContext.Provider>
             </CommunityDrinksContext.Provider>
           </UsersContext.Provider>
