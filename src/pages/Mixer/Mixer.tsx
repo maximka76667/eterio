@@ -1,18 +1,13 @@
-import React, {
-  MouseEventHandler,
-  FocusEventHandler,
-  ChangeEventHandler,
-  useContext,
-  useEffect,
-  useState
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Drink from '../../interfaces/Drink';
-import Bottle from '../../components/Bottle/Bottle';
 import Match from '../../components/Match/Match';
 
+import './Mixer.sass';
+
 import DrinksContext from '../../contexts/DrinksContext';
-import BottlesContext from '../../contexts/BottlesContext';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
+import GlassEditor from '../../components/GlassEditor/GlassEditor';
+import { GlassContent } from '../../interfaces';
 
 type IMatch = Array<{
   drink: Drink;
@@ -24,36 +19,12 @@ const Mixer = (): JSX.Element => {
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
 
-  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false);
 
-  const [isPouring, setIsPouring] = useState(false);
-  const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
-    {}
-  );
-
-  const [currentDrink, setCurrentDrink] = useState('');
-  const [currentDrinkCode, setCurrentDrinkCode] = useState('');
-
-  const [ingredientCount, setIngredientCount] = useState<number>(0);
+  const [glassContent, setGlassContent] = useState<GlassContent>({});
 
   const [matches, setMatches] = useState<IMatch>([]);
   const [communityMatches, setCommunityMatches] = useState<IMatch>([]);
-
-  const bottles = useContext(BottlesContext);
-
-  function pourDrink() {
-    setIsPouring(true);
-  }
-
-  function unpourDrink() {
-    setIsPouring(false);
-  }
-
-  const changeDrink = (drink: string) => {
-    setCurrentDrink(drink);
-  };
 
   function searchMatches() {
     setMatches([]);
@@ -78,7 +49,13 @@ const Mixer = (): JSX.Element => {
       if (drinkMatch > 0) {
         setCommunityMatches((matches) => [
           ...matches,
-          { drink: communityDrink, match: drinkMatch }
+          {
+            drink: {
+              ...communityDrink,
+              code: `community/${communityDrink.code}`
+            },
+            match: drinkMatch
+          }
         ]);
       }
     }
@@ -88,148 +65,52 @@ const Mixer = (): JSX.Element => {
     setIsSubmittedOnce(true);
   }
 
-  function compareComposition(
-    drink1: { [key: string]: number },
-    drink2: { [key: string]: number }
-  ) {
+  function compareComposition(drink1: GlassContent, drink2: GlassContent) {
     let result = 0;
     for (const ingr in drink1) {
       if (drink2[ingr] !== undefined) {
         result +=
-          ((drink1[ingr] < drink2[ingr] ? drink1[ingr] : drink2[ingr]) / 6.5) *
-          100;
+          (drink1[ingr] < drink2[ingr] ? drink1[ingr] : drink2[ingr]) / 6.5;
       }
     }
     return result;
   }
 
-  function formatDrinkName(drink: string) {
-    return drink.replaceAll(' ', '-');
-  }
+  useEffect(() => {
+    const localMatches = localStorage.getItem('matches');
 
-  function showInput() {
-    setIsSearchListOpen(true);
-  }
-
-  const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {
-    if (e.relatedTarget == null) {
-      hideInput();
+    if (localMatches === null) {
+      return;
     }
-  };
 
-  const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSearchValue(e.target.value);
-  };
+    const { matches, communityMatches } = JSON.parse(localMatches);
 
-  function handleInputClick() {
-    setSearchValue('');
-    showInput();
-  }
-
-  const handleBottleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    hideInput();
-  };
-
-  function hideInput() {
-    setIsSearchListOpen(false);
-  }
-
-  function removeIngredient(bottleName: string) {
-    const { [bottleName]: _, ...newGlassContent } = glassContent;
-
-    setGlassContent(newGlassContent);
-  }
+    setMatches(matches);
+    setCommunityMatches(communityMatches);
+    setIsSubmittedOnce(true);
+  }, []);
 
   useEffect(() => {
-    let bulking: NodeJS.Timer;
-
-    if (currentDrink !== '' && isPouring && ingredientCount <= 10) {
-      bulking = setInterval(() => {
-        const initValue = glassContent[currentDrink] ?? 0;
-        setGlassContent({
-          ...glassContent,
-          [currentDrink]: Math.floor((initValue + 0.1) * 100) / 100
-        });
-      }, 100);
-    }
-    return () => clearInterval(bulking);
-  }, [isPouring, glassContent, ingredientCount, currentDrink]);
-
-  useEffect(() => {
-    let sum = 0;
-    for (const key in glassContent) sum += glassContent[key];
-
-    setIngredientCount(Math.floor(sum * 100) / 100);
-  }, [glassContent, ingredientCount]);
-
-  useEffect(() => {
-    setCurrentDrinkCode(formatDrinkName(currentDrink));
-    setSearchValue(currentDrink);
-  }, [currentDrink]);
-
-  useEffect(() => {
-    if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
-  }, [isSearchListOpen, searchValue, currentDrink]);
+    // Store matches in localStorage
+    localStorage.setItem(
+      'matches',
+      JSON.stringify({ matches, communityMatches })
+    );
+  }, [matches, communityMatches]);
 
   return (
-    <div className='home'>
+    <div className='mixer'>
       <h1 className='text-7xl ff-montse'>Put some drinks!</h1>
-      <div className='home__glass-container relative'>
-        <div className='home__glass glass'>
-          {Object.keys(glassContent).map((bottleName) => (
-            <div
-              className={`glass__ingredient ${formatDrinkName(bottleName)}`}
-              key={bottleName}
-              style={{ height: `${glassContent[bottleName] * 10}%` }}
-              onClick={() => removeIngredient(bottleName)}
-            ></div>
-          ))}
-        </div>
-        <button
-          className='home__current-drink bottom-[50%] left-[55%] lg:left-[50%]'
-          data-type={currentDrinkCode}
-          onMouseDown={pourDrink}
-          onMouseUp={unpourDrink}
-          onMouseLeave={unpourDrink}
-          onTouchStart={pourDrink}
-          onTouchEnd={unpourDrink}
-        >
-          <div
-            className={`w-[100px] lg:w-[200px] home__drink bottle_${currentDrinkCode} ${
-              isPouring ? 'home__drink_pouring' : ''
-            }`}
-          ></div>
-        </button>
-      </div>
-      <div className='home__search-container' onBlur={handleSearchBlur}>
-        <input
-          className='home__search w-full md:w-1/2'
-          type='text'
-          value={searchValue}
-          onChange={handleSearch}
-          onFocus={handleInputClick}
+      <div className='relative'>
+        <GlassEditor
+          glassContent={glassContent}
+          onGlassContentChange={(newGlassContent) =>
+            setGlassContent(newGlassContent)
+          }
         />
-        <ul
-          className={`home__search-list ${
-            isSearchListOpen ? 'home__search-list_active' : ''
-          }`}
-        >
-          {bottles
-            .filter((bottle) =>
-              bottle.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((bottle) => (
-              <li key={bottle} className='home__search-item'>
-                <Bottle
-                  bottle={bottle}
-                  changeDrink={changeDrink}
-                  onClick={handleBottleClick}
-                />
-              </li>
-            ))}
-        </ul>
       </div>
-      <button className='home__matches-button' onClick={searchMatches}>
+
+      <button className='mixer__matches-button' onClick={searchMatches}>
         Find matches
       </button>
       <div className='matches'>
@@ -241,7 +122,9 @@ const Mixer = (): JSX.Element => {
           ))}
         {isSubmittedOnce && (
           <>
-            <h2>Search on community drinks</h2>
+            <h2 className='text-xl font-bold ff-montse'>
+              Search on community drinks
+            </h2>
             {communityMatches.length !== 0 ? (
               communityMatches.map((match) => (
                 <Match key={match.drink.id} match={match} />

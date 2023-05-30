@@ -67,10 +67,6 @@ function App() {
       .catch((error) => {
         setErrorResponse(error.response);
       });
-
-    return () => {
-      source.cancel();
-    };
   }, []);
 
   useEffect(() => {
@@ -87,9 +83,11 @@ function App() {
     const matches: T[] = [];
     const nonMatches: T[] = [];
 
-    array.forEach((element) =>
-      (callback(element) ? matches : nonMatches).push(element)
-    );
+    if (array !== undefined) {
+      array.forEach((element) =>
+        (callback(element) ? matches : nonMatches).push(element)
+      );
+    }
 
     return [matches, nonMatches];
   }

@@ -2,23 +2,21 @@ import React, {
   useContext,
   useState,
   useEffect,
-  FocusEventHandler,
   ChangeEventHandler,
   MouseEventHandler
 } from 'react';
 import './AddDrink.sass';
 
 import {
-  BottlesContext,
   CategoriesContext,
   CurrentUserContext,
   DrinksContext
 } from '../../contexts';
-import { Bottle } from '../../components';
 import ListViewer from '../../components/ListViewer/ListViewer';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
-import { DrinkCreate } from '../../interfaces';
+import { DrinkCreate, GlassContent } from '../../interfaces';
 import { NavLink, useNavigate } from 'react-router-dom';
+import GlassEditor from '../../components/GlassEditor/GlassEditor';
 
 interface AddDrinkProps {
   onCreateDrink: (drinkCreate: DrinkCreate) => void;
@@ -27,92 +25,31 @@ interface AddDrinkProps {
 const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   const navigate = useNavigate();
 
+  // Contexts
+  const drinks = useContext(DrinksContext);
+  const communityDrinks = useContext(CommunityDrinksContext);
   const currentUser = useContext(CurrentUserContext);
   const categories = useContext(CategoriesContext);
 
-  const [isPouring, setIsPouring] = useState(false);
-  const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
-    {}
-  );
-
-  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-
-  const [currentDrink, setCurrentDrink] = useState('');
-  const [currentDrinkCode, setCurrentDrinkCode] = useState('');
-
-  const [ingredientCount, setIngredientCount] = useState<number>(0);
-
-  // Form validaton
+  // Form fields
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
   const [img, setImg] = useState('');
+  const [glassContent, setGlassContent] = useState<{ [key: string]: number }>(
+    {}
+  );
   const [description, setDescription] = useState('');
   const [extra, setExtra] = useState<string[]>([]);
-
-  const drinks = useContext(DrinksContext);
-  const communityDrinks = useContext(CommunityDrinksContext);
-  const bottles = useContext(BottlesContext);
-
   const [category, setCategory] = useState('');
 
+  // Code validation
   const [isCodeOccupied, setIsCodeOccupied] = useState(false);
-
-  function pourDrink() {
-    setIsPouring(true);
-  }
-
-  function unpourDrink() {
-    setIsPouring(false);
-  }
-
-  const changeDrink = (drink: string) => {
-    setCurrentDrink(drink);
-  };
-
-  function formatDrinkName(drink: string) {
-    return drink.replaceAll(' ', '-');
-  }
-
-  function showInput() {
-    setIsSearchListOpen(true);
-  }
-
-  const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {
-    if (e.relatedTarget == null) {
-      hideInput();
-    }
-  };
-
-  const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  function handleInputClick() {
-    setSearchValue('');
-    showInput();
-  }
-
-  const handleBottleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    hideInput();
-  };
-
-  function hideInput() {
-    setIsSearchListOpen(false);
-  }
-
-  function removeIngredient(bottleName: string) {
-    const { [bottleName]: _, ...newGlassContent } = glassContent;
-
-    setGlassContent(newGlassContent);
-  }
 
   function checkIsCodeOccupied() {
     let result = false;
 
     // I use two arrays because lengths of drinks and communityDrinks are different
     drinks.forEach((drink) => {
-      console.log(drink.code);
       if (drink.code === code) {
         return (result = true);
       }
@@ -127,10 +64,16 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
     return result;
   }
 
+  useEffect(() => {
+    setIsCodeOccupied(checkIsCodeOccupied());
+  }, [code]);
+  // --- Code validation
+
   function updateExtras(newExtras: string[]) {
     setExtra(newExtras);
   }
 
+  // Form submit
   const publishDrink: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
 
@@ -148,55 +91,22 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
       author: currentUser.id,
       extra,
       favorites: [],
+      date: new Date(),
       category
     };
 
     onCreateDrink(newDrink);
     navigate('../');
   };
+  // --- Form submit
 
-  useEffect(() => {
-    let bulking: NodeJS.Timer;
-
-    if (currentDrink !== '' && isPouring && ingredientCount < 1000) {
-      bulking = setInterval(() => {
-        const initValue = glassContent[currentDrink] ?? 0;
-        setGlassContent({
-          ...glassContent,
-          [currentDrink]: initValue + 10
-        });
-      }, 100);
-    }
-
-    console.log(glassContent);
-
-    return () => clearInterval(bulking);
-  }, [isPouring, glassContent, ingredientCount, currentDrink]);
-
-  useEffect(() => {
-    let sum = 0;
-    for (const key in glassContent) sum += glassContent[key];
-
-    setIngredientCount(Math.floor(sum * 100) / 100);
-  }, [glassContent, ingredientCount]);
-
-  useEffect(() => {
-    setCurrentDrinkCode(formatDrinkName(currentDrink));
-    setSearchValue(currentDrink);
-  }, [currentDrink]);
-
-  useEffect(() => {
-    if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
-  }, [isSearchListOpen, searchValue, currentDrink]);
-
-  useEffect(() => {
-    setIsCodeOccupied(checkIsCodeOccupied());
-  }, [code]);
+  const handleGlassContentChange = (glassContent: GlassContent) => {
+    setGlassContent(glassContent);
+  };
 
   const handleCategoryChange: ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
-    console.log(event);
     setCategory('');
   };
 
@@ -327,64 +237,10 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
           <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>
             Proportions
           </h3>
-
-          {/* Glass */}
-          <div style={{ widows: '100%', position: 'relative' }}>
-            <div className='home__glass glass'>
-              {Object.keys(glassContent).map((bottleName) => (
-                <div
-                  className={`glass__ingredient ${formatDrinkName(bottleName)}`}
-                  key={bottleName}
-                  style={{ height: `${glassContent[bottleName] * 0.1}%` }}
-                  onClick={() => removeIngredient(bottleName)}
-                ></div>
-              ))}
-            </div>
-            <button
-              className='home__current-drink'
-              style={{ top: '-12rem', left: '48%' }}
-              data-type={currentDrinkCode}
-              onMouseDown={pourDrink}
-              onMouseUp={unpourDrink}
-              onMouseLeave={unpourDrink}
-              type='button'
-            >
-              <div
-                className={`home__drink bottle_${currentDrinkCode} ${
-                  isPouring ? 'home__drink_pouring' : ''
-                }`}
-              ></div>
-            </button>
-            <div className='home__search-container' onBlur={handleSearchBlur}>
-              <input
-                className='home__search ff-montse'
-                type='text'
-                value={searchValue}
-                onChange={handleSearch}
-                onFocus={handleInputClick}
-              />
-              <ul
-                className={`home__search-list ${
-                  isSearchListOpen ? 'home__search-list_active' : ''
-                }`}
-              >
-                {bottles
-                  .filter((bottle) =>
-                    bottle.toLowerCase().includes(searchValue.toLowerCase())
-                  )
-                  .map((bottle) => (
-                    <li key={bottle} className='home__search-item'>
-                      <Bottle
-                        bottle={bottle}
-                        changeDrink={changeDrink}
-                        onClick={handleBottleClick}
-                      />
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
-          {/* Glass */}
+          <GlassEditor
+            glassContent={glassContent}
+            onGlassContentChange={handleGlassContentChange}
+          />
 
           {/* Extras */}
           <h3 className='mt-6 drink__subheading ff-amatic text-4xl font-bold'>

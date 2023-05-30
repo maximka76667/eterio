@@ -34,6 +34,10 @@ const Sidebar = ({
   }
 
   function directRandomDrink() {
+    if (filteredDrinks.length === 0) {
+      return;
+    }
+
     let randomIndex = 0;
 
     if (filteredDrinks.length !== 1) {
@@ -120,7 +124,7 @@ const Sidebar = ({
                 <div
                   className={`flex-col sidebar__filter ${
                     isFilterOpen
-                      ? 'sidebar__filter_open my-1 px-2 pt-0.5 pb-3'
+                      ? 'sidebar__filter_open my-1 px-3 pt-0.5 pb-3'
                       : ''
                   }`}
                 >

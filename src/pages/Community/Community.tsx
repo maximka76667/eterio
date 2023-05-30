@@ -59,6 +59,12 @@ const Community = ({
     setFilteredDrinks(newDrinks);
   }, [search, communityDrinks]);
 
+  function compareDates(dateA: Date, dateB: Date) {
+    if (dateA > dateB) return -1;
+    if (dateA < dateB) return 1;
+    return 0;
+  }
+
   return (
     <div>
       Community
@@ -90,14 +96,17 @@ const Community = ({
                 </div>
               </NavLink>
               {filteredDrinks.length !== 0 ? (
-                filteredDrinks.map((drink) => (
-                  <li key={drink.id} className='sidebar__item'>
-                    <CommunityDrinkLink
-                      drink={drink}
-                      onToggleFavorite={onToggleFavorite}
-                    />
-                  </li>
-                ))
+                filteredDrinks
+                  .reverse()
+                  .sort((a, b) => compareDates(a.date, b.date))
+                  .map((drink) => (
+                    <li key={drink.id} className='sidebar__item'>
+                      <CommunityDrinkLink
+                        drink={drink}
+                        onToggleFavorite={onToggleFavorite}
+                      />
+                    </li>
+                  ))
               ) : (
                 <li className='sidebar__item'>
                   <p className='sidebar__not-found'>Nothing is found</p>

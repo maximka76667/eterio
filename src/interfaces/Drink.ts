@@ -11,5 +11,6 @@ export default interface Drink {
   is_community: boolean;
   author: string;
   favorites: string[];
+  date: Date;
   category: string;
 }

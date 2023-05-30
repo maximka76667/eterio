@@ -5,6 +5,8 @@ import './DrinkInfo.sass';
 import { CurrentUserContext } from '../../contexts';
 import { useNavigate } from 'react-router-dom';
 
+import imageNotFound from '../../images/image-not-found.jpg';
+
 interface DrinkInfoProps {
   drink: Drink;
   onDeleteDrink: (id: string) => void;
@@ -56,7 +58,11 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
       <div className='drink__container'>
         <div
           className='drink__img'
-          style={{ backgroundImage: `url(${drink.img})` }}
+          style={{
+            backgroundImage: `url(${
+              drink.img !== '' ? drink.img : imageNotFound
+            })`
+          }}
         />
       </div>
       <p className='drink__description'>{drink.description}</p>
