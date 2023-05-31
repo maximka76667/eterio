@@ -10,7 +10,7 @@ import './GlassEditor.sass';
 
 import { BottlesContext } from '../../contexts';
 import Bottle from '../Bottle/Bottle';
-import { GlassContent } from '../../interfaces';
+import { Bottle as IBottle, GlassContent } from '../../interfaces';
 
 interface GlassEditorProps {
   glassContent: GlassContent;
@@ -32,6 +32,7 @@ const GlassEditor = ({
   const [isPouring, setIsPouring] = useState(false);
   const [currentDrink, setCurrentDrink] = useState('');
   const [currentDrinkCode, setCurrentDrinkCode] = useState('');
+  const [currentDrinkImg, setCurrentDrinkImg] = useState('');
 
   function pourDrink() {
     setIsPouring(true);
@@ -60,7 +61,7 @@ const GlassEditor = ({
   // --- Pouring proccess
 
   // Bottles search
-  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
+  const [isSearchListOpen, setIsSearchListOpen] = useState(true);
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {
@@ -69,8 +70,9 @@ const GlassEditor = ({
     }
   };
 
-  const changeDrink = (drink: string) => {
-    setCurrentDrink(drink);
+  const changeBottle = (bottle: IBottle) => {
+    setCurrentDrink(bottle.name.toLowerCase());
+    setCurrentDrinkImg(bottle.img);
   };
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -121,7 +123,7 @@ const GlassEditor = ({
   }
 
   function formatDrinkName(drink: string) {
-    return drink.replaceAll(' ', '-');
+    return drink.toLowerCase().replaceAll(' ', '-');
   }
 
   useEffect(() => {
@@ -146,7 +148,7 @@ const GlassEditor = ({
         ))}
       </div>
       <button
-        className='glass-editor__current-drink w-[150px]'
+        className='glass-editor__current-drink w-[250px]'
         style={{ top: '-12rem', left: '48%' }}
         data-type={currentDrinkCode}
         onMouseDown={pourDrink}
@@ -154,11 +156,15 @@ const GlassEditor = ({
         onMouseLeave={unpourDrink}
         type='button'
       >
-        <div
-          className={`glass-editor__drink bottle_${currentDrinkCode} ${
-            isPouring ? 'glass-editor__drink_pouring' : ''
-          }`}
-        ></div>
+        {currentDrinkImg !== '' && (
+          <img
+            className={`glass-editor__drink ${
+              isPouring ? 'glass-editor__drink_pouring' : ''
+            }`}
+            src={`${process.env.PUBLIC_URL}/images/${currentDrinkImg}`}
+            onError={() => setCurrentDrinkImg('bottle-not-found.png')}
+          />
+        )}
       </button>
       <div className='glass-editor__search-container' onBlur={handleSearchBlur}>
         <input
@@ -181,7 +187,7 @@ const GlassEditor = ({
               <li key={bottle.id} className='glass-editor__search-item'>
                 <Bottle
                   bottle={bottle}
-                  changeDrink={changeDrink}
+                  changeDrink={changeBottle}
                   onClick={handleBottleClick}
                 />
               </li>

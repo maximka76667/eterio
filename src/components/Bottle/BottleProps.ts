@@ -3,6 +3,6 @@ import { Bottle } from '../../interfaces';
 
 export default interface BottleProps {
   bottle: Bottle;
-  changeDrink: (drink: string) => void;
+  changeDrink: (drink: Bottle) => void;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
