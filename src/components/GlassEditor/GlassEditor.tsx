@@ -61,7 +61,7 @@ const GlassEditor = ({
   // --- Pouring proccess
 
   // Bottles search
-  const [isSearchListOpen, setIsSearchListOpen] = useState(true);
+  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearchBlur: FocusEventHandler<HTMLDivElement> = (e) => {

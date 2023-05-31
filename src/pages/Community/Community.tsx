@@ -1,5 +1,6 @@
 import React, {
   MouseEventHandler,
+  ChangeEvent,
   useContext,
   useEffect,
   useState
@@ -13,6 +14,7 @@ import CommunityDrinkLink from '../../components/CommunityDrinkLink/CommunityDri
 import { NavLink, useNavigate } from 'react-router-dom';
 import plusIcon from '../../images/plus.png';
 import { CurrentUserContext } from '../../contexts';
+import AdvancedFilter from '../../components/AdvancedFilter/AdvancedFilter';
 
 interface CommunityProps {
   onListItemClick: () => void;
@@ -28,6 +30,7 @@ const Community = ({
   const communityDrinks = useContext(CommunityDrinksContext);
   const [search, setSearch] = useState('');
   const [filteredDrinks, setFilteredDrinks] = useState<Drink[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -52,18 +55,45 @@ const Community = ({
       return;
     }
 
-    const newDrinks = communityDrinks.filter((communityDrink) =>
+    let newDrinks = communityDrinks.filter((communityDrink) =>
       communityDrink.name.toLowerCase().includes(search.toLowerCase())
     );
 
+    if (selectedCategories.length !== 0) {
+      newDrinks = newDrinks.filter((drink) =>
+        selectedCategories.includes(drink.category)
+      );
+    }
+
     setFilteredDrinks(newDrinks);
-  }, [search, communityDrinks]);
+  }, [search, communityDrinks, selectedCategories]);
 
   function compareDates(dateA: Date, dateB: Date) {
     if (dateA > dateB) return -1;
     if (dateA < dateB) return 1;
     return 0;
   }
+
+  const handleOnChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    categoryName: string
+  ) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSelectedCategories((selectedCategories) => [
+        ...selectedCategories,
+        categoryName
+      ]);
+
+      return;
+    }
+
+    setSelectedCategories((selectedCategories) =>
+      selectedCategories.filter((selectedCategory) => {
+        return selectedCategory !== categoryName;
+      })
+    );
+  };
 
   return (
     <div>
@@ -72,6 +102,8 @@ const Community = ({
         {communityDrinks !== undefined && (
           <>
             <Search search={search} onSearch={handleSearch} />
+            <div className='m-2'></div>
+            <AdvancedFilter onChange={handleOnChange} />
             <ul className='community__list grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
               <NavLink
                 className={({ isActive }) =>
@@ -109,7 +141,7 @@ const Community = ({
                   ))
               ) : (
                 <li className='sidebar__item'>
-                  <p className='sidebar__not-found'>Nothing is found</p>
+                  <p className='community__not-found'>Nothing is found</p>
                 </li>
               )}
             </ul>
