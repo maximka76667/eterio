@@ -27,6 +27,7 @@ const CommunityDrinkLink = ({
   const authorUser = users.find((user) => user.id === author);
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const [favoritesLength, setFavoritesLength] = useState(favorites.length);
 
   const toggleFavorite: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -37,8 +38,21 @@ const CommunityDrinkLink = ({
       return;
     }
 
-    setIsFavorite((isFavorite) => !isFavorite);
+    setIsFavorite((isFavorite) => {
+      changeFavoritesLength(isFavorite);
+      return !isFavorite;
+    });
   };
+
+  function changeFavoritesLength(isFavorite: boolean) {
+    let difference = 1;
+
+    if (isFavorite) {
+      difference = -1;
+    }
+
+    setFavoritesLength((favoritesLength) => favoritesLength + difference);
+  }
 
   useEffect(() => {
     if (currentUser === null) {
@@ -78,7 +92,7 @@ const CommunityDrinkLink = ({
             }`}
             onClick={toggleFavorite}
           >
-            <p className='mr-2'>{favorites.length}</p>
+            <p className='mr-2'>{favoritesLength}</p>
             <FavoritesStar />
           </button>
         </div>

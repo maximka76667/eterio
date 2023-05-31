@@ -15,11 +15,13 @@ import { GlassContent } from '../../interfaces';
 interface GlassEditorProps {
   glassContent: GlassContent;
   onGlassContentChange: (newGlassContent: GlassContent) => void;
+  localStorageItemName: string;
 }
 
 const GlassEditor = ({
   glassContent,
-  onGlassContentChange
+  onGlassContentChange,
+  localStorageItemName
 }: GlassEditorProps) => {
   // Contexts
   const bottles = useContext(BottlesContext);
@@ -93,7 +95,7 @@ const GlassEditor = ({
   }
 
   useEffect(() => {
-    const cachedGlassContent = localStorage.getItem('mixer-content');
+    const cachedGlassContent = localStorage.getItem(localStorageItemName);
 
     if (cachedGlassContent === null) {
       return;
@@ -128,7 +130,7 @@ const GlassEditor = ({
 
     setIngredientCount(Math.floor(sum * 100) / 100);
 
-    localStorage.setItem('mixer-content', JSON.stringify(glassContent));
+    localStorage.setItem(localStorageItemName, JSON.stringify(glassContent));
   }, [glassContent, ingredientCount]);
 
   return (

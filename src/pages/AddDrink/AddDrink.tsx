@@ -240,6 +240,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
           <GlassEditor
             glassContent={glassContent}
             onGlassContentChange={handleGlassContentChange}
+            localStorageItemName='add-drink-content'
           />
 
           {/* Extras */}

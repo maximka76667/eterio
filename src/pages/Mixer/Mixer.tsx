@@ -107,6 +107,7 @@ const Mixer = (): JSX.Element => {
           onGlassContentChange={(newGlassContent) =>
             setGlassContent(newGlassContent)
           }
+          localStorageItemName='mixer-content'
         />
       </div>
 

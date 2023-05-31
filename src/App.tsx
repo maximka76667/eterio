@@ -8,8 +8,7 @@ import LoginPopup from './components/LoginPopup/LoginPopup';
 import authApi from './dataServices/auth';
 import CurrentUserContext from './contexts/CurrentUserContext';
 import RegistrationPopup from './components/RegistrationPopup/RegistrationPopup';
-import ErrorPopup from './components/ErrorPopup/ErrorPopup';
-import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios';
+import axios, { AxiosError, CancelTokenSource } from 'axios';
 import UserUpdate from './interfaces/UserUpdate';
 import InfoPopup from './components/InfoPopup/InfoPopup';
 import CommunityDrinksContext from './contexts/CommunityDrinksContext';
@@ -44,7 +43,7 @@ function App() {
         setAllDrinks(res);
       })
       .catch((error) => {
-        setErrorResponse(error.response);
+        showError(error);
       })
       .finally(() => {
         setIsLoading(false);
@@ -56,7 +55,7 @@ function App() {
         setCategories(res);
       })
       .catch((error) => {
-        setErrorResponse(error.response);
+        showError(error);
       });
 
     fetchUsers(source);
@@ -64,7 +63,7 @@ function App() {
     api
       .getBottles()
       .then((res) => setBottles(res))
-      .catch((error) => setErrorResponse(error.response));
+      .catch((error) => showError(error));
 
     return () => {
       source.cancel();
@@ -78,7 +77,7 @@ function App() {
         setUsers(res);
       })
       .catch((error) => {
-        setErrorResponse(error.response);
+        showError(error);
       });
   }
 
@@ -109,10 +108,6 @@ function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
 
-  // Error popup
-  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
-  const [errorResponse, setErrorResponse] = useState<AxiosResponse>();
-
   // Info
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   const [info, setInfo] = useState<{ title: string; message: string }>({
@@ -131,8 +126,8 @@ function App() {
   }
 
   function showError(error: AxiosError) {
-    setErrorResponse(error.response);
-    setIsErrorPopupOpen(true);
+    setInfo({ title: error.name, message: error.message });
+    setIsInfoPopupOpen(true);
   }
 
   function showInfo(info: { title: string; message: string }) {
@@ -337,15 +332,6 @@ function App() {
           onClose={() => setIsRegistrationPopupOpen(false)}
           isOpen={isRegistrationPopupOpen}
         />
-        {errorResponse !== undefined && (
-          <ErrorPopup
-            classNames='lg:w-1/3 sm:w-5/6'
-            errorMessage={errorResponse.data?.detail}
-            errorTitle={errorResponse.request.statusText}
-            isOpen={isErrorPopupOpen}
-            onClose={() => setIsErrorPopupOpen(false)}
-          />
-        )}
         {info !== undefined && (
           <InfoPopup
             classNames='lg:w-1/3 sm:w-5/6'
