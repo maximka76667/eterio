@@ -45,14 +45,13 @@ const GlassEditor = ({
     if (currentDrink !== '' && isPouring && ingredientCount < 1000) {
       bulking = setInterval(() => {
         const initValue = glassContent[currentDrink] ?? 0;
+
         onGlassContentChange({
           ...glassContent,
           [currentDrink]: initValue + 10
         });
       }, 100);
     }
-
-    console.log(glassContent);
 
     return () => clearInterval(bulking);
   }, [isPouring, glassContent, ingredientCount, currentDrink]);
@@ -94,6 +93,16 @@ const GlassEditor = ({
   }
 
   useEffect(() => {
+    const cachedGlassContent = localStorage.getItem('mixer-content');
+
+    if (cachedGlassContent === null) {
+      return;
+    }
+
+    onGlassContentChange(JSON.parse(cachedGlassContent));
+  }, []);
+
+  useEffect(() => {
     if (!isSearchListOpen && searchValue === '') setSearchValue(currentDrink);
   }, [isSearchListOpen, searchValue, currentDrink]);
 
@@ -118,6 +127,8 @@ const GlassEditor = ({
     for (const key in glassContent) sum += glassContent[key];
 
     setIngredientCount(Math.floor(sum * 100) / 100);
+
+    localStorage.setItem('mixer-content', JSON.stringify(glassContent));
   }, [glassContent, ingredientCount]);
 
   return (

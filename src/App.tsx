@@ -9,7 +9,7 @@ import authApi from './dataServices/auth';
 import CurrentUserContext from './contexts/CurrentUserContext';
 import RegistrationPopup from './components/RegistrationPopup/RegistrationPopup';
 import ErrorPopup from './components/ErrorPopup/ErrorPopup';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios';
 import UserUpdate from './interfaces/UserUpdate';
 import InfoPopup from './components/InfoPopup/InfoPopup';
 import CommunityDrinksContext from './contexts/CommunityDrinksContext';
@@ -36,7 +36,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    let source = axios.CancelToken.source();
+    const source = axios.CancelToken.source();
 
     api
       .getDrinks(source)
@@ -50,8 +50,6 @@ function App() {
         setIsLoading(false);
       });
 
-    source = axios.CancelToken.source();
-
     api
       .getCategories(source)
       .then((res) => {
@@ -61,8 +59,19 @@ function App() {
         setErrorResponse(error.response);
       });
 
-    source = axios.CancelToken.source();
+    fetchUsers(source);
 
+    api
+      .getBottles()
+      .then((res) => setBottles(res))
+      .catch((error) => setErrorResponse(error.response));
+
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+  function fetchUsers(source: CancelTokenSource) {
     api
       .getUsers(source)
       .then((res) => {
@@ -71,12 +80,7 @@ function App() {
       .catch((error) => {
         setErrorResponse(error.response);
       });
-
-    api
-      .getBottles()
-      .then((res) => setBottles(res))
-      .catch((error) => setErrorResponse(error.response));
-  }, []);
+  }
 
   useEffect(() => {
     const [matchDrinks, nonMatchDrinks] = partition<Drink>(
@@ -217,6 +221,9 @@ function App() {
       setCurrentUser(updatedUser);
 
       showInfo({ title: 'Perfect!', message: 'User updated successfully' });
+
+      const source = axios.CancelToken.source();
+      fetchUsers(source);
     } catch (error: any) {
       showError(error);
       console.log(error);
