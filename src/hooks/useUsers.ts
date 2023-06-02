@@ -11,11 +11,7 @@ const useUsers = () => {
   function onUserUpdate(updatedUser: User) {
     setUsers((users) =>
       users.map((user) => {
-        if (user.id === updatedUser.id) {
-          console.log(updatedUser);
-          return updatedUser;
-        }
-        return user;
+        return user.id === updatedUser.id ? updatedUser : user;
       })
     );
   }
