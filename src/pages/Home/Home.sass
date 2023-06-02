@@ -52,15 +52,16 @@
       left: 0
       right: 0
       bottom: 0
-      display: none
+      display: flex
       justify-content: center
       align-items: center
       background-color: rgba(0, 0, 0, .5)
       transition: all 0.3s
       z-index: 3
+      opacity: 0
 
     &:hover &__overlay
-      display: flex
+      opacity: 1
 
     &_top
       border-radius: 20px 20px 20px 0

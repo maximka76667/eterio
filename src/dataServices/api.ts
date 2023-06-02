@@ -93,7 +93,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'http://localhost:8000'
+  baseUrl: 'https://eterioapi-1-f7989107.deta.app'
 });
 
 export default api;
