@@ -57,10 +57,7 @@ const useDrinks = () => {
         const newDrinks = drinks.filter((drink) => drink.id !== id);
         setDrinks(newDrinks);
       })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-      });
+      .catch(setError);
   }
 
   useEffect(() => {
