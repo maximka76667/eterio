@@ -13,7 +13,7 @@
   &-wrapper
     display: flex
     flex-direction: column
-    height: 92vh
+    height: calc(100vh - 70px)
     position: sticky
     top: 70px
     min-width: 320px
@@ -24,17 +24,18 @@
     @include md
       position: fixed
       width: 0
-      height: 90%
+      height: calc(100% - 70px)
       display: flex
       opacity: 0
       visibility: hidden
       font-size: 0
 
     &_opened
-      opacity: 1
-      visibility: visible
-      width: 100%
-      font-size: 1em
+      @include md
+        opacity: 1
+        visibility: visible
+        width: 100%
+        font-size: 1em
 
   &__list
     padding: 0

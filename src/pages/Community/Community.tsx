@@ -96,58 +96,59 @@ const Community = ({
   };
 
   return (
-    <div>
-      Community
-      <>
-        {communityDrinks !== undefined && (
-          <>
+    <div className='flex flex-col items-center'>
+      <h2 className='text-6xl ff-montse text-center mb-10'>Community</h2>
+
+      {communityDrinks !== undefined && (
+        <>
+          <div className='lg:w-1/2 w-full'>
             <Search search={search} onSearch={handleSearch} />
             <div className='m-2'></div>
             <AdvancedFilter onChange={handleOnChange} />
-            <ul className='community__list grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
-              <NavLink
-                className={({ isActive }) =>
-                  'text-lg sidebar__link w-full h-[550px] ff-montse py-4 px-4 flex flex-col' +
-                  (isActive ? ' sidebar__link_active' : '')
-                }
-                to='add'
-                onClick={addDrinkRedirect}
+          </div>
+          <ul className='community__list grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
+            <NavLink
+              className={({ isActive }) =>
+                'text-lg sidebar__link w-full h-[550px] ff-montse py-4 px-4 flex flex-col' +
+                (isActive ? ' sidebar__link_active' : '')
+              }
+              to='add'
+              onClick={addDrinkRedirect}
+            >
+              <div
+                className='w-full h-full flex justify-center items-center'
+                style={{ backgroundColor: '#e6e6e6' }}
               >
-                <div
-                  className='w-full h-full flex justify-center items-center'
-                  style={{ backgroundColor: '#e6e6e6' }}
-                >
-                  <img
-                    className='w-1/2 object-cover object-center'
-                    src={plusIcon}
-                    alt='plus'
-                  />
-                </div>
-                <div className='sidebar__info w-full mt-5 pb-2 px-4 flex justify-between'>
-                  <p>Add a drink</p>
-                </div>
-              </NavLink>
-              {filteredDrinks.length !== 0 ? (
-                filteredDrinks
-                  .reverse()
-                  .sort((a, b) => compareDates(a.date, b.date))
-                  .map((drink) => (
-                    <li key={drink.id} className='sidebar__item'>
-                      <CommunityDrinkLink
-                        drink={drink}
-                        onToggleFavorite={onToggleFavorite}
-                      />
-                    </li>
-                  ))
-              ) : (
-                <li className='sidebar__item'>
-                  <p className='community__not-found'>Nothing is found</p>
-                </li>
-              )}
-            </ul>
-          </>
-        )}
-      </>
+                <img
+                  className='w-1/2 object-cover object-center'
+                  src={plusIcon}
+                  alt='plus'
+                />
+              </div>
+              <div className='sidebar__info w-full mt-5 pb-2 px-4 flex justify-between'>
+                <p>Add a drink</p>
+              </div>
+            </NavLink>
+            {filteredDrinks.length !== 0 ? (
+              filteredDrinks
+                .reverse()
+                .sort((a, b) => compareDates(a.date, b.date))
+                .map((drink) => (
+                  <li key={drink.id} className='sidebar__item'>
+                    <CommunityDrinkLink
+                      drink={drink}
+                      onToggleFavorite={onToggleFavorite}
+                    />
+                  </li>
+                ))
+            ) : (
+              <li className='sidebar__item'>
+                <p className='community__not-found'>Nothing is found</p>
+              </li>
+            )}
+          </ul>
+        </>
+      )}
     </div>
   );
 };

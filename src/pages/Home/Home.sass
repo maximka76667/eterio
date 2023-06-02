@@ -24,7 +24,6 @@
 
   &__title
     font-size: 6rem
-    margin-top: 120px
 
     @include md
       text-align: center
@@ -43,6 +42,31 @@
     @include md
       text-align: center
       font-size: 1rem
+
+  &__nav-link
+    position: relative
+
+    &__overlay
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      display: none
+      justify-content: center
+      align-items: center
+      background-color: rgba(0, 0, 0, .5)
+      transition: all 0.3s
+      z-index: 3
+
+    &:hover &__overlay
+      display: flex
+
+    &_top
+      border-radius: 20px 20px 20px 0
+
+    &_bottom
+      border-radius: 20px 0 20px 20px
 
   &__sidebar-button
     display: none
