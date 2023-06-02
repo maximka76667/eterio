@@ -29,15 +29,7 @@ const Main = ({
   return (
     <main className='main'>
       <Routes>
-        <Route
-          index
-          element={
-            <Home
-              isSidebarOpened={isSidebarOpened}
-              toggleSidebar={toggleSidebar}
-            />
-          }
-        />
+        <Route index element={<Home />} />
         <Route path='mixer' element={<Mixer />} />
         {drinks?.map((drink) => (
           <Route

@@ -15,7 +15,7 @@ type IMatch = Array<{
 }>;
 
 // Component of the home page
-const Mixer = (): JSX.Element => {
+const Mixer = () => {
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
 
@@ -26,27 +26,28 @@ const Mixer = (): JSX.Element => {
   const [matches, setMatches] = useState<IMatch>([]);
   const [communityMatches, setCommunityMatches] = useState<IMatch>([]);
 
+  function calculateMatch(drink: Drink) {
+    return (
+      Math.floor(compareComposition(drink.ingredients, glassContent) * 10) / 10
+    );
+  }
+
   function searchMatches() {
     setMatches([]);
     setCommunityMatches([]);
 
     for (const drink of drinks) {
-      const drinkMatch =
-        Math.floor(compareComposition(drink.ingredients, glassContent) * 10) /
-        10;
+      const match = calculateMatch(drink);
 
-      if (drinkMatch > 0) {
-        setMatches((matches) => [...matches, { drink, match: drinkMatch }]);
+      if (match > 0) {
+        setMatches((matches) => [...matches, { drink, match }]);
       }
     }
 
     for (const communityDrink of communityDrinks) {
-      const drinkMatch =
-        Math.floor(
-          compareComposition(communityDrink.ingredients, glassContent) * 10
-        ) / 10;
+      const match = calculateMatch(communityDrink);
 
-      if (drinkMatch > 0) {
+      if (match > 0) {
         setCommunityMatches((matches) => [
           ...matches,
           {
@@ -54,7 +55,7 @@ const Mixer = (): JSX.Element => {
               ...communityDrink,
               code: `community/${communityDrink.code}`
             },
-            match: drinkMatch
+            match
           }
         ]);
       }

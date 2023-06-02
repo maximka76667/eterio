@@ -21,7 +21,7 @@ const useDrinks = () => {
     api
       .createDrink(token, newDrink)
       .then((newDrink) => {
-        setCommunityDrinks((drinks) => [...drinks, newDrink]);
+        setDrinks((drinks) => [...drinks, newDrink]);
       })
       .catch(setError);
   }
@@ -36,7 +36,7 @@ const useDrinks = () => {
       .then((res) => {
         const newDrinks = drinks.map((drink) => {
           if (drink.id === drinkId) {
-            return { ...res };
+            return res;
           }
           return drink;
         });

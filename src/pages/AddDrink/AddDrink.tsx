@@ -40,7 +40,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
   );
   const [description, setDescription] = useState('');
   const [extra, setExtra] = useState<string[]>([]);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState<string>('Collins');
 
   // Code validation
   const [isCodeOccupied, setIsCodeOccupied] = useState(false);

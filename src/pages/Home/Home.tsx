@@ -1,13 +1,12 @@
 import React from 'react';
-import HomeProps from './HomeProps';
 import './Home.sass';
 import { NavLink } from 'react-router-dom';
 
 // Component of the home page
-const Home = ({ toggleSidebar, isSidebarOpened }: HomeProps): JSX.Element => {
+const Home = () => {
   return (
     <div className='home'>
-      <h1 className='home__title text-8xl ff-montse'>
+      <h1 className='home__title text-8xl ff-montse text-center'>
         Welcome to <span className='home__name'>Eterio</span>
       </h1>
       <p className='text-2xl ff-montse mt-6 mb-8'>
