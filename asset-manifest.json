@@ -1,24 +1,25 @@
 {
   "files": {
-    "main.css": "/alcopedia/static/css/main.30576bd0.css",
-    "main.js": "/alcopedia/static/js/main.6a6de473.js",
-    "static/media/vodka.png": "/alcopedia/static/media/vodka.6f3d769dc8938aae32d3.png",
-    "static/media/Ubuntu-Regular.ttf": "/alcopedia/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
-    "static/media/Ubuntu-Bold.ttf": "/alcopedia/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
-    "static/media/cranberry-juice.png": "/alcopedia/static/media/cranberry-juice.b0f16685b519baebea3b.png",
-    "static/media/AmaticSC-Bold.ttf": "/alcopedia/static/media/AmaticSC-Bold.f12c1d887cda2131ac83.ttf",
-    "static/media/AmaticSC-Regular.ttf": "/alcopedia/static/media/AmaticSC-Regular.fd9971162ff94dc53856.ttf",
-    "static/media/IndieFlower-Regular.ttf": "/alcopedia/static/media/IndieFlower-Regular.599d26584b9afc1d20b1.ttf",
-    "static/media/orange-juice.png": "/alcopedia/static/media/orange-juice.c4d989f331d60e6088cf.png",
-    "static/media/logo512.png": "/alcopedia/static/media/logo512.2b4f1b026f490312e7b6.png",
-    "static/media/PatuaOne-Regular.ttf": "/alcopedia/static/media/PatuaOne-Regular.a9f01afefe6f58c9aeb2.ttf",
-    "static/media/lime-slice.webp": "/alcopedia/static/media/lime-slice.9bec9e92722ae1424160.webp",
-    "index.html": "/alcopedia/index.html",
-    "main.30576bd0.css.map": "/alcopedia/static/css/main.30576bd0.css.map",
-    "main.6a6de473.js.map": "/alcopedia/static/js/main.6a6de473.js.map"
+    "main.css": "/eterio/static/css/main.6f4ec018.css",
+    "main.js": "/eterio/static/js/main.2f3a0c92.js",
+    "static/media/Ubuntu-Regular.ttf": "/eterio/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
+    "static/media/Ubuntu-Bold.ttf": "/eterio/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
+    "static/media/AmaticSC-Bold.ttf": "/eterio/static/media/AmaticSC-Bold.f12c1d887cda2131ac83.ttf",
+    "static/media/AmaticSC-Regular.ttf": "/eterio/static/media/AmaticSC-Regular.fd9971162ff94dc53856.ttf",
+    "static/media/IndieFlower-Regular.ttf": "/eterio/static/media/IndieFlower-Regular.599d26584b9afc1d20b1.ttf",
+    "static/media/home-community.webp": "/eterio/static/media/home-community.ddf627042a6cfe06e7a2.webp",
+    "static/media/logo512.png": "/eterio/static/media/logo512.2b4f1b026f490312e7b6.png",
+    "static/media/PatuaOne-Regular.ttf": "/eterio/static/media/PatuaOne-Regular.a9f01afefe6f58c9aeb2.ttf",
+    "static/media/home-official.webp": "/eterio/static/media/home-official.1e74c025fd6fa7d219af.webp",
+    "static/media/plus.png": "/eterio/static/media/plus.2c131f75bbb79f006912.png",
+    "static/media/image-not-found.jpg": "/eterio/static/media/image-not-found.c160315d7e3394bafc44.jpg",
+    "static/media/lime-slice.webp": "/eterio/static/media/lime-slice.9bec9e92722ae1424160.webp",
+    "index.html": "/eterio/index.html",
+    "main.6f4ec018.css.map": "/eterio/static/css/main.6f4ec018.css.map",
+    "main.2f3a0c92.js.map": "/eterio/static/js/main.2f3a0c92.js.map"
   },
   "entrypoints": [
-    "static/css/main.30576bd0.css",
-    "static/js/main.6a6de473.js"
+    "static/css/main.6f4ec018.css",
+    "static/js/main.2f3a0c92.js"
   ]
 }
