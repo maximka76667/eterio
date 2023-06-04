@@ -20,7 +20,8 @@ import {
   CommunityDrinksContext,
   DrinksContext as OfficialDrinksContext,
   CurrentUserContext,
-  UsersContext
+  UsersContext,
+  LoadingContext
 } from './contexts';
 
 import { api } from './dataServices';
@@ -34,7 +35,7 @@ function App() {
   const {
     officialDrinks,
     communityDrinks,
-    isLoading,
+    isLoading: isDrinksLoading,
     error,
     onAddCommunityDrink,
     onToggleFavorite,
@@ -85,6 +86,7 @@ function App() {
   // Popups
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Info
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
@@ -143,15 +145,20 @@ function App() {
 
   // Current user
   function handleLogin(email: string, password: string) {
+    setIsLoading(true);
     onLogin(email, password)
       .then(() => setIsLoginPopupOpen(false))
-      .catch(showError);
+      .catch(showError)
+      .finally(() => setIsLoading(false));
   }
 
   function handleRegistration(email: string, name: string, password: string) {
+    setIsLoading(true);
+
     onRegistration(email, name, password)
       .then(() => toggleAuthPopups(true))
-      .catch(showError);
+      .catch(showError)
+      .finally(() => setIsLoading(false));
   }
 
   function handleLogout() {
@@ -161,76 +168,83 @@ function App() {
   async function updateUser(newUser: UserUpdate) {
     const promise = onUpdateUser(newUser);
 
+    setIsLoading(true);
+
     promise
       .then(() => {
         showInfo({ title: 'Perfect!', message: 'User updated successfully' });
         navigate('/me');
       })
-      .catch(showError);
+      .catch(showError)
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     return await promise;
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className='app'>
-        <Header
-          isSidebarOpened={isSidebarOpened}
-          closeSidebar={closeSidebar}
-          openLoginPopup={() => setIsLoginPopupOpen(true)}
-          openRegistrationPopup={() => setIsRegistrationPopupOpen(true)}
-          handleLogout={handleLogout}
-        />
-        <OfficialDrinksContext.Provider value={officialDrinks}>
-          <UsersContext.Provider value={users}>
-            <CommunityDrinksContext.Provider value={communityDrinks}>
-              <CategoriesContext.Provider value={categories}>
-                <BottlesContext.Provider value={bottles}>
-                  {isLoading ? (
-                    <Loading />
-                  ) : (
-                    <Content
-                      isSidebarOpened={isSidebarOpened}
-                      toggleSidebar={() => {
-                        setIsSidebarOpened(
-                          (isSidebarOpened) => !isSidebarOpened
-                        );
-                      }}
-                      closeSidebar={closeSidebar}
-                      onToggleFavorite={handleToggleFavorite}
-                      onUserUpdate={updateUser}
-                      onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
-                      onCreateDrink={handleCreateDrink}
-                      onDeleteDrink={handleDeleteDrink}
-                    />
-                  )}
-                </BottlesContext.Provider>
-              </CategoriesContext.Provider>
-            </CommunityDrinksContext.Provider>
-          </UsersContext.Provider>
-        </OfficialDrinksContext.Provider>
-        <LoginPopup
-          handleLogin={handleLogin}
-          onClose={() => setIsLoginPopupOpen(false)}
-          redirectSignup={() => toggleAuthPopups(false)}
-          isOpen={isLoginPopupOpen}
-        />
-        <RegistrationPopup
-          handleRegistration={handleRegistration}
-          redirectSignin={() => toggleAuthPopups(true)}
-          onClose={() => setIsRegistrationPopupOpen(false)}
-          isOpen={isRegistrationPopupOpen}
-        />
-        {info !== undefined && (
-          <InfoPopup
-            classNames='lg:w-1/3 sm:w-5/6'
-            title={info.title}
-            message={info.message}
-            isOpen={isInfoPopupOpen}
-            onClose={() => setIsInfoPopupOpen(false)}
+      <LoadingContext.Provider value={isLoading}>
+        <div className='app'>
+          <Header
+            isSidebarOpened={isSidebarOpened}
+            closeSidebar={closeSidebar}
+            openLoginPopup={() => setIsLoginPopupOpen(true)}
+            openRegistrationPopup={() => setIsRegistrationPopupOpen(true)}
+            handleLogout={handleLogout}
           />
-        )}
-      </div>
+          <OfficialDrinksContext.Provider value={officialDrinks}>
+            <UsersContext.Provider value={users}>
+              <CommunityDrinksContext.Provider value={communityDrinks}>
+                <CategoriesContext.Provider value={categories}>
+                  <BottlesContext.Provider value={bottles}>
+                    {isDrinksLoading ? (
+                      <Loading />
+                    ) : (
+                      <Content
+                        isSidebarOpened={isSidebarOpened}
+                        toggleSidebar={() => {
+                          setIsSidebarOpened(
+                            (isSidebarOpened) => !isSidebarOpened
+                          );
+                        }}
+                        closeSidebar={closeSidebar}
+                        onToggleFavorite={handleToggleFavorite}
+                        onUserUpdate={updateUser}
+                        onOpenLoginPopup={() => setIsLoginPopupOpen(true)}
+                        onCreateDrink={handleCreateDrink}
+                        onDeleteDrink={handleDeleteDrink}
+                      />
+                    )}
+                  </BottlesContext.Provider>
+                </CategoriesContext.Provider>
+              </CommunityDrinksContext.Provider>
+            </UsersContext.Provider>
+          </OfficialDrinksContext.Provider>
+          <LoginPopup
+            handleLogin={handleLogin}
+            onClose={() => setIsLoginPopupOpen(false)}
+            redirectSignup={() => toggleAuthPopups(false)}
+            isOpen={isLoginPopupOpen}
+          />
+          <RegistrationPopup
+            handleRegistration={handleRegistration}
+            redirectSignin={() => toggleAuthPopups(true)}
+            onClose={() => setIsRegistrationPopupOpen(false)}
+            isOpen={isRegistrationPopupOpen}
+          />
+          {info !== undefined && (
+            <InfoPopup
+              classNames='lg:w-1/3 sm:w-5/6'
+              title={info.title}
+              message={info.message}
+              isOpen={isInfoPopupOpen}
+              onClose={() => setIsInfoPopupOpen(false)}
+            />
+          )}
+        </div>
+      </LoadingContext.Provider>
     </CurrentUserContext.Provider>
   );
 }

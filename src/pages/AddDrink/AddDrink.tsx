@@ -117,9 +117,6 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
           <div className='border-b border-gray-900/10 pb-12'>
             <div>
               <div className='flex justify-between'>
-                <h2 className='add-drink__title-smile text-9xl font-semibold ff-montse text-emerald-500 my-12 text-right'>
-                  ( ͡° ͜ʖ ͡°)
-                </h2>
                 <h2 className='add-drink__title text-9xl font-semibold ff-montse text-emerald-500 my-12 text-right'>
                   New drink
                 </h2>

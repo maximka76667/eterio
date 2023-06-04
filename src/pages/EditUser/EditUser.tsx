@@ -4,8 +4,10 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import { CurrentUserContext } from '../../contexts';
-import UserUpdate from '../../interfaces/UserUpdate';
+import { CurrentUserContext, LoadingContext } from '../../contexts';
+import { UserUpdate } from '../../interfaces';
+
+import fountain from '../../images/fountain.gif';
 
 interface EditUserProps {
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
@@ -17,6 +19,8 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState('');
+
+  const isLoading = useContext(LoadingContext);
 
   function setUserData() {
     if (currentUser === null) {
@@ -75,11 +79,11 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
         />
 
         <button
-          className='bg-emerald-500 py-1.5 px-3 mt-4 rounded text-white'
+          className='bg-emerald-500 py-2.5 px-5 mt-4 rounded text-white'
           type='submit'
           onClick={handleSubmit}
         >
-          Update
+          {isLoading ? <img className='submit-img' src={fountain} /> : 'Update'}
         </button>
       </form>
     </div>

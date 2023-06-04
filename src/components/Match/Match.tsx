@@ -7,7 +7,7 @@ import imageNotFound from '../../images/image-not-found.jpg';
 
 const Match = ({ match: { drink, match } }: MatchProps) => {
   return (
-    <Link to={`/${drink.code}`} className='match flex-col xl:flex-row'>
+    <Link to={`/${drink.code}`} className='match flex-col xl:flex-row w-full'>
       <div
         style={{
           backgroundImage: `url(${
@@ -16,7 +16,7 @@ const Match = ({ match: { drink, match } }: MatchProps) => {
         }}
         className='match__drink-img min-w-[100px] lg:min-w-[300px]'
       ></div>
-      <div className='match__drink-info w-[600px] py-7 px-2'>
+      <div className='match__drink-info py-7 px-2'>
         <h2 className='match__drink-name text-6xl ff-amatic mb-3'>
           {drink.name}
         </h2>

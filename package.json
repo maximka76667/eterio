@@ -1,8 +1,8 @@
 {
-  "name": "alcopedia",
+  "name": "eterio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://maximka76667.github.io/alcopedia",
+  "homepage": "https://maximka76667.github.io/eterio",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

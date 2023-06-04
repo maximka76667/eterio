@@ -1,5 +1,9 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useContext } from 'react';
 import Popup from '../Popup/Popup';
+
+import logo from '../../images/logo512.png';
+import fountain from '../../images/fountain.gif';
+import { LoadingContext } from '../../contexts';
 
 interface RegistrationPopupProps {
   isOpen: boolean;
@@ -18,6 +22,8 @@ const RegistrationPopup = ({
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const isLoading = useContext(LoadingContext);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -30,13 +36,9 @@ const RegistrationPopup = ({
       onClose={onClose}
       classNames='w-full sm:w-full md:w-5/6 lg:w-3/6'
     >
-      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
+      <div className='flex flex-1 flex-col justify-center px-6 py-6 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <img
-            className='mx-auto h-10 w-auto'
-            src='https://tailwindui.com/img/logos/mark.svg?color=emerald&shade=600'
-            alt='Your Company'
-          />
+          <img className='mx-auto h-10 w-auto' src={logo} alt='Your Company' />
           <h2 className='mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900'>
             Create a new account
           </h2>
@@ -114,7 +116,11 @@ const RegistrationPopup = ({
                 type='submit'
                 className='flex w-full justify-center rounded-md bg-emerald-600 px-3 py-2 font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600'
               >
-                Sign up
+                {isLoading ? (
+                  <img className='submit-img' src={fountain} />
+                ) : (
+                  'Sign up'
+                )}
               </button>
             </div>
           </form>

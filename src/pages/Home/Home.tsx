@@ -13,7 +13,7 @@ const Home = () => {
         Welcome to <span className='home__name'>Eterio</span>
       </h1>
       <div className='grid sm:grid-cols-2 mt-10 w-full grid-cols-1'>
-        <div className='w-full h-full flex flex-col justify-center items-center'>
+        <div className='w-full h-full flex flex-col justify-center items-center p-10 sm:p-0'>
           <p className='text-3xl ff-montse text-center w-2/3'>
             Find your cocktail by it&apos;s content!
           </p>
@@ -55,7 +55,7 @@ const Home = () => {
           </div>
         </NavLink>
 
-        <div className='w-full flex-col h-full flex justify-center items-center'>
+        <div className='w-full flex-col h-full flex justify-center items-center p-10 sm:p-0'>
           <p className='text-3xl ff-montse text-center w-2/3'>
             Look what people figured out!
           </p>
