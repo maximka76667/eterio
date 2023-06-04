@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/eterio/static/css/main.6f4ec018.css",
-    "main.js": "/eterio/static/js/main.2f3a0c92.js",
+    "main.css": "/eterio/static/css/main.a7f233bc.css",
+    "main.js": "/eterio/static/js/main.57b74fa6.js",
     "static/media/Ubuntu-Regular.ttf": "/eterio/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
     "static/media/Ubuntu-Bold.ttf": "/eterio/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
     "static/media/AmaticSC-Bold.ttf": "/eterio/static/media/AmaticSC-Bold.f12c1d887cda2131ac83.ttf",
     "static/media/AmaticSC-Regular.ttf": "/eterio/static/media/AmaticSC-Regular.fd9971162ff94dc53856.ttf",
+    "static/media/fountain.gif": "/eterio/static/media/fountain.74debccf9b62401a6e91.gif",
     "static/media/IndieFlower-Regular.ttf": "/eterio/static/media/IndieFlower-Regular.599d26584b9afc1d20b1.ttf",
     "static/media/home-community.webp": "/eterio/static/media/home-community.ddf627042a6cfe06e7a2.webp",
     "static/media/logo512.png": "/eterio/static/media/logo512.2b4f1b026f490312e7b6.png",
@@ -15,11 +16,11 @@
     "static/media/image-not-found.jpg": "/eterio/static/media/image-not-found.c160315d7e3394bafc44.jpg",
     "static/media/lime-slice.webp": "/eterio/static/media/lime-slice.9bec9e92722ae1424160.webp",
     "index.html": "/eterio/index.html",
-    "main.6f4ec018.css.map": "/eterio/static/css/main.6f4ec018.css.map",
-    "main.2f3a0c92.js.map": "/eterio/static/js/main.2f3a0c92.js.map"
+    "main.a7f233bc.css.map": "/eterio/static/css/main.a7f233bc.css.map",
+    "main.57b74fa6.js.map": "/eterio/static/js/main.57b74fa6.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f4ec018.css",
-    "static/js/main.2f3a0c92.js"
+    "static/css/main.a7f233bc.css",
+    "static/js/main.57b74fa6.js"
   ]
 }
