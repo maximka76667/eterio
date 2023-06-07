@@ -31,6 +31,20 @@ import { useNavigate } from 'react-router-dom';
 function App() {
   const navigate = useNavigate();
 
+  // Users
+  const { users, onUserUpdate } = useUsers();
+
+  // Current user custom hook
+  const {
+    currentUser,
+    error: userError,
+    token,
+    onLogin,
+    onRegistration,
+    onUpdateUser,
+    onLogout
+  } = useCurrentUser(onUserUpdate);
+
   // Drinks custom hook
   const {
     officialDrinks,
@@ -40,20 +54,7 @@ function App() {
     onAddCommunityDrink,
     onToggleFavorite,
     onDeleteCommunityDrink
-  } = useDrinks();
-
-  // Users
-  const { users, onUserUpdate } = useUsers();
-
-  // Current user custom hook
-  const {
-    currentUser,
-    error: userError,
-    onLogin,
-    onRegistration,
-    onUpdateUser,
-    onLogout
-  } = useCurrentUser(onUserUpdate);
+  } = useDrinks(token);
 
   // Categories
   const [categories, setCategories] = useState<Category[]>([]);
@@ -69,9 +70,7 @@ function App() {
       .then((res) => {
         setCategories(res);
       })
-      .catch((error) => {
-        showError(error);
-      });
+      .catch(showError);
 
     api
       .getBottles()
@@ -102,9 +101,12 @@ function App() {
     setIsSidebarOpened(false);
   }
 
-  function showError(error: AxiosError) {
+  function showError(error: AxiosError<{ detail?: string }>) {
     console.log(error);
-    setInfo({ title: error.name, message: error.message });
+    setInfo({
+      title: error.response?.data.detail ?? 'Error',
+      message: error.message
+    });
     setIsInfoPopupOpen(true);
   }
 
@@ -126,14 +128,6 @@ function App() {
     setIsRegistrationPopupOpen(!toSignin);
     setIsLoginPopupOpen(toSignin);
   };
-
-  function handleCreateDrink(newDrink: DrinkCreate) {
-    onAddCommunityDrink(newDrink);
-  }
-
-  function handleDeleteDrink(id: string) {
-    onDeleteCommunityDrink(id);
-  }
 
   useEffect(() => {
     const errorToShow = error ?? userError;
@@ -181,6 +175,33 @@ function App() {
       });
 
     return await promise;
+  }
+
+  // Drinks
+  function handleCreateDrink(newDrink: DrinkCreate) {
+    setIsLoading(true);
+
+    onAddCommunityDrink(newDrink)
+      .then(() => {
+        navigate('/community');
+      })
+      .catch(showError)
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  function handleDeleteDrink(id: string) {
+    setIsLoading(true);
+
+    onDeleteCommunityDrink(id)
+      .then(() => {
+        navigate('/community');
+      })
+      .catch(showError)
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (

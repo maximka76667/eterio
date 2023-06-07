@@ -2,7 +2,6 @@ export { default as AdvancedFilter } from './AdvancedFilter/AdvancedFilter';
 export { default as Bottle } from './Bottle/Bottle';
 export { default as CommunityDrinkLink } from './CommunityDrinkLink/CommunityDrinkLink';
 export { default as Content } from './Content/Content';
-export { default as ErrorPopup } from './ErrorPopup/ErrorPopup';
 export { default as Extra } from './Extra/Extra';
 export { default as FavoritesStar } from './FavoritesStar/FavoritesStar';
 export { default as Glass } from './Glass/Glass';

@@ -6,7 +6,9 @@ import { AxiosError } from 'axios';
 
 const useCurrentUser = (onUserUpdate: (newUser: User) => void) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [error, setError] = useState<AxiosError | null>(null);
+  const [error, setError] = useState<AxiosError<{ detail?: string }> | null>(
+    null
+  );
 
   const { token, onTokenChange } = useToken();
 
@@ -61,6 +63,7 @@ const useCurrentUser = (onUserUpdate: (newUser: User) => void) => {
   return {
     error,
     currentUser,
+    token,
     onUpdateUser,
     onLogin,
     onRegistration,

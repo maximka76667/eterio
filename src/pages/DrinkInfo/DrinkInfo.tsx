@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Drink, Ingredient } from '../../interfaces';
 import Glass from '../../components/Glass/Glass';
 import './DrinkInfo.sass';
-import { CurrentUserContext } from '../../contexts';
-import { useNavigate } from 'react-router-dom';
+import { CurrentUserContext, LoadingContext } from '../../contexts';
 
 import imageNotFound from '../../images/image-not-found.jpg';
+import fountain from '../../images/fountain.gif';
 
 interface DrinkInfoProps {
   drink: Drink;
@@ -15,10 +15,10 @@ interface DrinkInfoProps {
 const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
   const currentUser = useContext(CurrentUserContext);
 
-  const navigate = useNavigate();
-
   const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
   const [ingredientCount, setIngredientCount] = useState<number>(0);
+
+  const isLoading = useContext(LoadingContext);
 
   useEffect(() => {
     setIngredientList([]);
@@ -36,8 +36,6 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
 
   const handleDrinkDelete = () => {
     onDeleteDrink(drink.id);
-
-    navigate('../');
   };
 
   return (
@@ -51,7 +49,11 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
             onClick={handleDrinkDelete}
             className='drink__delete bg-red-500 py-1.5 px-3 rounded-xl text-white hover:bg-red-600'
           >
-            Delete
+            {isLoading ? (
+              <img className='submit-img' src={fountain} />
+            ) : (
+              'Delete'
+            )}
           </button>
         )}
       </div>

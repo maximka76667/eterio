@@ -2,23 +2,22 @@ import { useEffect, useState } from 'react';
 import { Drink, DrinkCreate } from '../interfaces';
 import api from '../dataServices/api';
 import axios, { AxiosError } from 'axios';
-import useToken from './useToken';
 
-const useDrinks = () => {
+const useDrinks = (token: string | null) => {
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [officialDrinks, setOfficialDrinks] = useState<Drink[]>([]);
   const [communityDrinks, setCommunityDrinks] = useState<Drink[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<AxiosError | null>(null);
+  const [error, setError] = useState<AxiosError<{ detail?: string }> | null>(
+    null
+  );
 
-  const { token } = useToken();
-
-  function onAddCommunityDrink(newDrink: DrinkCreate) {
+  async function onAddCommunityDrink(newDrink: DrinkCreate) {
     if (token === null) {
-      return;
+      throw new Error('Not authorized');
     }
 
-    api
+    return await api
       .createDrink(token, newDrink)
       .then((newDrink) => {
         setDrinks((drinks) => [...drinks, newDrink]);
@@ -28,7 +27,7 @@ const useDrinks = () => {
 
   function onToggleFavorite(isFavorite: boolean, drinkId: string) {
     if (token === null) {
-      return;
+      throw new Error('Not authorized');
     }
 
     api
@@ -46,12 +45,12 @@ const useDrinks = () => {
       .catch(setError);
   }
 
-  function onDeleteCommunityDrink(id: string) {
+  async function onDeleteCommunityDrink(id: string) {
     if (token === null) {
-      return;
+      throw new Error('Not authorized');
     }
 
-    api
+    return await api
       .deleteDrink(token, id)
       .then(() => {
         const newDrinks = drinks.filter((drink) => drink.id !== id);

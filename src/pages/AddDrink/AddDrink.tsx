@@ -10,21 +10,22 @@ import './AddDrink.sass';
 import {
   CategoriesContext,
   CurrentUserContext,
-  DrinksContext
+  DrinksContext,
+  LoadingContext
 } from '../../contexts';
 import ListViewer from '../../components/ListViewer/ListViewer';
 import CommunityDrinksContext from '../../contexts/CommunityDrinksContext';
 import { DrinkCreate, GlassContent } from '../../interfaces';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import GlassEditor from '../../components/GlassEditor/GlassEditor';
+
+import fountain from '../../images/fountain.gif';
 
 interface AddDrinkProps {
   onCreateDrink: (drinkCreate: DrinkCreate) => void;
 }
 
 const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
-  const navigate = useNavigate();
-
   // Contexts
   const drinks = useContext(DrinksContext);
   const communityDrinks = useContext(CommunityDrinksContext);
@@ -44,6 +45,8 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
 
   // Code validation
   const [isCodeOccupied, setIsCodeOccupied] = useState(false);
+
+  const isLoading = useContext(LoadingContext);
 
   function checkIsCodeOccupied() {
     let result = false;
@@ -96,7 +99,6 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
     };
 
     onCreateDrink(newDrink);
-    navigate('../');
   };
   // --- Form submit
 
@@ -269,7 +271,11 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
               type='submit'
               disabled={name === '' || code === ''}
             >
-              Publish
+              {isLoading ? (
+                <img className='submit-img' src={fountain} />
+              ) : (
+                'Publish'
+              )}
             </button>
             <NavLink to='../' className='add-drink__cancel'>
               Cancel
