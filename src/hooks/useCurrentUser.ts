@@ -30,6 +30,9 @@ const useCurrentUser = (onUserUpdate: (newUser: User) => void) => {
     const promise = api.getCurrentUser(res.access_token);
     const currentUser = await promise;
     setCurrentUser(currentUser);
+
+    console.log(res.access_token);
+
     onTokenChange(res.access_token);
 
     return await promise;
