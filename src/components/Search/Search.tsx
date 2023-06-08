@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, FormEventHandler } from 'react';
-import { SearchProps } from '../../interfaces';
+import SearchProps from './SearchProps';
 import './Search.sass';
 
 const Search = ({ search, onSearch }: SearchProps) => {
@@ -14,7 +14,7 @@ const Search = ({ search, onSearch }: SearchProps) => {
   return (
     <form className='search' onSubmit={handleSubmit}>
       <input
-        className='search__input'
+        className='search__input ff-monste text-lg py-3 px-3'
         type='text'
         value={search}
         placeholder='Search a drink'

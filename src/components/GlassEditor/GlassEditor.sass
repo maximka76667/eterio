@@ -1,0 +1,54 @@
+.glass-editor
+
+    &__glass
+        width: 100px
+        height: 250px
+        display: flex
+        margin: 12rem auto 5rem
+        flex-direction: column-reverse
+
+    &__current-drink
+        margin-top: -3rem
+        position: absolute
+        background-color: transparent
+
+    &__drink
+        min-height: 250px
+        height: 250px
+        transform: rotate(-45deg)
+        transition: all 0.3s
+        pointer-events: none
+        background-size: contain
+        background-position: 50% 50%
+        background-repeat: no-repeat
+
+        &_pouring
+            top: 15%
+            transform: rotate(-110deg)
+
+    &__search
+        border: 1px solid #606770
+        border-radius: 5px
+        padding: 0.375rem 1rem
+        outline: 0
+        display: block
+        margin: 0 auto
+
+        &-container
+            font-size: 1.5rem
+            width: 100%
+
+        &-list
+            display: none
+            list-style-type: none
+            grid-template-columns: repeat(4, 1fr)
+            padding: 0
+            margin: 0
+            gap: 5px
+            padding: 5px
+
+            &_active
+                display: grid
+
+        &-item
+            width: 100%

@@ -1,27 +1,56 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext } from 'react';
 import './Header.sass';
-import logo from '../../images/logo512.png';
-import { HeaderProps } from '../../interfaces';
+import HeaderProps from './HeaderProps';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import LogoWrapper from '../LogoWrapper/LogoWrapper';
+import { NavLink } from 'react-router-dom';
 
-const Header = ({ closeSidebar, isSidebarOpened }: HeaderProps) => {
-  const { pathname } = useLocation();
-
+const Header = ({
+  closeSidebar,
+  isSidebarOpened,
+  openLoginPopup,
+  openRegistrationPopup,
+  handleLogout
+}: HeaderProps) => {
+  const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
-      {pathname !== '/' || isSidebarOpened ? (
-        <Link to='/' onClick={closeSidebar} className='header__logo'>
-          {' '}
-          <img className='header__logo-img' src={logo} alt='Alcopedia' />{' '}
-          Alcopedia
-        </Link>
-      ) : (
-        <p className='header__logo'>
-          {' '}
-          <img className='header__logo-img' src={logo} alt='Alcopedia' />{' '}
-          Alcopedia
-        </p>
-      )}
+      <div className='flex items-center gap-10'>
+        <LogoWrapper
+          closeSidebar={closeSidebar}
+          isSidebarOpened={isSidebarOpened}
+        />
+        <NavLink className='text-xl' to='/mixer'>
+          Mixer
+        </NavLink>
+      </div>
+      <div className='header__auth-buttons'>
+        {currentUser != null ? (
+          <>
+            <button
+              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-montse'
+              onClick={handleLogout}
+            >
+              Sign out
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-amasic'
+              onClick={openRegistrationPopup}
+            >
+              Sign up
+            </button>
+            <button
+              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-amasic'
+              onClick={openLoginPopup}
+            >
+              Sign in
+            </button>
+          </>
+        )}
+      </div>
     </header>
   );
 };

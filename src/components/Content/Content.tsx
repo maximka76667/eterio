@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContentProps } from '../../interfaces';
+import ContentProps from './ContentProps';
 import Main from '../Main/Main';
 import Sidebar from '../Sidebar/Sidebar';
 import './Content.sass';
@@ -9,6 +9,11 @@ const Content = ({
   toggleSidebar,
   closeSidebar,
   isSidebarOpened,
+  onToggleFavorite,
+  onUserUpdate,
+  onOpenLoginPopup,
+  onCreateDrink,
+  onDeleteDrink
 }: ContentProps) => {
   return (
     <div className='content'>
@@ -19,8 +24,21 @@ const Content = ({
           alt='sidebar icon'
         />
       </button>
-      <Sidebar isOpened={isSidebarOpened} onListItemClick={closeSidebar} />
-      <Main isSidebarOpened={isSidebarOpened} toggleSidebar={toggleSidebar} />
+      <Sidebar
+        isOpened={isSidebarOpened}
+        onListItemClick={closeSidebar}
+        onToggleFavorite={onToggleFavorite}
+      />
+      <Main
+        isSidebarOpened={isSidebarOpened}
+        toggleSidebar={toggleSidebar}
+        onUserUpdate={onUserUpdate}
+        onListItemClick={closeSidebar}
+        onToggleFavorite={onToggleFavorite}
+        onOpenLoginPopup={onOpenLoginPopup}
+        onCreateDrink={onCreateDrink}
+        onDeleteDrink={onDeleteDrink}
+      />
     </div>
   );
 };
