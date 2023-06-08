@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/eterio/static/css/main.a7f233bc.css",
-    "main.js": "/eterio/static/js/main.57b74fa6.js",
+    "main.css": "/eterio/static/css/main.4aaac859.css",
+    "main.js": "/eterio/static/js/main.2b6ab524.js",
     "static/media/Ubuntu-Regular.ttf": "/eterio/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
     "static/media/Ubuntu-Bold.ttf": "/eterio/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
     "static/media/AmaticSC-Bold.ttf": "/eterio/static/media/AmaticSC-Bold.f12c1d887cda2131ac83.ttf",
@@ -16,11 +16,11 @@
     "static/media/image-not-found.jpg": "/eterio/static/media/image-not-found.c160315d7e3394bafc44.jpg",
     "static/media/lime-slice.webp": "/eterio/static/media/lime-slice.9bec9e92722ae1424160.webp",
     "index.html": "/eterio/index.html",
-    "main.a7f233bc.css.map": "/eterio/static/css/main.a7f233bc.css.map",
-    "main.57b74fa6.js.map": "/eterio/static/js/main.57b74fa6.js.map"
+    "main.4aaac859.css.map": "/eterio/static/css/main.4aaac859.css.map",
+    "main.2b6ab524.js.map": "/eterio/static/js/main.2b6ab524.js.map"
   },
   "entrypoints": [
-    "static/css/main.a7f233bc.css",
-    "static/js/main.57b74fa6.js"
+    "static/css/main.4aaac859.css",
+    "static/js/main.2b6ab524.js"
   ]
 }
