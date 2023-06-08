@@ -26,8 +26,8 @@ class AuthApi {
 }
 
 const authApi = new AuthApi({
-  // baseUrl: 'https://eterioapi-1-f7989107.deta.app'
-  baseUrl: 'http://localhost:8000'
+  baseUrl: 'https://eterioapi-1-f7989107.deta.app'
+  // baseUrl: 'http://localhost:8000'
 });
 
 export default authApi;
