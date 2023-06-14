@@ -269,7 +269,7 @@ const AddDrink = ({ onCreateDrink }: AddDrinkProps) => {
               onClick={publishDrink}
               className='add-drink__submit bg-emerald-500 py-2 px-3 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200'
               type='submit'
-              disabled={name === '' || code === ''}
+              disabled={name === '' || code === '' || isCodeOccupied}
             >
               {isLoading ? (
                 <img className='submit-img' src={fountain} />
