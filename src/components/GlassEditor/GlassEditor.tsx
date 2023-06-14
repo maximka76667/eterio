@@ -154,6 +154,8 @@ const GlassEditor = ({
         onMouseDown={pourDrink}
         onMouseUp={unpourDrink}
         onMouseLeave={unpourDrink}
+        onTouchStart={pourDrink}
+        onTouchEnd={unpourDrink}
         type='button'
       >
         {currentDrinkImg !== '' && (
