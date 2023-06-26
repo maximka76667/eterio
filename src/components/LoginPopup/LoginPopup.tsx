@@ -1,4 +1,10 @@
-import React, { FormEvent, useState, useContext } from 'react';
+import React, {
+  FormEvent,
+  useState,
+  useContext,
+  useRef,
+  useEffect
+} from 'react';
 import Popup from '../Popup/Popup';
 import { LoadingContext } from '../../contexts';
 import './LoginPopup.sass';
@@ -21,6 +27,14 @@ const LoginPopup = ({
   redirectSignup,
   handleLogin
 }: LoginPopupProps) => {
+  const inputElement = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputElement.current && isOpen) {
+      inputElement.current.focus();
+    }
+  }, [isOpen]);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,16 +56,17 @@ const LoginPopup = ({
     >
       <div className='flex min-h-full flex-1 flex-col justify-center py-10 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <h2 className='login-popup__title text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+          <h2 className='popup__title text-2xl font-bold leading-9 tracking-tight text-gray-900'>
             Sign in to your account
           </h2>
         </div>
         {/* TO DO hiding password, clear password validation, stay logged in checkbox */}
-        <div className='login-popup__form-wrapper sm:mx-auto sm:w-full sm:max-w-sm'>
+        <div className='popup__form-wrapper sm:mx-auto sm:w-full sm:max-w-sm'>
           <form onSubmit={handleSubmit}>
             <div>
               <div className='mt-2'>
                 <input
+                  ref={inputElement}
                   id='email'
                   name='email'
                   type='email'
@@ -60,7 +75,7 @@ const LoginPopup = ({
                   placeholder='Email'
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className='login-form__input block w-full rounded-md placeholder:text-gray-400 sm:text-sm sm:leading-6'
+                  className='popup__input block w-full rounded-md placeholder:text-gray-400 sm:text-sm sm:leading-6'
                 />
               </div>
             </div>
@@ -75,11 +90,11 @@ const LoginPopup = ({
                 value={password}
                 placeholder='Password'
                 onChange={(e) => setPassword(e.target.value)}
-                className='login-form__input block w-full rounded-md px-4 text-gray-900  placeholder:text-gray-400 sm:text-sm sm:leading-6'
+                className='popup__input block w-full rounded-md px-4 text-gray-900  placeholder:text-gray-400 sm:text-sm sm:leading-6'
               />
               <button
                 onClick={() => setIsHidden((isHidden) => !isHidden)}
-                className='hide-password'
+                className='popup__hide-password'
                 type='button'
               >
                 <img src={isHidden ? hiddenEye : eye} />
@@ -89,7 +104,7 @@ const LoginPopup = ({
               <div className='m-1 text-sm'>
                 <a
                   href='#'
-                  className='font-semibold text-emerald-600 hover:text-emerald-500'
+                  className='font-semibold text-emerald-600 hover:text-emerald-500 transition-all'
                 >
                   Forgot password?
                 </a>
@@ -99,10 +114,10 @@ const LoginPopup = ({
             <div>
               <button
                 type='submit'
-                className='login-form__submit-button flex w-full justify-center rounded-md px-3 py-2 font-semibold leading-6 text-white shadow-sm'
+                className='popup__submit-button flex w-full justify-center rounded-md px-3 py-2 font-semibold leading-6 text-white shadow-sm'
               >
                 {isLoading ? (
-                  <img className='submit-img' src={fountain} />
+                  <img className='popup__submit-img' src={fountain} />
                 ) : (
                   'Sign in'
                 )}
@@ -110,11 +125,11 @@ const LoginPopup = ({
             </div>
           </form>
 
-          <p className='login-popup__signup-link mt-2 text-center text-sm text-gray-500'>
+          <p className='popup__redirect-link mt-2 text-center text-sm text-gray-500'>
             Don&apos;t have an account?{' '}
             <button
               onClick={redirectSignup}
-              className='font-semibold leading-6 text-emerald-600 hover:text-emerald-500'
+              className='font-semibold leading-6 text-emerald-600 hover:text-emerald-500 transition-all'
             >
               Sign up
             </button>
