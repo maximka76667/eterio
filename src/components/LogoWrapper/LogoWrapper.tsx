@@ -13,7 +13,7 @@ const LogoWrapper = ({ isSidebarOpened, closeSidebar }: LogoWrapperProps) => {
           <Logo />
         </Link>
       ) : (
-        <div className='header__logo ff-montse text-2xl'>
+        <div className='header__logo text-2xl'>
           <Logo />
         </div>
       )}

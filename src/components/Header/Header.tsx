@@ -15,7 +15,7 @@ const Header = ({
   const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
-      <div className='flex items-center gap-10'>
+      <div className='flex items-center gap-20'>
         <LogoWrapper
           closeSidebar={closeSidebar}
           isSidebarOpened={isSidebarOpened}
@@ -27,26 +27,20 @@ const Header = ({
       <div className='header__auth-buttons'>
         {currentUser != null ? (
           <>
-            <button
-              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-montse'
-              onClick={handleLogout}
-            >
-              Sign out
+            <button className='header__auth-button' onClick={handleLogout}>
+              Sign Out
             </button>
           </>
         ) : (
           <>
-            <button
-              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-amasic'
-              onClick={openRegistrationPopup}
-            >
-              Sign up
+            <button className='header__auth-link' onClick={openLoginPopup}>
+              Log In
             </button>
             <button
-              className='header__auth-button md:w-[100px] p-1 md:py-2 md:px-4 ff-amasic'
-              onClick={openLoginPopup}
+              className='header__auth-button'
+              onClick={openRegistrationPopup}
             >
-              Sign in
+              Sign Up
             </button>
           </>
         )}

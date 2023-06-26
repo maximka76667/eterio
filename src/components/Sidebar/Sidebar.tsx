@@ -104,7 +104,7 @@ const Sidebar = ({
               <li className='sidebar__item'>
                 <AdvancedFilter onChange={handleOnChange} />
                 <button
-                  className='sidebar__link sidebar__link_random ff-montse text-lg py-3 px-3 mt-1'
+                  className='sidebar__link sidebar__link_random text-lg py-3 px-3 mt-1'
                   onClick={directRandomDrink}
                 >
                   Get a random drink

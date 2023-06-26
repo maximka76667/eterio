@@ -3,8 +3,10 @@ import Popup from '../Popup/Popup';
 import { LoadingContext } from '../../contexts';
 import './LoginPopup.sass';
 
-import logo from '../../images/logo512.png';
 import fountain from '../../images/fountain.gif';
+
+import eye from '../../images/eye.png';
+import hiddenEye from '../../images/hidden.png';
 
 interface LoginPopupProps {
   isOpen: boolean;
@@ -22,6 +24,8 @@ const LoginPopup = ({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [isHidden, setIsHidden] = useState(true);
+
   const isLoading = useContext(LoadingContext);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -36,23 +40,16 @@ const LoginPopup = ({
       onClose={onClose}
       classNames='w-full sm:w-full md:w-5/6 lg:w-3/6'
     >
-      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
+      <div className='flex min-h-full flex-1 flex-col justify-center py-10 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <img className='mx-auto h-10 w-auto' src={logo} alt='Your Company' />
-          <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+          <h2 className='login-popup__title text-2xl font-bold leading-9 tracking-tight text-gray-900'>
             Sign in to your account
           </h2>
         </div>
-
-        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form className='space-y-6' onSubmit={handleSubmit}>
+        {/* TO DO hiding password, clear password validation, stay logged in checkbox */}
+        <div className='login-popup__form-wrapper sm:mx-auto sm:w-full sm:max-w-sm'>
+          <form onSubmit={handleSubmit}>
             <div>
-              <label
-                htmlFor='email'
-                className='block font-medium leading-6 text-gray-900'
-              >
-                Email address
-              </label>
               <div className='mt-2'>
                 <input
                   id='email'
@@ -60,48 +57,49 @@ const LoginPopup = ({
                   type='email'
                   autoComplete='email'
                   value={email}
+                  placeholder='Email'
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6'
+                  className='login-form__input block w-full rounded-md placeholder:text-gray-400 sm:text-sm sm:leading-6'
                 />
               </div>
             </div>
 
-            <div>
-              <div className='flex items-center justify-between'>
-                <label
-                  htmlFor='password'
-                  className='block font-medium leading-6 text-gray-900'
+            <div className='mt-5 relative'>
+              <input
+                id='password'
+                name='password'
+                type={isHidden ? 'password' : 'text'}
+                autoComplete='current-password'
+                required
+                value={password}
+                placeholder='Password'
+                onChange={(e) => setPassword(e.target.value)}
+                className='login-form__input block w-full rounded-md px-4 text-gray-900  placeholder:text-gray-400 sm:text-sm sm:leading-6'
+              />
+              <button
+                onClick={() => setIsHidden((isHidden) => !isHidden)}
+                className='hide-password'
+                type='button'
+              >
+                <img src={isHidden ? hiddenEye : eye} />
+              </button>
+            </div>
+            <div className='flex items-center justify-end'>
+              <div className='m-1 text-sm'>
+                <a
+                  href='#'
+                  className='font-semibold text-emerald-600 hover:text-emerald-500'
                 >
-                  Password
-                </label>
-                <div className='text-sm'>
-                  <a
-                    href='#'
-                    className='font-semibold text-emerald-600 hover:text-emerald-500'
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className='mt-2'>
-                <input
-                  id='password'
-                  name='password'
-                  type='password'
-                  autoComplete='current-password'
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6'
-                />
+                  Forgot password?
+                </a>
               </div>
             </div>
 
             <div>
               <button
                 type='submit'
-                className='flex w-full justify-center rounded-md bg-emerald-600 px-3 py-2 font-semibold leading-6 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600'
+                className='login-form__submit-button flex w-full justify-center rounded-md px-3 py-2 font-semibold leading-6 text-white shadow-sm'
               >
                 {isLoading ? (
                   <img className='submit-img' src={fountain} />
@@ -112,7 +110,7 @@ const LoginPopup = ({
             </div>
           </form>
 
-          <p className='mt-10 text-center text-sm text-gray-500'>
+          <p className='login-popup__signup-link mt-2 text-center text-sm text-gray-500'>
             Don&apos;t have an account?{' '}
             <button
               onClick={redirectSignup}
