@@ -13,7 +13,9 @@
     line-height: 1.5
     display: inline-block
     position: relative
-    text-shadow: -3px -3px 0 transparentize(#FF6852, .3)
+    z-index: 1
+    color: $text-color
+    text-shadow: -3px -3px 0 transparentize($secondary-color, .3)
 
     &:before
       content: ''
@@ -91,6 +93,7 @@
       font-size: 1rem
 
   &__subheading
+    z-index: 1
     line-height: 1.5
     text-shadow: -1px -1px 0 $primary-color
     position: relative

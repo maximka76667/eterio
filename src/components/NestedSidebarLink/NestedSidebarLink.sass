@@ -1,0 +1,20 @@
+@import "../../sass/main"
+
+.sidebar__link_nested_active .sidebar__username
+  color: $primary-color
+
+.sidebar__link_nested-secondary
+  position: absolute
+  top: 50%
+  right: 5%
+  transform: translateY(-50%)
+
+  & svg
+    width: 24px
+    height: 24px
+
+  & path
+    fill: $text-color
+
+  &_active path
+    fill: $primary-color

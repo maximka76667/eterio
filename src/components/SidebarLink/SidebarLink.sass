@@ -13,7 +13,7 @@
     font-family: 'Jost', sans-serif
 
     &:hover, &_active
-      background-color: #f2f2f2
+      background-color: darken($bg-color, 7)
 
     &_random
       border: 0
@@ -41,17 +41,17 @@
     border: 0
     outline: 0
 
-    path
+    svg
       fill: transparent
       stroke: #030712
-      stroke-width: 2
+      stroke-width: 1
 
     &:hover
-      path
+      svg
         stroke: #030712
         fill: #facc15
 
     &_active
-      path
+      svg
         fill: #facc15
         stroke: #facc15

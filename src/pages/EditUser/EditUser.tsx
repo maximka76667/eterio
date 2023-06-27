@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import { CurrentUserContext, LoadingContext } from '../../contexts';
 import { UserUpdate } from '../../interfaces';
+import './EditUser.sass';
 
 import fountain from '../../images/fountain.gif';
 

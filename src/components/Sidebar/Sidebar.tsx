@@ -9,6 +9,9 @@ import SidebarProps from './SidebarProps';
 import SidebarLinkFav from '../SidebarLinkFav/SidebarLinkFav';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import AdvancedFilter from '../AdvancedFilter/AdvancedFilter';
+import NestedSidebarLink from '../NestedSidebarLink/NestedSidebarLink';
+
+import { ReactComponent as DiceIcon } from '../../images/dice.svg';
 
 const Sidebar = ({
   isOpened,
@@ -108,6 +111,7 @@ const Sidebar = ({
                   onClick={directRandomDrink}
                 >
                   Get a random drink
+                  <DiceIcon width='24' height='24' fill='white' />
                 </button>
               </li>
               {filteredDrinks.length !== 0 ? (
@@ -136,8 +140,10 @@ const Sidebar = ({
           Community
         </SidebarLink>
         {currentUser != null && (
-          <SidebarLink
+          <NestedSidebarLink
             extraClass='px-4'
+            mainActiveClass='sidebar__link_nested_active'
+            secondaryActiveClass='sidebar__link_nested-secondary_active'
             onListItemClick={onListItemClick}
             link='/me'
           >
@@ -147,17 +153,9 @@ const Sidebar = ({
                 src={currentUser.avatar}
                 alt=''
               />
-              <p>{currentUser.name}</p>
+              <p className='sidebar__username'>{currentUser.name}</p>
             </div>
-            <button
-              onClick={(event) => {
-                event.preventDefault();
-                navigate('/me/edit');
-              }}
-            >
-              Edit
-            </button>
-          </SidebarLink>
+          </NestedSidebarLink>
         )}
       </aside>
     </div>
