@@ -1,7 +1,11 @@
 import React, { useState, useContext } from 'react';
+import './AdvancedFilter.sass';
+
 import { CategoriesContext } from '../../contexts';
 import AdvamcedFilterProps from './AdvamcedFilterProps';
 import { v4 as uuidv4 } from 'uuid';
+
+import { ReactComponent as ListArrowIcon } from '../../images/list-arrow.svg';
 
 const AdvancedFilter = ({ onChange }: AdvamcedFilterProps) => {
   const categories = useContext(CategoriesContext);
@@ -17,15 +21,17 @@ const AdvancedFilter = ({ onChange }: AdvamcedFilterProps) => {
   return (
     <>
       <button
-        className='sidebar__link sidebar__link_random ff-montse text-lg py-3 px-3'
+        className='sidebar__link sidebar__link_filter px-3'
         onClick={toggleFilter}
       >
         Advanced filter
-        <i
-          className={`sidebar__menu-open-icon ${
-            isFilterOpen ? 'sidebar__menu-open-icon_opened' : ''
+        <ListArrowIcon
+          width='20'
+          height='20'
+          className={`filter__list-icon ${
+            isFilterOpen ? 'filter__list-icon_active' : ''
           }`}
-        ></i>
+        />
       </button>
       <div
         className={`flex-col sidebar__filter ${

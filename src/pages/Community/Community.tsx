@@ -97,7 +97,7 @@ const Community = ({
 
   return (
     <div className='flex flex-col items-center'>
-      <h2 className='text-6xl ff-montse text-center mb-10'>Community</h2>
+      <h2 className='text-6xl text-center mb-10'>Community</h2>
 
       {communityDrinks !== undefined && (
         <>
@@ -109,7 +109,7 @@ const Community = ({
           <ul className='community__list grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
             <NavLink
               className={({ isActive }) =>
-                'text-lg sidebar__link w-full h-[550px] ff-montse py-4 px-4 flex flex-col' +
+                'text-lg sidebar__link w-full h-[550px] py-4 px-4 flex flex-col' +
                 (isActive ? ' sidebar__link_active' : '')
               }
               to='add'

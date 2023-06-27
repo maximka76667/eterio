@@ -13,7 +13,7 @@
     font-family: 'Jost', sans-serif
 
     &:hover, &_active
-      background-color: darken($bg-color, 7)
+      background-color: darken($bg-color, 4)
 
     &_random
       border: 0
@@ -26,8 +26,21 @@
       &:hover
         background-color: $primary-color-dark
 
+    &_filter
+      border: 0
+      outline: 0
+      padding: 0.25rem 0.75rem
+      font-size: 16px
+      width: 100%
+      text-align: left
+      background-color: darken($bg-color, 10)
+      color: $text-color
+
+      &:hover
+        background-color: darken($bg-color, 25)
+
     &_active
-      color: $primary-color
+      color: $secondary-color
 
     &_dark
       background-color: $primary-color
