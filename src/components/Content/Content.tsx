@@ -9,6 +9,7 @@ const Content = ({
   windowWidth,
   toggleSidebar,
   closeSidebar,
+  onListItemClick,
   isSidebarOpened,
   onToggleFavorite,
   onUserUpdate,
@@ -16,12 +17,6 @@ const Content = ({
   onCreateDrink,
   onDeleteDrink
 }: ContentProps) => {
-  function handleListItemClick() {
-    if (windowWidth <= 768) {
-      return closeSidebar();
-    }
-  }
-
   return (
     <div className='content'>
       <button className='content__sidebar-button' onClick={toggleSidebar}>
@@ -34,14 +29,14 @@ const Content = ({
       <Sidebar
         isOpened={isSidebarOpened}
         toggleSidebar={toggleSidebar}
-        onListItemClick={handleListItemClick}
+        onListItemClick={onListItemClick}
         onToggleFavorite={onToggleFavorite}
       />
       <Main
         isSidebarOpened={isSidebarOpened}
         toggleSidebar={toggleSidebar}
         onUserUpdate={onUserUpdate}
-        onListItemClick={handleListItemClick}
+        onListItemClick={onListItemClick}
         onToggleFavorite={onToggleFavorite}
         onOpenLoginPopup={onOpenLoginPopup}
         onCreateDrink={onCreateDrink}

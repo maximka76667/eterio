@@ -1,5 +1,5 @@
 export default interface HeaderProps {
-  closeSidebar: () => void;
+  onLogoClick: () => void;
   isSidebarOpened: boolean;
   openLoginPopup: () => void;
   openRegistrationPopup: () => void;

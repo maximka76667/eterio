@@ -35,7 +35,13 @@ import { useNavigate } from 'react-router-dom';
 
 function App() {
   const navigate = useNavigate();
+
   const { width: windowWidth } = useWindowDimensions();
+  function handleListItemClick() {
+    if (windowWidth <= 768) {
+      return closeSidebar();
+    }
+  }
 
   // Users
   const { users, onUserUpdate } = useUsers();
@@ -222,7 +228,7 @@ function App() {
         <div className='app'>
           <Header
             isSidebarOpened={isSidebarOpened}
-            closeSidebar={closeSidebar}
+            onLogoClick={handleListItemClick}
             openLoginPopup={() => setIsLoginPopupOpen(true)}
             openRegistrationPopup={() => setIsRegistrationPopupOpen(true)}
             handleLogout={handleLogout}
@@ -237,6 +243,7 @@ function App() {
                     ) : (
                       <Content
                         windowWidth={windowWidth}
+                        onListItemClick={handleListItemClick}
                         isSidebarOpened={isSidebarOpened}
                         toggleSidebar={() => {
                           setIsSidebarOpened(

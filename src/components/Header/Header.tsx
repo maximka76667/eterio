@@ -6,7 +6,7 @@ import LogoWrapper from '../LogoWrapper/LogoWrapper';
 import { NavLink } from 'react-router-dom';
 
 const Header = ({
-  closeSidebar,
+  onLogoClick,
   isSidebarOpened,
   openLoginPopup,
   openRegistrationPopup,
@@ -17,10 +17,10 @@ const Header = ({
     <header className='header'>
       <div className='flex items-center md:gap-20 gap-5'>
         <LogoWrapper
-          closeSidebar={closeSidebar}
+          onLogoClick={onLogoClick}
           isSidebarOpened={isSidebarOpened}
         />
-        <NavLink className='text-xl' to='/mixer'>
+        <NavLink className='header__nav-link text-xl' to='/mixer'>
           Mixer
         </NavLink>
       </div>

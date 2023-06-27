@@ -11,4 +11,5 @@ export default interface ContentProps {
   onOpenLoginPopup: () => void;
   onCreateDrink: (newDrink: DrinkCreate) => void;
   onDeleteDrink: (id: string) => void;
+  onListItemClick: () => void;
 }
