@@ -4,6 +4,7 @@ import Main from '../Main/Main';
 import Sidebar from '../Sidebar/Sidebar';
 import './Content.sass';
 import icon from '../../images/logo512.png';
+import { useWindowDimensions } from '../../hooks';
 
 const Content = ({
   toggleSidebar,
@@ -15,6 +16,14 @@ const Content = ({
   onCreateDrink,
   onDeleteDrink
 }: ContentProps) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  function handleListItemClick() {
+    if (windowWidth <= 768) {
+      return closeSidebar();
+    }
+  }
+
   return (
     <div className='content'>
       <button className='content__sidebar-button' onClick={toggleSidebar}>
@@ -26,14 +35,15 @@ const Content = ({
       </button>
       <Sidebar
         isOpened={isSidebarOpened}
-        onListItemClick={closeSidebar}
+        toggleSidebar={toggleSidebar}
+        onListItemClick={handleListItemClick}
         onToggleFavorite={onToggleFavorite}
       />
       <Main
         isSidebarOpened={isSidebarOpened}
         toggleSidebar={toggleSidebar}
         onUserUpdate={onUserUpdate}
-        onListItemClick={closeSidebar}
+        onListItemClick={handleListItemClick}
         onToggleFavorite={onToggleFavorite}
         onOpenLoginPopup={onOpenLoginPopup}
         onCreateDrink={onCreateDrink}

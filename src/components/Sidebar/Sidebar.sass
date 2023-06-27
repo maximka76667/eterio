@@ -2,13 +2,16 @@
 
 .sidebar
   width: 100%
+  left: 100%
   padding: 0.5rem
-  position: sticky
+  position: absolute
   top: 0
+  overflow: hidden
   height: 100%
   display: flex
   flex-direction: column
   justify-content: space-between
+  transition: all 0.2s
 
   &-wrapper
     display: flex
@@ -16,7 +19,6 @@
     height: calc(100vh - 70px)
     position: sticky
     top: 70px
-    min-width: 320px
     background-color: $bg-color
     z-index: 4
     transition: all 0.2s, font-size 0.1s
@@ -31,11 +33,19 @@
       font-size: 0
 
     &_opened
+      min-width: 320px
+
       @include md
         opacity: 1
         visibility: visible
         width: 100%
         font-size: 1em
+
+    &_opened .sidebar
+      left: 0
+
+    &_opened .sidebar__toggler-icon
+      transform: rotate(0)
 
   &__list
     padding: 0
@@ -65,36 +75,6 @@
       opacity: 1
       height: 100%
 
-  &__menu-open-icon
-    height: 30px
-    width: 30px
-    position: relative
-    transform: scale(0.8)
-
-    &:before
-      content: ""
-      position: absolute
-      top: 30%
-      right: 10px
-      transform: rotate(-45deg)
-      height: 2px
-      width: 15px
-      background-color: white
-
-    &:after
-      content: ""
-      position: absolute
-      bottom: 30%
-      right: 10px
-      transform: rotate(45deg)
-      height: 2px
-      width: 15px
-      background-color: white
-      transition: all 0.2s
-
-    &_opened
-      transform: rotate(-90deg) scale(0.8)
-
   &__toggler-button
     width: 25px
     height: 45px
@@ -107,6 +87,13 @@
     border-radius: 0 10px 10px 0
     z-index: -2
     color: $text-color
+    transition: all 0.2s
+
+    @include md
+      display: none
 
     &:hover
       background-color: darken($bg-color, 25)
+
+  &__toggler-icon
+    transform: rotate(-180deg)

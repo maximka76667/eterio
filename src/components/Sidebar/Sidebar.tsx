@@ -17,7 +17,8 @@ import { ReactComponent as TogglerIcon } from '../../images/menu-width-icon.svg'
 const Sidebar = ({
   isOpened,
   onListItemClick,
-  onToggleFavorite
+  onToggleFavorite,
+  toggleSidebar
 }: SidebarProps) => {
   const drinks = useContext(DrinksContext);
   const [search, setSearch] = useState('');
@@ -165,8 +166,8 @@ const Sidebar = ({
           </NestedSidebarLink>
         )}
       </aside>
-      <button className='sidebar__toggler-button'>
-        <TogglerIcon fill='black' />
+      <button onClick={toggleSidebar} className='sidebar__toggler-button'>
+        <TogglerIcon className='sidebar__toggler-icon' fill='black' />
       </button>
     </div>
   );
