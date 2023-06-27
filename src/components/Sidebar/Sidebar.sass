@@ -94,3 +94,19 @@
 
     &_opened
       transform: rotate(-90deg) scale(0.8)
+
+  &__toggler-button
+    width: 25px
+    height: 45px
+    position: absolute
+    background-color: darken($bg-color, 10)
+    padding: 0.25rem 0
+    top: 50%
+    transform: translateY(-50%) rotate(180deg)
+    right: 100%
+    border-radius: 0 10px 10px 0
+    z-index: -2
+    color: $text-color
+
+    &:hover
+      background-color: darken($bg-color, 25)

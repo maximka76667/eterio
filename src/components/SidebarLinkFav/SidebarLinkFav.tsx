@@ -14,12 +14,14 @@ interface SidebarLinkFavProps {
   drink: Drink;
   onListItemClick: () => void;
   onToggleFavorite: (isFavorite: boolean, drinkId: string) => void;
+  onClick: () => void;
 }
 
 const SidebarLinkFav = ({
   drink: { id, code, name, favorites },
   onListItemClick,
-  onToggleFavorite
+  onToggleFavorite,
+  ...props
 }: SidebarLinkFavProps) => {
   const currentUser = useContext(CurrentUserContext);
   const [isFavorite, setIsFavorite] = useState(false);

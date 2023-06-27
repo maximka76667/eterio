@@ -12,6 +12,7 @@ import AdvancedFilter from '../AdvancedFilter/AdvancedFilter';
 import NestedSidebarLink from '../NestedSidebarLink/NestedSidebarLink';
 
 import { ReactComponent as DiceIcon } from '../../images/dice.svg';
+import { ReactComponent as TogglerIcon } from '../../images/menu-width-icon.svg';
 
 const Sidebar = ({
   isOpened,
@@ -95,6 +96,11 @@ const Sidebar = ({
     );
   };
 
+  function handleListItemClick(index: number) {
+    onListItemClick();
+    setPrevRandomIndex(index);
+  }
+
   return (
     <div
       className={`sidebar-wrapper ${isOpened ? 'sidebar-wrapper_opened' : ''}`}
@@ -115,12 +121,13 @@ const Sidebar = ({
                 </button>
               </li>
               {filteredDrinks.length !== 0 ? (
-                filteredDrinks.map((drink) => (
+                filteredDrinks.map((drink, index) => (
                   <li key={drink.id} className='sidebar__item'>
                     <SidebarLinkFav
                       drink={drink}
-                      onListItemClick={onListItemClick}
+                      onListItemClick={() => handleListItemClick(index)}
                       onToggleFavorite={onToggleFavorite}
+                      onClick={() => setPrevRandomIndex(index)}
                     />
                   </li>
                 ))
@@ -158,6 +165,9 @@ const Sidebar = ({
           </NestedSidebarLink>
         )}
       </aside>
+      <button className='sidebar__toggler-button'>
+        <TogglerIcon fill='black' />
+      </button>
     </div>
   );
 };
