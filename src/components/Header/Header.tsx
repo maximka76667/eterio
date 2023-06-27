@@ -15,7 +15,7 @@ const Header = ({
   const currentUser = useContext(CurrentUserContext);
   return (
     <header className='header'>
-      <div className='flex items-center gap-20'>
+      <div className='flex items-center md:gap-20 gap-5'>
         <LogoWrapper
           closeSidebar={closeSidebar}
           isSidebarOpened={isSidebarOpened}

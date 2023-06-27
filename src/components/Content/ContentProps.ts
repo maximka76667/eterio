@@ -2,6 +2,7 @@ import { DrinkCreate } from '../../interfaces';
 import UserUpdate from '../../interfaces/UserUpdate';
 
 export default interface ContentProps {
+  windowWidth: number;
   toggleSidebar: () => void;
   closeSidebar: () => void;
   isSidebarOpened: boolean;

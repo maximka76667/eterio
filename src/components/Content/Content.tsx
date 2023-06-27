@@ -4,9 +4,9 @@ import Main from '../Main/Main';
 import Sidebar from '../Sidebar/Sidebar';
 import './Content.sass';
 import icon from '../../images/logo512.png';
-import { useWindowDimensions } from '../../hooks';
 
 const Content = ({
+  windowWidth,
   toggleSidebar,
   closeSidebar,
   isSidebarOpened,
@@ -16,8 +16,6 @@ const Content = ({
   onCreateDrink,
   onDeleteDrink
 }: ContentProps) => {
-  const { width: windowWidth } = useWindowDimensions();
-
   function handleListItemClick() {
     if (windowWidth <= 768) {
       return closeSidebar();

@@ -25,11 +25,17 @@ import {
 } from './contexts';
 
 import { api } from './dataServices';
-import { useCurrentUser, useDrinks, useUsers } from './hooks';
+import {
+  useCurrentUser,
+  useDrinks,
+  useUsers,
+  useWindowDimensions
+} from './hooks';
 import { useNavigate } from 'react-router-dom';
 
 function App() {
   const navigate = useNavigate();
+  const { width: windowWidth } = useWindowDimensions();
 
   // Users
   const { users, onUserUpdate } = useUsers();
@@ -95,11 +101,17 @@ function App() {
   });
 
   // Sidebar mobiles opened state
-  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+  const [isSidebarOpened, setIsSidebarOpened] = useState(true);
 
   function closeSidebar() {
     setIsSidebarOpened(false);
   }
+
+  useEffect(() => {
+    if (windowWidth <= 768) {
+      setIsSidebarOpened(false);
+    }
+  }, []);
 
   function showError(error: AxiosError<{ detail?: string }>) {
     console.log(error);
@@ -224,6 +236,7 @@ function App() {
                       <Loading />
                     ) : (
                       <Content
+                        windowWidth={windowWidth}
                         isSidebarOpened={isSidebarOpened}
                         toggleSidebar={() => {
                           setIsSidebarOpened(
