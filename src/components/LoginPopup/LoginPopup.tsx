@@ -8,8 +8,10 @@ import React, {
 import Popup from '../Popup/Popup';
 import { LoadingContext } from '../../contexts';
 import './LoginPopup.sass';
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from 'jwt-decode';
 
-import fountain from '../../images/fountain.gif';
+import fountain from '../../images/fountain.svg';
 
 import eye from '../../images/eye.png';
 import hiddenEye from '../../images/hidden.png';
@@ -19,13 +21,15 @@ interface LoginPopupProps {
   onClose: () => void;
   redirectSignup: () => void;
   handleLogin: (email: string, password: string) => void;
+  onGoogleAuth: (email: string, name: string, password: string) => void;
 }
 
 const LoginPopup = ({
   onClose,
   isOpen,
   redirectSignup,
-  handleLogin
+  handleLogin,
+  onGoogleAuth
 }: LoginPopupProps) => {
   const inputElement = useRef<HTMLInputElement>(null);
 
@@ -62,6 +66,23 @@ const LoginPopup = ({
         </div>
         {/* TO DO hiding password, clear password validation, stay logged in checkbox */}
         <div className='popup__form-wrapper sm:mx-auto sm:w-full sm:max-w-sm'>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              const { credential } = credentialResponse;
+
+              if (credential === undefined) {
+                return;
+              }
+
+              const user: any = jwt_decode(credential);
+
+              onGoogleAuth(user.email, user.given_name, credential);
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+          />
+          <p>or</p>
           <form onSubmit={handleSubmit}>
             <div>
               <div className='mt-2'>
@@ -104,7 +125,7 @@ const LoginPopup = ({
               <div className='m-1 text-sm'>
                 <a
                   href='#'
-                  className='font-semibold text-emerald-600 hover:text-emerald-500 transition-all'
+                  className='font-semibold login-popup__forgot transition-all'
                 >
                   Forgot password?
                 </a>
@@ -129,7 +150,7 @@ const LoginPopup = ({
             Don&apos;t have an account?{' '}
             <button
               onClick={redirectSignup}
-              className='font-semibold leading-6 text-emerald-600 hover:text-emerald-500 transition-all'
+              className='font-semibold leading-6 login-popup__sign-up transition-all'
             >
               Sign up
             </button>

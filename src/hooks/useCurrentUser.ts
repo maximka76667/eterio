@@ -31,8 +31,6 @@ const useCurrentUser = (onUserUpdate: (newUser: User) => void) => {
     const currentUser = await promise;
     setCurrentUser(currentUser);
 
-    console.log(res.access_token);
-
     onTokenChange(res.access_token);
 
     return await promise;
@@ -40,6 +38,15 @@ const useCurrentUser = (onUserUpdate: (newUser: User) => void) => {
 
   async function onRegistration(email: string, name: string, password: string) {
     return await authApi.register(email, name, password);
+  }
+
+  async function onGoogleAuth(email: string, name: string, password: string) {
+    try {
+      await onLogin(email, password);
+    } catch (err) {
+      await onRegistration(email, name, password);
+      await onLogin(email, password);
+    }
   }
 
   function onLogout() {
@@ -70,6 +77,7 @@ const useCurrentUser = (onUserUpdate: (newUser: User) => void) => {
     onUpdateUser,
     onLogin,
     onRegistration,
+    onGoogleAuth,
     onLogout
   };
 };

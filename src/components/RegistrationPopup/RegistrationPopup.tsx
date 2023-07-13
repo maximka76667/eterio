@@ -1,7 +1,7 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import Popup from '../Popup/Popup';
 
-import fountain from '../../images/fountain.gif';
+import fountain from '../../images/fountain.svg';
 import { LoadingContext } from '../../contexts';
 
 import eye from '../../images/eye.png';

@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://maximka76667.github.io/eterio",
   "dependencies": {
+    "@react-oauth/google": "^0.11.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -13,6 +14,7 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^1.3.6",
     "framer-motion": "^7.3.2",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",

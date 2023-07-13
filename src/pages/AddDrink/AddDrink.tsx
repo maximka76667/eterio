@@ -19,7 +19,7 @@ import { DrinkCreate, GlassContent } from '../../interfaces';
 import { NavLink } from 'react-router-dom';
 import GlassEditor from '../../components/GlassEditor/GlassEditor';
 
-import fountain from '../../images/fountain.gif';
+import fountain from '../../images/fountain.svg';
 
 interface AddDrinkProps {
   onCreateDrink: (drinkCreate: DrinkCreate) => void;

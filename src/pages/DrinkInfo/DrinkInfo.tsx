@@ -5,7 +5,7 @@ import './DrinkInfo.sass';
 import { CurrentUserContext, LoadingContext } from '../../contexts';
 
 import imageNotFound from '../../images/image-not-found.jpg';
-import fountain from '../../images/fountain.gif';
+import fountain from '../../images/fountain.svg';
 
 interface DrinkInfoProps {
   drink: Drink;

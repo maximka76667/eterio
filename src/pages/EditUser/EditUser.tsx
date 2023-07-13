@@ -8,7 +8,7 @@ import { CurrentUserContext, LoadingContext } from '../../contexts';
 import { UserUpdate } from '../../interfaces';
 import './EditUser.sass';
 
-import fountain from '../../images/fountain.gif';
+import fountain from '../../images/fountain.svg';
 
 interface EditUserProps {
   onUserUpdate: (newUser: UserUpdate) => Promise<void>;
@@ -53,7 +53,7 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
         <h2 className='text-5xl ff-montse mb-10'>Edit user</h2>
 
         <input
-          className='w-2/3 border-solid border-2 border-emerald-600 p-2 rounded'
+          className='edit-user__input w-2/3 border-solid border-2 p-2 rounded'
           type='text'
           value={avatar}
           onChange={(event) => setAvatar(event.target.value)}
@@ -66,25 +66,29 @@ const EditUser = ({ onUserUpdate }: EditUserProps) => {
         />
 
         <input
-          className='mt-4 border-solid border-2 border-emerald-600 p-2 rounded'
+          className='edit-user__input mt-4 border-solid border-2 p-2 rounded'
           type='text'
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
 
         <input
-          className='mt-4 border-solid border-2 border-emerald-600 p-2 rounded'
+          className='edit-user__input mt-4 border-solid border-2 p-2 rounded'
           type='text'
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
 
         <button
-          className='bg-emerald-500 py-2.5 px-5 mt-4 rounded text-white'
+          className='edit-user__submit-button py-2.5 px-5 mt-4 rounded text-white'
           type='submit'
           onClick={handleSubmit}
         >
-          {isLoading ? <img className='submit-img' src={fountain} /> : 'Update'}
+          {isLoading ? (
+            <img className='edit-user__submit-img' src={fountain} />
+          ) : (
+            'Update'
+          )}
         </button>
       </form>
     </div>

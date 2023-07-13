@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import './UserInfo.sass';
+
 import { CurrentUserContext } from '../../contexts';
 import { NavLink } from 'react-router-dom';
 
@@ -16,7 +18,7 @@ const UserInfo = () => {
       <h3 className='mt-5 text-3xl'>{currentUser?.email}</h3>
       <p className='mt-3 text-xl'>{currentUser?.name}</p>
       <NavLink
-        className='bg-emerald-500 py-1.5 px-3 mt-4 rounded text-white'
+        className='user-info__edit-button py-1.5 px-3 mt-4 rounded text-white'
         to='edit'
       >
         Edit

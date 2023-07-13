@@ -67,10 +67,7 @@ const CommunityDrinkLink = ({
 
   return (
     <NavLink
-      className={({ isActive }) =>
-        'text-lg sidebar__link w-full ff-montse py-4 px-4 flex flex-col' +
-        (isActive ? ' sidebar__link_active' : '')
-      }
+      className='text-lg community__link w-full ff-montse py-4 px-4 flex flex-col'
       to={code}
     >
       <div
@@ -83,12 +80,12 @@ const CommunityDrinkLink = ({
           alt={name}
         />
       </div>
-      <div className='sidebar__info w-full mt-5 pb-2 px-4 flex flex-col gap-5'>
+      <div className='community__info w-full mt-5 pb-2 px-4 flex flex-col gap-5'>
         <div className='w-full flex justify-between'>
           <p>{name}</p>
           <button
-            className={`flex sidebar__favorites ${
-              isFavorite ? 'sidebar__favorites_active' : ''
+            className={`flex community__favorites ${
+              isFavorite ? 'community__favorites_active' : ''
             }`}
             onClick={toggleFavorite}
           >

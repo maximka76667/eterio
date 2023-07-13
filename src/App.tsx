@@ -54,6 +54,7 @@ function App() {
     onLogin,
     onRegistration,
     onUpdateUser,
+    onGoogleAuth,
     onLogout
   } = useCurrentUser(onUserUpdate);
 
@@ -173,6 +174,14 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
+  function handleGoogleAuth(email: string, name: string, password: string) {
+    setIsLoading(true);
+    onGoogleAuth(email, name, password)
+      .then(() => setIsLoginPopupOpen(false))
+      .catch(showError)
+      .finally(() => setIsLoading(false));
+  }
+
   function handleLogout() {
     onLogout();
   }
@@ -264,6 +273,7 @@ function App() {
             </UsersContext.Provider>
           </OfficialDrinksContext.Provider>
           <LoginPopup
+            onGoogleAuth={handleGoogleAuth}
             handleLogin={handleLogin}
             onClose={() => setIsLoginPopupOpen(false)}
             redirectSignup={() => toggleAuthPopups(false)}

@@ -108,10 +108,7 @@ const Community = ({
           </div>
           <ul className='community__list grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
             <NavLink
-              className={({ isActive }) =>
-                'text-lg sidebar__link w-full h-[550px] py-4 px-4 flex flex-col' +
-                (isActive ? ' sidebar__link_active' : '')
-              }
+              className='text-lg community__item w-full py-4 px-4 flex flex-col ff-montse'
               to='add'
               onClick={addDrinkRedirect}
             >
@@ -125,7 +122,7 @@ const Community = ({
                   alt='plus'
                 />
               </div>
-              <div className='sidebar__info w-full mt-5 pb-2 px-4 flex justify-between'>
+              <div className='community-link__info w-full mt-5 pb-2 px-4 flex justify-between'>
                 <p>Add a drink</p>
               </div>
             </NavLink>
@@ -134,7 +131,7 @@ const Community = ({
                 .reverse()
                 .sort((a, b) => compareDates(a.date, b.date))
                 .map((drink) => (
-                  <li key={drink.id} className='sidebar__item'>
+                  <li key={drink.id} className='community__item'>
                     <CommunityDrinkLink
                       drink={drink}
                       onToggleFavorite={onToggleFavorite}
@@ -142,7 +139,7 @@ const Community = ({
                   </li>
                 ))
             ) : (
-              <li className='sidebar__item'>
+              <li className='community__item'>
                 <p className='community__not-found'>Nothing is found</p>
               </li>
             )}
