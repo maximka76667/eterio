@@ -1,12 +1,11 @@
 {
   "files": {
-    "main.css": "/eterio/static/css/main.4aaac859.css",
-    "main.js": "/eterio/static/js/main.ab9df0ab.js",
+    "main.css": "/eterio/static/css/main.2810504c.css",
+    "main.js": "/eterio/static/js/main.56be29a9.js",
     "static/media/Ubuntu-Regular.ttf": "/eterio/static/media/Ubuntu-Regular.1cbb1b79a23478cc89ad.ttf",
     "static/media/Ubuntu-Bold.ttf": "/eterio/static/media/Ubuntu-Bold.fec2d0f1431a6114a6ce.ttf",
     "static/media/AmaticSC-Bold.ttf": "/eterio/static/media/AmaticSC-Bold.f12c1d887cda2131ac83.ttf",
     "static/media/AmaticSC-Regular.ttf": "/eterio/static/media/AmaticSC-Regular.fd9971162ff94dc53856.ttf",
-    "static/media/fountain.gif": "/eterio/static/media/fountain.74debccf9b62401a6e91.gif",
     "static/media/IndieFlower-Regular.ttf": "/eterio/static/media/IndieFlower-Regular.599d26584b9afc1d20b1.ttf",
     "static/media/home-community.webp": "/eterio/static/media/home-community.ddf627042a6cfe06e7a2.webp",
     "static/media/logo512.png": "/eterio/static/media/logo512.2b4f1b026f490312e7b6.png",
@@ -15,12 +14,18 @@
     "static/media/plus.png": "/eterio/static/media/plus.2c131f75bbb79f006912.png",
     "static/media/image-not-found.jpg": "/eterio/static/media/image-not-found.c160315d7e3394bafc44.jpg",
     "static/media/lime-slice.webp": "/eterio/static/media/lime-slice.9bec9e92722ae1424160.webp",
+    "static/media/fountain.svg": "/eterio/static/media/fountain.4ad6a8092e2b568cb22f96091cff3f66.svg",
+    "static/media/edit-icon.svg": "/eterio/static/media/edit-icon.a14190403a295b72750d6d1238f32aec.svg",
+    "static/media/dice.svg": "/eterio/static/media/dice.5997dfbff24644bd2a46e7cd2a4e00ba.svg",
     "index.html": "/eterio/index.html",
-    "main.4aaac859.css.map": "/eterio/static/css/main.4aaac859.css.map",
-    "main.ab9df0ab.js.map": "/eterio/static/js/main.ab9df0ab.js.map"
+    "static/media/star-2.svg": "/eterio/static/media/star-2.977621b0922f7e269bc96a02f1f7930a.svg",
+    "static/media/list-arrow.svg": "/eterio/static/media/list-arrow.e5f5624f81312473928e8d242e89324e.svg",
+    "static/media/menu-width-icon.svg": "/eterio/static/media/menu-width-icon.5fccf6ef764674d44a9bfd8357471213.svg",
+    "main.2810504c.css.map": "/eterio/static/css/main.2810504c.css.map",
+    "main.56be29a9.js.map": "/eterio/static/js/main.56be29a9.js.map"
   },
   "entrypoints": [
-    "static/css/main.4aaac859.css",
-    "static/js/main.ab9df0ab.js"
+    "static/css/main.2810504c.css",
+    "static/js/main.56be29a9.js"
   ]
 }
