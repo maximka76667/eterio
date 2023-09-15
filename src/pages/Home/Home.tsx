@@ -19,7 +19,7 @@ const Home = () => {
           </p>
           <NavLink
             to='mixer'
-            className='text-center text-xl ff-montse bg-emerald-500 text-white p-4 mt-5 rounded-full hover:bg-emerald-700 transition-all'
+            className='text-center text-xl ff-montse home__link text-white p-4 mt-5 rounded-full transition-all'
           >
             Official drinks mixer
           </NavLink>
@@ -61,7 +61,7 @@ const Home = () => {
           </p>
           <NavLink
             to='community'
-            className='text-center text-xl ff-montse bg-emerald-500 text-white p-4 mt-5 rounded-full hover:bg-emerald-700 transition-all'
+            className='text-center text-xl ff-montse home__link text-white p-4 mt-5 rounded-full transition-all'
           >
             Community drinks
           </NavLink>
