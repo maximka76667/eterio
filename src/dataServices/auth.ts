@@ -26,7 +26,7 @@ class AuthApi {
 }
 
 const authApi = new AuthApi({
-  baseUrl: 'https://eterioapi-1-f7989107.deta.app'
+  baseUrl: 'https://eterio-api.onrender.com'
   // baseUrl: 'http://localhost:8000'
 });
 
