@@ -18,6 +18,8 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
   const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
   const [ingredientCount, setIngredientCount] = useState<number>(0);
 
+  const [isValidImage, setIsValidImage] = useState(true);
+
   const isLoading = useContext(LoadingContext);
 
   useEffect(() => {
@@ -33,6 +35,20 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
       ]);
     }
   }, [drink]);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = drink.img;
+
+    img.onload = () => {
+      console.log(drink.img);
+      setIsValidImage(true);
+    };
+
+    img.onerror = () => {
+      setIsValidImage(false);
+    };
+  }, [drink.img]);
 
   const handleDrinkDelete = () => {
     onDeleteDrink(drink.id);
@@ -61,9 +77,7 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
         <div
           className='drink__img'
           style={{
-            backgroundImage: `url(${
-              drink.img !== '' ? drink.img : imageNotFound
-            })`
+            backgroundImage: `url(${isValidImage ? drink.img : imageNotFound})`
           }}
         />
       </div>
