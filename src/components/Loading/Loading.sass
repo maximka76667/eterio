@@ -12,6 +12,7 @@
 
 .loading
   display: flex
+  flex-direction: column
   width: 100%
   justify-content: center
   align-items: center
@@ -30,3 +31,16 @@
     height: 5rem
     border-radius: 50%
     background-color: $primary-color
+
+  &__message
+    font-size: 4rem
+    margin: 70px 0
+
+    @include lg
+      font-size: 1.5rem
+
+    @include md
+      font-size: 1.2rem
+
+    @include sm
+      font-size: 1rem

@@ -56,6 +56,9 @@ const Loading = () => {
           transition={loadingCircleTransition}
         ></motion.span>
       </motion.div>
+      <p className='loading__message'>
+        Server is loading. It could take a couple of minutes :(
+      </p>
     </div>
   );
 };
