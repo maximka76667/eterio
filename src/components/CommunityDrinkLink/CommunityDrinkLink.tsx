@@ -31,7 +31,9 @@ const CommunityDrinkLink = ({
   const [favoritesLength, setFavoritesLength] = useState(favorites.length);
 
   const handleImageError: ReactEventHandler<HTMLImageElement> = (e) => {
-    e.currentTarget.src = imageNotFound;
+    if (e.currentTarget.src !== imageNotFound) {
+      e.currentTarget.src = imageNotFound;
+    }
   };
 
   const toggleFavorite: MouseEventHandler<HTMLButtonElement> = (e) => {
