@@ -8,8 +8,8 @@ import React, {
 import Popup from '../Popup/Popup';
 import { LoadingContext } from '../../contexts';
 import './LoginPopup.sass';
-import { GoogleLogin } from '@react-oauth/google';
-import jwt_decode from 'jwt-decode';
+// import { GoogleLogin } from '@react-oauth/google';
+// import jwt_decode from 'jwt-decode';
 
 import fountain from '../../images/fountain.svg';
 
@@ -66,7 +66,7 @@ const LoginPopup = ({
         </div>
         {/* TO DO hiding password, clear password validation, stay logged in checkbox */}
         <div className='popup__form-wrapper sm:mx-auto sm:w-full sm:max-w-sm'>
-          <GoogleLogin
+          {/* <GoogleLogin
             onSuccess={(credentialResponse) => {
               const { credential } = credentialResponse;
 
@@ -82,7 +82,7 @@ const LoginPopup = ({
               console.log('Login Failed');
             }}
           />
-          <p>or</p>
+          <p>or</p> */}
           <form onSubmit={handleSubmit}>
             <div>
               <div className='mt-2'>
