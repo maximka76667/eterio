@@ -2,7 +2,8 @@ import React, {
   useState,
   useEffect,
   useContext,
-  MouseEventHandler
+  MouseEventHandler,
+  ReactEventHandler
 } from 'react';
 import { CurrentUserContext } from '../../contexts';
 import { Drink } from '../../interfaces';
@@ -28,6 +29,10 @@ const CommunityDrinkLink = ({
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoritesLength, setFavoritesLength] = useState(favorites.length);
+
+  const handleImageError: ReactEventHandler<HTMLImageElement> = (e) => {
+    e.currentTarget.src = imageNotFound;
+  };
 
   const toggleFavorite: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -76,7 +81,8 @@ const CommunityDrinkLink = ({
       >
         <img
           className='w-full h-[450px] rounded object-cover'
-          src={img !== '' ? img : imageNotFound}
+          src={img}
+          onError={handleImageError}
           alt={name}
         />
       </div>

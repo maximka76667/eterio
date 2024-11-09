@@ -1,5 +1,6 @@
 import React from 'react';
 import Popup from '../Popup/Popup';
+import infoMarkImage from '../../images/info-mark.webp';
 
 interface InfoPopupProps {
   title: string;
@@ -21,8 +22,8 @@ const InfoPopup = ({
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <img
             className='mx-auto h-10 w-auto'
-            src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
-            alt='Your Company'
+            src={infoMarkImage}
+            alt='Success mark'
           />
           <h2 className='mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900'>
             {title}

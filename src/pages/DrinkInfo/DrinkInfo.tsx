@@ -41,7 +41,6 @@ const DrinkInfo = ({ drink, onDeleteDrink }: DrinkInfoProps) => {
     img.src = drink.img;
 
     img.onload = () => {
-      console.log(drink.img);
       setIsValidImage(true);
     };
 
