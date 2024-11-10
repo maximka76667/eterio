@@ -138,6 +138,20 @@ const GlassEditor = ({
   return (
     <div style={{ widows: '100%', position: 'relative' }}>
       <div className='glass-editor__glass glass'>
+        <p
+          className={`glass-editor__pouring-hint ${
+            currentDrink ? 'visible' : 'invisible'
+          }`}
+        >
+          Now keep pressing on the bottle <br /> to pour your drink!
+        </p>
+        <p
+          className={`glass-editor__removing-hint ${
+            Object.entries(glassContent).length !== 0 ? 'visible' : 'invisible'
+          }`}
+        >
+          Press on liquid <br /> to remove it!
+        </p>
         {Object.keys(glassContent).map((bottleName) => (
           <div
             className={`glass__ingredient ${formatDrinkName(bottleName)}`}
@@ -147,16 +161,15 @@ const GlassEditor = ({
           ></div>
         ))}
       </div>
-      <button
-        className='glass-editor__current-drink w-[250px]'
-        style={{ top: '-12rem', left: '48%' }}
+      <div
+        className='glass-editor__current-drink'
+        style={{ top: '-12rem' }}
         data-type={currentDrinkCode}
         onMouseDown={pourDrink}
         onMouseUp={unpourDrink}
         onMouseLeave={unpourDrink}
         onTouchStart={pourDrink}
         onTouchEnd={unpourDrink}
-        type='button'
       >
         {currentDrinkImg !== '' && (
           <img
@@ -167,7 +180,7 @@ const GlassEditor = ({
             onError={() => setCurrentDrinkImg('bottle-not-found.png')}
           />
         )}
-      </button>
+      </div>
       <div className='glass-editor__search-container' onBlur={handleSearchBlur}>
         <input
           className='glass-editor__search ff-montse'

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MatchProps from './MatchProps';
 import './Match.sass';
@@ -6,13 +6,22 @@ import './Match.sass';
 import imageNotFound from '../../images/image-not-found.jpg';
 
 const Match = ({ match: { drink, match } }: MatchProps) => {
+  const [isValidImage, setIsValidImage] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = drink.img;
+
+    img.onload = () => {
+      setIsValidImage(true);
+    };
+  }, [drink.img]);
+
   return (
     <Link to={`/${drink.code}`} className='match flex-col xl:flex-row w-full'>
       <div
         style={{
-          backgroundImage: `url(${
-            drink.img !== '' ? drink.img : imageNotFound
-          })`
+          backgroundImage: `url(${isValidImage ? drink.img : imageNotFound})`
         }}
         className='match__drink-img min-w-[100px] lg:min-w-[300px]'
       ></div>

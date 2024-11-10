@@ -1,3 +1,5 @@
+@import "../../sass/main"
+
 .match
   display: flex
   padding: 20px
@@ -7,6 +9,7 @@
   text-decoration: none
   color: #000
   transition: all 0.2s
+  border: 1px solid $secondary-color
 
   &:hover
     background-color: #fff
@@ -23,14 +26,24 @@
     flex-direction: column
     margin: 0 30px
 
+  &__drink-name
+    @include sm
+      font-size: 2rem
+
   &__drink-description
     display: -webkit-box
     -webkit-line-clamp: 7
     -webkit-box-orient: vertical
     overflow: hidden
 
+    @include sm
+      font-size: 0.8rem
+
   &__percent
     display: flex
     align-items: center
     justify-content: center
     min-width: 25%
+
+    @include sm
+      font-size: 3rem

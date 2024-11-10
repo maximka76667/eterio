@@ -101,7 +101,7 @@ const Mixer = () => {
 
   return (
     <div className='mixer'>
-      <h1 className='text-7xl ff-montse'>Put some drinks!</h1>
+      <h1 className='text-7xl ff-montse mixer__title'>Put some drinks!</h1>
       <div className='relative'>
         <GlassEditor
           glassContent={glassContent}
