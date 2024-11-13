@@ -93,7 +93,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://eterio-api.onrender.com'
+  baseUrl: 'https://eterio-api-489286482375.europe-southwest1.run.app/'
   // baseUrl: 'http://localhost:8000'
 });
 
