@@ -8,7 +8,7 @@ class AuthApi {
   }
 
   async login(email: string, password: string) {
-    const response = await axios.post(`${this._baseUrl}/auth/login`, {
+    const response = await axios.post(`${this._baseUrl}/auth/login/`, {
       email,
       password
     });
@@ -16,7 +16,7 @@ class AuthApi {
   }
 
   async register(email: string, name: string, password: string) {
-    const response = await axios.post(`${this._baseUrl}/users`, {
+    const response = await axios.post(`${this._baseUrl}/users/`, {
       email,
       name,
       password
@@ -26,7 +26,7 @@ class AuthApi {
 }
 
 const authApi = new AuthApi({
-  baseUrl: 'https://eterio-api-489286482375.europe-southwest1.run.app/'
+  baseUrl: 'https://eterio-api-489286482375.europe-southwest1.run.app'
   // baseUrl: 'http://localhost:8000'
 });
 

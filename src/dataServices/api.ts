@@ -11,7 +11,7 @@ class Api {
 
   async getDrinks(source: CancelTokenSource) {
     try {
-      const drinks = await axios.get(`${this._baseUrl}/drinks`, {
+      const drinks = await axios.get(`${this._baseUrl}/drinks/`, {
         cancelToken: source.token
       });
       return drinks.data;
@@ -22,7 +22,7 @@ class Api {
 
   async getUsers(source: CancelTokenSource) {
     try {
-      const users = await axios.get(`${this._baseUrl}/users`, {
+      const users = await axios.get(`${this._baseUrl}/users/`, {
         cancelToken: source.token
       });
       return users.data;
@@ -32,19 +32,19 @@ class Api {
   }
 
   async getCurrentUser(token: string) {
-    const response = await axios.get(`${this._baseUrl}/users/me`, {
+    const response = await axios.get(`${this._baseUrl}/users/me/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;
   }
 
   async getBottles() {
-    const response = await axios.get(`${this._baseUrl}/bottles`);
+    const response = await axios.get(`${this._baseUrl}/bottles/`);
     return response.data;
   }
 
   async updateUser(token: string, newUser: UserUpdate) {
-    const response = await axios.put(`${this._baseUrl}/users/me`, newUser, {
+    const response = await axios.put(`${this._baseUrl}/users/me/`, newUser, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -54,21 +54,21 @@ class Api {
   async toggleFavorite(isFavorite: boolean, token: string, id: string) {
     if (!isFavorite) {
       const response = await axios.put(
-        `${this._baseUrl}/drinks/favs/${id}`,
+        `${this._baseUrl}/drinks/favs/${id}/`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return response.data;
     }
 
-    const response = await axios.delete(`${this._baseUrl}/drinks/favs/${id}`, {
+    const response = await axios.delete(`${this._baseUrl}/drinks/favs/${id}/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;
   }
 
   async createDrink(token: string, newDrink: DrinkCreate) {
-    const response = await axios.post(`${this._baseUrl}/drinks`, newDrink, {
+    const response = await axios.post(`${this._baseUrl}/drinks/`, newDrink, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -76,7 +76,7 @@ class Api {
   }
 
   async deleteDrink(token: string, id: string) {
-    const response = await axios.delete(`${this._baseUrl}/drinks/${id}`, {
+    const response = await axios.delete(`${this._baseUrl}/drinks/${id}/`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -84,7 +84,7 @@ class Api {
   }
 
   async getCategories(source: CancelTokenSource) {
-    const response = await axios.get(`${this._baseUrl}/categories`, {
+    const response = await axios.get(`${this._baseUrl}/categories/`, {
       cancelToken: source.token
     });
 
@@ -93,7 +93,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://eterio-api-489286482375.europe-southwest1.run.app/'
+  baseUrl: 'https://eterio-api-489286482375.europe-southwest1.run.app'
   // baseUrl: 'http://localhost:8000'
 });
 
