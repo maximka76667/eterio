@@ -8,7 +8,7 @@ This project is a cocktails and drinks library, which i did as my final Superior
 ![image](https://github.com/user-attachments/assets/3813d6ac-f221-4b1c-89fc-4191d01c2862)
 
 This repository is a **frontend** part of the project.  
-Written on **`React`** + **`Typescript`** + **`Saas`**.  
+Written on **`React`** + **`Typescript`** + **`Sass`**.  
 
 *Backend-api repo*: [https://github.com/maximka76667/eterio-api](https://github.com/maximka76667/eterio-api)
 
