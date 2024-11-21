@@ -32,7 +32,7 @@ class Api {
   }
 
   async getCurrentUser(token: string) {
-    const response = await axios.get(`${this._baseUrl}/users/me/`, {
+    const response = await axios.get(`${this._baseUrl}/users/me`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;
@@ -44,7 +44,7 @@ class Api {
   }
 
   async updateUser(token: string, newUser: UserUpdate) {
-    const response = await axios.put(`${this._baseUrl}/users/me/`, newUser, {
+    const response = await axios.put(`${this._baseUrl}/users/me`, newUser, {
       headers: { Authorization: `Bearer ${token}` }
     });
 

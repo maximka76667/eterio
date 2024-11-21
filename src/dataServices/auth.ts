@@ -8,7 +8,7 @@ class AuthApi {
   }
 
   async login(email: string, password: string) {
-    const response = await axios.post(`${this._baseUrl}/auth/login/`, {
+    const response = await axios.post(`${this._baseUrl}/auth/login`, {
       email,
       password
     });
