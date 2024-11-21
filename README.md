@@ -1,4 +1,6 @@
-# Eterio
+# Eterio ![image](https://github.com/user-attachments/assets/fa34ea22-b751-4ae5-af47-b4abd4995c1c)
+
+
 
 This project is a cocktails and drinks library, which i did as my final Superior Grade project.  
 Demonstration: (https://maximka76667.github.io/eterio)  
