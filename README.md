@@ -1,6 +1,7 @@
 # Eterio
 
 This project is a cocktails and drinks library, which i did as my final Superior Grade project.  
+Demonstration: (https://maximka76667.github.io/eterio)  
   
 ![image](https://github.com/user-attachments/assets/3813d6ac-f221-4b1c-89fc-4191d01c2862)
 
@@ -52,9 +53,3 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 #### `npm run deploy`
 
 Builds and deploys project on gh-pages homepage: (https://maximka76667.github.io/eterio)
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
