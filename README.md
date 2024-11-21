@@ -3,16 +3,14 @@
 
 
 This project is a cocktails and drinks library, which i did as my final Superior Grade project.  
-Demonstration: (https://maximka76667.github.io/eterio)  
+[**Demonstration**](https://maximka76667.github.io/eterio)  
   
 ![image](https://github.com/user-attachments/assets/3813d6ac-f221-4b1c-89fc-4191d01c2862)
 
-This repository is a frontend part of the project.  
-Written on React + Typescript + Saas.  
+This repository is a **frontend** part of the project.  
+Written on **`React`** + **`Typescript`** + **`Saas`**.  
 
-
-
-Backend-api repo: [https://github.com/maximka76667/eterio-api](https://github.com/maximka76667/eterio-api)
+*Backend-api repo*: [https://github.com/maximka76667/eterio-api](https://github.com/maximka76667/eterio-api)
 
 ## Possibilities
 
