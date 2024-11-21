@@ -14,15 +14,21 @@ Written on **`React`** + **`Typescript`** + **`Sass`**.
 
 ## Possibilities
 
-- User authentification (sign up/login)  
+- User authentification (sign up/login)
+  
 ![image](https://github.com/user-attachments/assets/12fb6bb3-bb03-497f-b8d9-9f0ac872f374)
 ![image](https://github.com/user-attachments/assets/62e78558-6aa1-4f5f-9358-afc40e74cc4f)
 
 - Searching info about drinks by using sidebar
+  
+![image](https://github.com/user-attachments/assets/1c69ddeb-c1b9-4b35-9edf-044ddc22d54c)
+
 - Creating your own cocktails on the community page  
+  
 ![image](https://github.com/user-attachments/assets/a8b911a5-6c01-4d7c-bedf-e95200a563ea)
 
 - Changing information about your user  
+  
 ![image](https://github.com/user-attachments/assets/2e7620bf-2ca1-470e-92c4-d4100cc33623)
 
 
